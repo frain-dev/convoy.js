@@ -8,19 +8,20 @@ export class DeliveryAttempt {
     this.client = client;
   }
 
-  public async all(eventDeliveryId: string) {
+  public async all(eventDeliveryId: string, query?: any) {
     try {
-      const { data } = await this.client.httpGet(`/eventdeliveries/${eventDeliveryId}/deliveryattempts`);
+      const { data } = await this.client.httpGet(`/eventdeliveries/${eventDeliveryId}/deliveryattempts`, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
     }
   }
 
-  public async find(eventDeliveryId: string, deliveryAttemptId: string) {
+  public async find(eventDeliveryId: string, deliveryAttemptId: string, query?: any) {
     try {
       const { data } = await this.client.httpGet(
         `/eventdeliveries/${eventDeliveryId}/deliveryattempts/${deliveryAttemptId}`,
+        query,
       );
       return data;
     } catch (error) {

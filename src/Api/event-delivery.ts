@@ -27,18 +27,18 @@ export class EventDelivery {
     }
   }
 
-  async resend(id: string) {
+  async resend(id: string, query?: any) {
     try {
-      const { data } = await this.client.httpPut(`/eventdeliveries/${id}/resend`);
+      const { data } = await this.client.httpPut(`/eventdeliveries/${id}/resend`, {}, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
     }
   }
 
-  async batchResend(attributes: BatchResend) {
+  async batchResend(attributes: BatchResend, query?: any) {
     try {
-      const { data } = await this.client.httpPut(`/eventdeliveries/batchretry`, attributes);
+      const { data } = await this.client.httpPut(`/eventdeliveries/batchretry`, attributes, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);

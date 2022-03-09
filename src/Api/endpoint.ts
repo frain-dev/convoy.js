@@ -18,9 +18,9 @@ export class Endpoint {
     }
   }
 
-  async create(appId: string, attributes: CreateEndpoint) {
+  async create(appId: string, attributes: CreateEndpoint, query?: any) {
     try {
-      const { data } = await this.client.httpPost(`/applications/${appId}/endpoints`, attributes);
+      const { data } = await this.client.httpPost(`/applications/${appId}/endpoints`, attributes, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
@@ -36,18 +36,22 @@ export class Endpoint {
     }
   }
 
-  async update(appId: string, endpointId: string, attributes: UpdateEndpoint) {
+  async update(appId: string, endpointId: string, attributes: UpdateEndpoint, query?: any) {
     try {
-      const { data } = await this.client.httpPut(`/applications/${appId}/endpoints/${endpointId}`, attributes);
+      const { data } = await this.client.httpPut(`/applications/${appId}/endpoints/${endpointId}`, attributes, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
     }
   }
 
-  async delete(appId: string, endpointId: string, attributes: any) {
+  async delete(appId: string, endpointId: string, attributes?: any, query?: any) {
     try {
-      const { data } = await this.client.httpDelete(`/applications/${appId}/endpoints/${endpointId}`, attributes);
+      const { data } = await this.client.httpDelete(
+        `/applications/${appId}/endpoints/${endpointId}`,
+        attributes,
+        query,
+      );
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);

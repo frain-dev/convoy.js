@@ -27,9 +27,9 @@ export class Event {
     }
   }
 
-  async find(id: string, attributes?: any) {
+  async find(id: string, query?: any) {
     try {
-      const { data } = await this.client.httpGet(`/events/${id}`, attributes);
+      const { data } = await this.client.httpGet(`/events/${id}`, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);

@@ -30,30 +30,34 @@ export class Client {
   }
 
   public async httpGet(path: string, query?: any) {
-    if (query && Object.getOwnPropertyNames(query).length > 0) {
-      path = `${path}?${this.buildQueryParams(query)}`;
-    }
-
-    return this.request.get(path);
+    return this.request.get(this.buildPath(path, query));
   }
 
   public async httpPost(path: string, data: any, query?: any) {
-    if (query && Object.getOwnPropertyNames(query).length > 0) {
+    return this.request.post(this.buildPath(path, query), data);
+  }
+
+  public async httpPut(path: string, data?: any, query?: any) {
+    return this.request.put(this.buildPath(path, query), data);
+  }
+
+  public async httpDelete(path: string, data?: any, query?: any) {
+    return this.request.delete(this.buildPath(path, query), data);
+  }
+
+  private buildPath(path: string, query: any) {
+    if (this.hasQueryParameters(query)) {
       path = `${path}?${this.buildQueryParams(query)}`;
     }
 
-    return this.request.post(path, data);
-  }
-
-  public async httpPut(path: string, data?: any) {
-    return this.request.put(path, data);
-  }
-
-  public async httpDelete(path: string, data?: any) {
-    return this.request.delete(path, data);
+    return path;
   }
 
   private buildQueryParams(query: any) {
     return new URLSearchParams(query).toString();
+  }
+
+  private hasQueryParameters(query: any): boolean {
+    return query && Object.getOwnPropertyNames(query).length > 0;
   }
 }

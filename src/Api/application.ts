@@ -36,18 +36,18 @@ export class Application {
     }
   }
 
-  async update(id: string, attributes: UpdateApplication) {
+  async update(id: string, attributes: UpdateApplication, query?: any) {
     try {
-      const { data } = await this.client.httpPut(`/applications/${id}`, attributes);
+      const { data } = await this.client.httpPut(`/applications/${id}`, attributes, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
     }
   }
 
-  async delete(id: string, attributes?: any) {
+  async delete(id: string, attributes?: any, query?: any) {
     try {
-      const { data } = await this.client.httpDelete(`/applications/${id}`, attributes);
+      const { data } = await this.client.httpDelete(`/applications/${id}`, attributes, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
