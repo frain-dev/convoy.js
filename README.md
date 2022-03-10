@@ -14,7 +14,7 @@ npm install convoy.js
 Next, require the `convoy` module and setup with your auth credentials.
 
 ```js
-const { Convoy } = require('convoy');
+const { Convoy } = require('convoy.js');
 const convoy = new Convoy({ api_key: 'your_api_key' })
 ```
 The SDK also supports authenticating via Basic Auth by defining your username and password.

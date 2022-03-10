@@ -1,5 +1,5 @@
 {
-  "name": "convoy",
+  "name": "convoy.js",
   "version": "0.0.1",
   "description": "Convoy JS SDK Library",
   "main": "dist/convoy.js",
@@ -9,6 +9,10 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frain-dev/convoy.js"
   },
   "keywords": [
     "convoy",
