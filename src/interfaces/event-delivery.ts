@@ -1,5 +1,3 @@
-interface BatchResend {
+export interface BatchResend {
   ids: string[];
 }
-
-export { BatchResend };
