@@ -61,7 +61,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
-- [Frain](https://github.com/frain)
+- [Frain](https://github.com/frain-dev)
 
 ## License
 
