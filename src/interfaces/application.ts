@@ -1,9 +1,7 @@
-interface CreateApplication {
+export interface CreateApplication {
   name: string;
   support_email?: string;
   secret?: string;
 }
 
-interface UpdateApplication extends CreateApplication {}
-
-export { CreateApplication, UpdateApplication };
+export interface UpdateApplication extends CreateApplication {}

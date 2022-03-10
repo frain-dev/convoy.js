@@ -1,4 +1,4 @@
-interface CreateGroup {
+export interface CreateGroup {
   name: string;
   logo_url?: string;
   config: {
@@ -21,6 +21,4 @@ interface StrategyConfig {
   };
 }
 
-interface UpdateGroup extends GroupConfig {}
-
-export { CreateGroup, UpdateGroup };
+export interface UpdateGroup extends GroupConfig {}
