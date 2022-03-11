@@ -18,9 +18,9 @@ export class Group {
     }
   }
 
-  async create(attributes: CreateGroup) {
+  async create(attributes: CreateGroup, query?: any) {
     try {
-      const { data } = await this.client.httpPost(`/groups`, attributes);
+      const { data } = await this.client.httpPost(`/groups`, attributes, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
@@ -36,18 +36,18 @@ export class Group {
     }
   }
 
-  async update(id: string, attributes: UpdateGroup) {
+  async update(id: string, attributes: UpdateGroup, query?: any) {
     try {
-      const { data } = await this.client.httpPut(`/groups/${id}`, attributes);
+      const { data } = await this.client.httpPut(`/groups/${id}`, attributes, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
     }
   }
 
-  async delete(id: string, attributes?: any) {
+  async delete(id: string, attributes?: any, query?: any) {
     try {
-      const { data } = await this.client.httpDelete(`/groups/${id}`, attributes);
+      const { data } = await this.client.httpDelete(`/groups/${id}`, attributes, query);
       return data;
     } catch (error) {
       ResponseHelper.handleErrors(error);
