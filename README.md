@@ -37,7 +37,7 @@ An application represents a user's application trying to receive webhooks. Once 
 try {
   const appData = { name: "my_app", support_email: "support@myapp.com" };
 
-  const response = await convoy.application.create(appData);
+  const response = await convoy.applications.create(appData);
 
   const appId = response.data.uid;
 } catch (error) {
