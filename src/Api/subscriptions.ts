@@ -1,8 +1,8 @@
 import { Client } from '../client';
-import { CreateEvent } from '../interfaces/event';
+import { CreateSubscription } from '../interfaces/subscription';
 import { ResponseHelper } from '../utils/helpers/response-helper';
 
-export class Event {
+export class Subscription {
     private client: Client;
 
     constructor(client: Client) {
@@ -11,16 +11,16 @@ export class Event {
 
     async all(query?: any) {
         try {
-            const { data } = await this.client.httpGet(`/events`, query);
+            const { data } = await this.client.httpGet(`/subscriptions`, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async create(attributes: CreateEvent, query?: any) {
+    async create(attributes: CreateSubscription, query?: any) {
         try {
-            const { data } = await this.client.httpPost(`/events`, attributes, query);
+            const { data } = await this.client.httpPost(`/subscriptions`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
@@ -29,7 +29,7 @@ export class Event {
 
     async find(id: string, query?: any) {
         try {
-            const { data } = await this.client.httpGet(`/events/${id}`, query);
+            const { data } = await this.client.httpGet(`/subscriptions/${id}`, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
