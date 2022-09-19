@@ -2,8 +2,8 @@ import { IConfig } from './interfaces';
 import { Client } from './client';
 import { Group } from './Api/group';
 import { Application } from './Api/application';
-import { Subscription } from './Api/subscriptions';
-import { Source } from './Api/sources';
+import { Subscription } from './Api/subscription';
+import { Source } from './Api/source';
 import { EventDelivery } from './Api/event-delivery';
 import { Event } from './Api/event';
 import { Endpoint } from './Api/endpoint';
@@ -14,7 +14,7 @@ export class Convoy {
     public groups;
     public applications;
     public subscriptions;
-    public source;
+    public sources;
     public events;
     public eventDeliveries;
     public endpoints;
@@ -26,7 +26,7 @@ export class Convoy {
         this.groups = new Group(this.client);
         this.applications = new Application(this.client);
         this.subscriptions = new Subscription(this.client);
-        this.source = new Source(this.client);
+        this.sources = new Source(this.client);
         this.events = new Event(this.client);
         this.eventDeliveries = new EventDelivery(this.client);
         this.endpoints = new Endpoint(this.client);

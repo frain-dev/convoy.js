@@ -6,6 +6,8 @@ import { Event } from '../src/Api/event';
 import { Group } from '../src/Api/group';
 import { Client } from '../src/client';
 import { Convoy } from '../src/convoy';
+import { Source } from '../src/Api/source';
+import { Subscription } from '../src/Api/subscription';
 
 describe('Convoy', function () {
     let convoy: any;
@@ -28,6 +30,14 @@ describe('Convoy', function () {
 
     test('creates application client', () => {
         expect(convoy.applications).toBeInstanceOf(Application);
+    });
+
+    test('creates source client', () => {
+        expect(convoy.sources).toBeInstanceOf(Source);
+    });
+
+    test('creates subscription client', () => {
+        expect(convoy.subscriptions).toBeInstanceOf(Subscription);
     });
 
     test('creates event client', () => {
