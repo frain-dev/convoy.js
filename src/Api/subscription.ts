@@ -1,8 +1,8 @@
 import { Client } from '../client';
-import { CreateApplication, UpdateApplication } from '../interfaces/application';
+import { CreateSubscription } from '../interfaces/subscription';
 import { ResponseHelper } from '../utils/helpers/response-helper';
 
-export class Application {
+export class Subscription {
     private client: Client;
 
     constructor(client: Client) {
@@ -11,16 +11,16 @@ export class Application {
 
     async all(query?: any) {
         try {
-            const { data } = await this.client.httpGet(`/applications`, query);
+            const { data } = await this.client.httpGet(`/subscriptions`, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async create(attributes: CreateApplication, query?: any) {
+    async create(attributes: CreateSubscription, query?: any) {
         try {
-            const { data } = await this.client.httpPost(`/applications`, attributes, query);
+            const { data } = await this.client.httpPost(`/subscriptions`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
@@ -29,16 +29,7 @@ export class Application {
 
     async find(id: string, query?: any) {
         try {
-            const { data } = await this.client.httpGet(`/applications/${id}`, query);
-            return data;
-        } catch (error) {
-            ResponseHelper.handleErrors(error);
-        }
-    }
-
-    async update(id: string, attributes: UpdateApplication, query?: any) {
-        try {
-            const { data } = await this.client.httpPut(`/applications/${id}`, attributes, query);
+            const { data } = await this.client.httpGet(`/subscriptions/${id}`, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
@@ -47,7 +38,7 @@ export class Application {
 
     async delete(id: string, attributes?: any, query?: any) {
         try {
-            const { data } = await this.client.httpDelete(`/applications/${id}`, attributes, query);
+            const { data } = await this.client.httpDelete(`/subscriptions/${id}`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);

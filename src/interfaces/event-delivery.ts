@@ -1,3 +1,3 @@
 export interface BatchResend {
-  ids: string[];
+    ids: string[];
 }
