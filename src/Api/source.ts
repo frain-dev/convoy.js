@@ -35,4 +35,13 @@ export class Source {
             ResponseHelper.handleErrors(error);
         }
     }
+
+    async delete(id: string, attributes?: any, query?: any) {
+        try {
+            const { data } = await this.client.httpDelete(`/sources/${id}`, attributes, query);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
 }

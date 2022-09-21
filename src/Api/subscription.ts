@@ -35,4 +35,13 @@ export class Subscription {
             ResponseHelper.handleErrors(error);
         }
     }
+
+    async delete(id: string, attributes?: any, query?: any) {
+        try {
+            const { data } = await this.client.httpDelete(`/subscriptions/${id}`, attributes, query);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
 }
