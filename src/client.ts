@@ -4,7 +4,7 @@ const axios = require('axios').default;
 
 export class Client {
     private request;
-    public baseUri = 'https://cloud.getconvoy.io/api/v1';
+    public baseUri = 'https://dashboard.getconvoy.io/api/v1';
 
     constructor(options: IConfig) {
         this.request = axios.create({
