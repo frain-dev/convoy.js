@@ -6,13 +6,13 @@ type SignedHeader = {
     signatures: string[];
 };
 
-interface ICreateWebhook {
+interface ConfigOpts {
     payload: any;
     header: string;
     secret: string;
-    tolerance: number;
-    hash: string;
-    encoding: string;
+    tolerance?: number;
+    hash?: string;
+    encoding?: string;
 }
 
 export class Webhook {
@@ -29,7 +29,7 @@ export class Webhook {
     private hash;
     private encoding;
 
-    constructor(options: ICreateWebhook) {
+    constructor(options: ConfigOpts) {
         this.payload = options.payload;
         this.header = options.header;
         this.secret = options.secret;
@@ -38,7 +38,7 @@ export class Webhook {
         this.encoding = options.encoding || this.defaultOptions.DEFAULT_ENCODING;
     }
 
-    verifyHeader() {
+    verify() {
         const signedHeader = this.parseSignatureHeader();
 
         if (!signedHeader.signatures.length) {
@@ -53,7 +53,7 @@ export class Webhook {
         return this.validateComputedSignature(signedHeader.signatures, expectedSignature);
     }
 
-    parseSignatureHeader(): SignedHeader {
+    private parseSignatureHeader(): SignedHeader {
         const header = this.header;
 
         if (typeof header !== 'string') {
@@ -72,7 +72,7 @@ export class Webhook {
         return signature;
     }
 
-    decodeAdvanced(sh: SignedHeader, pairs: string[]): SignedHeader {
+    private decodeAdvanced(sh: SignedHeader, pairs: string[]): SignedHeader {
         pairs.map((sig: string) => {
             const item = sig.split('=').slice(1).join('=');
             if (isNaN(Number(item))) {
@@ -96,14 +96,14 @@ export class Webhook {
         return sh;
     }
 
-    decodeSimple(sh: SignedHeader, header: string): SignedHeader {
+    private decodeSimple(sh: SignedHeader, header: string): SignedHeader {
         sh.signatures.push(header);
         return sh;
     }
 
-    validateComputedSignature(signatures: string[], expectedSignature: string) {
+    private validateComputedSignature(signatures: string[], expectedSignature: string) {
         const signatureFound = signatures.filter((signature) => {
-            this.secureCompare(signature, expectedSignature);
+            return this.secureCompare(signature, expectedSignature);
         });
 
         if (!signatureFound.length) {
@@ -113,7 +113,7 @@ export class Webhook {
         return true;
     }
 
-    secureCompare(a: any, b: any): boolean {
+    private secureCompare(a: any, b: any): boolean {
         a = Buffer.from(a);
         b = Buffer.from(b);
 

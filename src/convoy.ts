@@ -8,8 +8,9 @@ import { EventDelivery } from './Api/event-delivery';
 import { Event } from './Api/event';
 import { Endpoint } from './Api/endpoint';
 import { DeliveryAttempt } from './Api/delivery-attempt';
+import { Webhook } from './webhook';
 
-export class Convoy {
+class Convoy {
     private client;
     public groups;
     public applications;
@@ -33,3 +34,5 @@ export class Convoy {
         this.deliveryAttempts = new DeliveryAttempt(this.client);
     }
 }
+
+export { Convoy, Webhook };
