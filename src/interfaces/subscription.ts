@@ -11,7 +11,7 @@ export interface CreateSubscription {
     };
     retry_config: {
         type: string;
-        retry_count: string;
+        retry_count: number;
         duration: string;
     };
     filter_config: {
