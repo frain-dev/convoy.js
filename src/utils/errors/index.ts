@@ -62,10 +62,15 @@ class ServerException extends BaseError {
 
 class WebhookVerificationException extends BaseError {
     constructor(message: string) {
-      super(message)
+        super(message);
     }
-  }
-  
+}
+
+class ConfigException extends BaseError {
+    constructor(message: string) {
+        super(message);
+    }
+}
 
 export {
     BadRequestException,
@@ -74,5 +79,6 @@ export {
     NotFoundException,
     TooManyRequestException,
     ServerException,
-    WebhookVerificationException
+    WebhookVerificationException,
+    ConfigException,
 };

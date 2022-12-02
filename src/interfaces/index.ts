@@ -1,16 +1,13 @@
 export interface IConfig {
     /**
-     * Username used for basic authentication
-     */
-    username?: string;
-    /**
-     * Password used for basic authentication
-     */
-    password?: string;
-    /**
      * API Key used for bearer token authentication
      */
-    api_key?: string;
+    api_key: string;
+
+    /**
+     * Project ID 
+     */
+    project_id: string;
     /**
      * Convoy self hosted uri
      */

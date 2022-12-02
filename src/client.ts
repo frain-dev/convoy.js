@@ -1,5 +1,5 @@
 import { IConfig } from './interfaces';
-import * as base64 from 'base-64';
+import { ConfigException } from './utils/errors';
 const axios = require('axios').default;
 
 export class Client {
@@ -7,10 +7,18 @@ export class Client {
     public baseUri = 'https://dashboard.getconvoy.io/api/v1';
 
     constructor(options: IConfig) {
+        if(!options.api_key) {
+            throw new ConfigException('API Key is required');
+        }
+
+        if(!options.project_id) {
+            throw new ConfigException('Project ID is required');
+        }
+
         this.request = axios.create({
-            baseURL: this.getBaseUrl(options.uri as string),
+            baseURL: `${this.getBaseUrl(options.uri as string)}/projects/${options.project_id}`,
             headers: {
-                Authorization: this.getAuthorization(options),
+                Authorization: `Bearer ${options.api_key}`,
                 'Content-Type': 'application/json',
             },
         });
@@ -18,15 +26,6 @@ export class Client {
 
     getBaseUrl(uri: string): string {
         return uri ? uri : this.baseUri;
-    }
-
-    getAuthorization(options: IConfig) {
-        if (options.api_key) {
-            return `Bearer ${options.api_key}`;
-        }
-
-        const basic = base64.encode(`${options.username}:${options.password}`);
-        return `Basic ${basic}`;
     }
 
     public async httpGet(path: string, query?: any) {
