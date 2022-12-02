@@ -15,80 +15,35 @@ Next, require the `convoy` module and setup with your auth credentials.
 
 ```js
 const { Convoy } = require('convoy.js');
-const convoy = new Convoy({ api_key: 'your_api_key' })
-```
-The SDK also supports authenticating via Basic Auth by defining your username and password.
-
-```js
-const convoy = new Convoy({ username: 'default', password: 'default' })
+const convoy = new Convoy({ api_key: 'your_api_key', project_id: 'e9bbdfd2-5ca6-48be-8779-d9f4a7cb9e65' })
 ```
 
-In the event you're using a self hosted convoy instance, you can define the url as part of what is passed into convoy's constructor.
-
-```js
-const convoy = new Convoy({ api_key: 'your_api_key', uri: 'self-hosted-instance' })
-```
-
-### Creating an Application
-
-An application represents a user's application trying to receive webhooks. Once you create an application, you'll receive a `uid` as part of the response that you should save and supply in subsequent API calls to perform other requests such as creating an event.
-
-```js
-try {
-  const appData = { name: "my_app", support_email: "support@myapp.com" };
-
-  const response = await convoy.applications.create(appData);
-
-  const appId = response.data.uid;
-} catch (error) {
-  console.log(error);
-}
-```
-
-### Add Application Endpoint
-
-After creating an application, you'll need to add an endpoint to the application you just created. An endpoint represents a target URL to receive events.
+### Create an Endpoint
+An endpoint represents a target URL to receive events.
 
 ```js
 try {
   const endpointData = {
+    name: 'Default Endpoint',
     url: "https://0d87-102-89-2-172.ngrok.io",
     description: "Default Endpoint",
     secret: "endpoint-secret",
     events: ["*"],
   };
 
-  const response = await convoy.endpoints.create(appId, endpointData);
-} catch (error) {
-  console.log(error);
-}
-```
-
-### Create a Subscription
-After creating an endpoint, we need to subscribe the endpoint to events.
-
-```js
-try {
-  const subscriptionData = {
-    "name": "event-sub",
-    "app_id": appId,
-    "endpoint_id": endpointId,
-  };
-
-  const response = await convoy.subscriptions.create(subscriptionData);
+  const response = await convoy.endpoints.create(endpointData);
 } catch (error) {
   console.log(error);
 }
 ```
 
 ### Sending an Event
-
-To send an event, you'll need the `uid` from the application we created earlier.
+To send an event, you'll need the `uid` from the endpoint we created earlier.
 
 ```js
 try {
   const eventData = {
-    app_id: appId,
+    endpoint_id: endpointId,
     event_type: "payment.success",
     data: {
       event: "payment.success",

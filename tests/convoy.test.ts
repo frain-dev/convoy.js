@@ -1,9 +1,8 @@
-import { Application } from '../src/Api/application';
 import { DeliveryAttempt } from '../src/Api/delivery-attempt';
 import { Endpoint } from '../src/Api/endpoint';
 import { EventDelivery } from '../src/Api/event-delivery';
 import { Event } from '../src/Api/event';
-import { Group } from '../src/Api/group';
+import { Project } from '../src/Api/project';
 import { Client } from '../src/client';
 import { Convoy } from '../src/convoy';
 import { Source } from '../src/Api/source';
@@ -14,9 +13,8 @@ describe('Convoy', function () {
 
     beforeEach(function () {
         convoy = new Convoy({
-            username: 'default',
-            password: 'password',
-            uri: 'uri',
+            api_key: 'random-api-key',
+            project_id: 'project-id'
         });
     });
 
@@ -24,12 +22,8 @@ describe('Convoy', function () {
         expect(convoy.client).toBeInstanceOf(Client);
     });
 
-    test('creates group client', () => {
-        expect(convoy.groups).toBeInstanceOf(Group);
-    });
-
-    test('creates application client', () => {
-        expect(convoy.applications).toBeInstanceOf(Application);
+    test('creates project client', () => {
+        expect(convoy.projects).toBeInstanceOf(Project);
     });
 
     test('creates source client', () => {
