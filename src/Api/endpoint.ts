@@ -9,53 +9,45 @@ export class Endpoint {
         this.client = client;
     }
 
-    async all(appId: string, query?: any) {
+    async all(query?: any) {
         try {
-            const { data } = await this.client.httpGet(`/applications/${appId}/endpoints`, query);
+            const { data } = await this.client.httpGet(`/endpoints`, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async create(appId: string, attributes: CreateEndpoint, query?: any) {
+    async create(attributes: CreateEndpoint, query?: any) {
         try {
-            const { data } = await this.client.httpPost(`/applications/${appId}/endpoints`, attributes, query);
+            const { data } = await this.client.httpPost(`/endpoints`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async find(appId: string, endpointId: string, query?: any) {
+    async find(endpointId: string, query?: any) {
         try {
-            const { data } = await this.client.httpGet(`/applications/${appId}/endpoints/${endpointId}`, query);
+            const { data } = await this.client.httpGet(`/endpoints/${endpointId}`, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async update(appId: string, endpointId: string, attributes: UpdateEndpoint, query?: any) {
+    async update(endpointId: string, attributes: UpdateEndpoint, query?: any) {
         try {
-            const { data } = await this.client.httpPut(
-                `/applications/${appId}/endpoints/${endpointId}`,
-                attributes,
-                query,
-            );
+            const { data } = await this.client.httpPut(`/endpoints/${endpointId}`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async delete(appId: string, endpointId: string, attributes?: any, query?: any) {
+    async delete(endpointId: string, attributes?: any, query?: any) {
         try {
-            const { data } = await this.client.httpDelete(
-                `/applications/${appId}/endpoints/${endpointId}`,
-                attributes,
-                query,
-            );
+            const { data } = await this.client.httpDelete(`/endpoints/${endpointId}`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
