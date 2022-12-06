@@ -15,7 +15,7 @@ Next, require the `convoy` module and setup with your auth credentials.
 
 ```js
 const { Convoy } = require('convoy.js');
-const convoy = new Convoy({ api_key: 'your_api_key', project_id: 'e9bbdfd2-5ca6-48be-8779-d9f4a7cb9e65' })
+const convoy = new Convoy({ api_key: 'your_api_key', project_id: 'your_project_id' })
 ```
 
 ### Create an Endpoint
