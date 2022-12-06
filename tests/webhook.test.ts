@@ -53,7 +53,7 @@ describe('Webhook Verification', function () {
 
     test('verify advanced hex signature', () => {
         const webhook = new Webhook({
-            header: 't=1666134587744,v1=3c0256def36cdeffaf1355cae483f280b2d43c416bb1f6ca04feb51ad097eb6e,v1=539c818999856078a89b40398449df2cf0a84339dd9e8e28711e395bfce43bec',
+            header: 't=2048976161,v1=c6c39e1bd410fc1dc4db90e97039f006d088c950a275296767595d330195088f,v1=6594ee0713f1cc1f54c3f713d06a60718cd10949c7684412f159034d49621e07',
             payload: { email: 'test@gmail.com' },
             secret: 'Convoy',
             hash: 'sha256',
@@ -65,7 +65,7 @@ describe('Webhook Verification', function () {
 
     test('verify advanced base64 signature', () => {
         const webhook = new Webhook({
-            header: 't=1666171999082,v1=PAJW3vNs3v+vE1XK5IPygLLUPEFrsfbKBP61GtCX624=,v1=U5yBiZmFYHiom0A5hEnfLPCoQzndno4ocR45W/zkO+w=',
+            header: 't=2048976161,v1=afdb90313acfa15a3fc425755ae651a204947710315bb2a90bccaa87fce88998,v1=fLBDCBUiX5iIs0L5zfNq45h23EkX1HAMpFF+2lHrnes=',
             payload: { email: 'test@gmail.com' },
             secret: '8IX9njirDG',
             hash: 'sha256',
