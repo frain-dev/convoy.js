@@ -4,6 +4,7 @@ const crypto = require('crypto');
 type SignedHeader = {
     timestamp: number;
     signatures: string[];
+    isAdvanced: boolean;
 };
 
 interface ConfigOpts {
@@ -45,9 +46,19 @@ export class Webhook {
             throw new WebhookVerificationException('Webhook has no valid signature');
         }
 
+        let message;
+
+        if(signedHeader.isAdvanced) {
+            message = `${signedHeader.timestamp},${JSON.stringify(this.payload)}`
+        } 
+
+        if (!signedHeader.isAdvanced) {
+            message = JSON.stringify(this.payload)
+        }
+
         const expectedSignature = crypto
             .createHmac(this.hash, this.secret)
-            .update(JSON.stringify(this.payload), 'utf8')
+            .update(message, 'utf8')
             .digest(this.encoding);
 
         return this.validateComputedSignature(signedHeader.signatures, expectedSignature);
@@ -63,6 +74,7 @@ export class Webhook {
         let signature: SignedHeader = {
             timestamp: -1,
             signatures: [],
+            isAdvanced: false
         };
 
         const parts = header.split(',');
@@ -93,6 +105,7 @@ export class Webhook {
             throw new WebhookVerificationException('Timestamp has expired');
         }
 
+        sh.isAdvanced = true
         return sh;
     }
 
