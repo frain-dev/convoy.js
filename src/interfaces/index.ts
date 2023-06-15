@@ -5,7 +5,7 @@ export interface IConfig {
     api_key: string;
 
     /**
-     * Project ID 
+     * Project ID
      */
     project_id: string;
     /**

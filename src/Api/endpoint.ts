@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { CreateEndpoint, UpdateEndpoint } from '../interfaces/endpoint';
+import { CreateEndpoint, ExpireSecret, UpdateEndpoint } from '../interfaces/endpoint';
 import { ResponseHelper } from '../utils/helpers/response-helper';
 
 export class Endpoint {
@@ -48,6 +48,15 @@ export class Endpoint {
     async delete(endpointId: string, attributes?: any, query?: any) {
         try {
             const { data } = await this.client.httpDelete(`/endpoints/${endpointId}`, attributes, query);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
+
+    async expireSecret(endpointId: string, attributes: ExpireSecret) {
+        try {
+            const { data } = await this.client.httpPut(`/endpoints/${endpointId}/expire_secret`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);

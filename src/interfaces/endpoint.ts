@@ -19,4 +19,9 @@ interface EndpointAuthentication {
     };
 }
 
+export interface ExpireSecret {
+    secret: string;
+    expiration: number;
+}
+
 export interface UpdateEndpoint extends CreateEndpoint {}
