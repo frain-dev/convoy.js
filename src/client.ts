@@ -7,11 +7,11 @@ export class Client {
     public baseUri = 'https://dashboard.getconvoy.io/api/v1';
 
     constructor(options: IConfig) {
-        if(!options.api_key) {
+        if (!options.api_key) {
             throw new ConfigException('API Key is required');
         }
 
-        if(!options.project_id) {
+        if (!options.project_id) {
             throw new ConfigException('Project ID is required');
         }
 

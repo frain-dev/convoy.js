@@ -48,12 +48,12 @@ export class Webhook {
 
         let message;
 
-        if(signedHeader.isAdvanced) {
-            message = `${signedHeader.timestamp},${JSON.stringify(this.payload)}`
-        } 
+        if (signedHeader.isAdvanced) {
+            message = `${signedHeader.timestamp},${JSON.stringify(this.payload)}`;
+        }
 
         if (!signedHeader.isAdvanced) {
-            message = JSON.stringify(this.payload)
+            message = JSON.stringify(this.payload);
         }
 
         const expectedSignature = crypto
@@ -74,7 +74,7 @@ export class Webhook {
         let signature: SignedHeader = {
             timestamp: -1,
             signatures: [],
-            isAdvanced: false
+            isAdvanced: false,
         };
 
         const parts = header.split(',');
@@ -105,7 +105,7 @@ export class Webhook {
             throw new WebhookVerificationException('Timestamp has expired');
         }
 
-        sh.isAdvanced = true
+        sh.isAdvanced = true;
         return sh;
     }
 
