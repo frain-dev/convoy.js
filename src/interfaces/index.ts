@@ -1,4 +1,5 @@
-import {SqsOptions} from "./sqs-options";
+import { SqsOptions } from './sqs-options';
+import { KafkaOptions } from './kafka-options';
 
 export interface IConfig {
     /**
@@ -19,10 +20,10 @@ export interface IConfig {
     /**
      * AWS SQS Options
      */
-    sqsOptions?: SqsOptions
+    sqsOptions?: SqsOptions;
 
     /**
-     * TODO: add Kafka
+     * Apache Kafka Options
      */
-    kafkaOptions?: any
+    kafkaOptions?: KafkaOptions;
 }

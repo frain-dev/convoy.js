@@ -8,10 +8,11 @@ import { Event } from './Api/event';
 import { Endpoint } from './Api/endpoint';
 import { DeliveryAttempt } from './Api/delivery-attempt';
 import { Webhook } from './webhook';
-import {SQS} from "./sqs";
+import { SQS } from './Api/sqs';
+import { Kafka } from './Api/kafka';
 
 class Convoy {
-    private client;
+    private readonly client;
     public projects;
     public subscriptions;
     public sources;
@@ -19,7 +20,8 @@ class Convoy {
     public eventDeliveries;
     public endpoints;
     public deliveryAttempts;
-    public sqs;
+    public sqs: SQS;
+    public kafka: Kafka;
 
     constructor(options: IConfig) {
         this.client = new Client(options);
@@ -32,6 +34,7 @@ class Convoy {
         this.endpoints = new Endpoint(this.client);
         this.deliveryAttempts = new DeliveryAttempt(this.client);
         this.sqs = new SQS(this.client);
+        this.kafka = new Kafka(this.client);
     }
 }
 

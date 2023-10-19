@@ -1,6 +1,8 @@
 import { SendMessageRequest } from '@aws-sdk/client-sqs';
 import { Client } from '../client';
 import { CreateEvent, CreateFanOutEvent } from '../interfaces/event';
+import { ResponseHelper } from '../utils/helpers/response-helper';
+import { ConfigException } from '../utils/errors';
 
 export class SQS {
     private client: Client;
@@ -9,7 +11,12 @@ export class SQS {
         this.client = client;
     }
 
-    async writeEvent(payload: CreateEvent) {
+    async writeEvent(payload: CreateEvent | CreateFanOutEvent) {
+        if (!this.client.sqs) {
+            const error = new ConfigException('the sqs client is not configured');
+            return ResponseHelper.handleErrors(error);
+        }
+
         try {
             const params: SendMessageRequest = {
                 MessageBody: JSON.stringify(payload),
@@ -17,19 +24,7 @@ export class SQS {
             };
             return await this.client.sqs?.sqsClient.sendMessage(params);
         } catch (error) {
-            throw error;
-        }
-    }
-
-    async writeFanOutEvent(payload: CreateFanOutEvent) {
-        try {
-            const params: SendMessageRequest = {
-                MessageBody: JSON.stringify(payload),
-                QueueUrl: this.client.sqs?.queueUrl as string,
-            };
-            return this.client.sqs?.sqsClient.sendMessage(params);
-        } catch (error) {
-            throw error;
+            ResponseHelper.handleErrors(error);
         }
     }
 }
