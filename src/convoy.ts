@@ -8,6 +8,7 @@ import { Event } from './Api/event';
 import { Endpoint } from './Api/endpoint';
 import { DeliveryAttempt } from './Api/delivery-attempt';
 import { Webhook } from './webhook';
+import {SQS} from "./sqs";
 
 class Convoy {
     private client;
@@ -18,6 +19,7 @@ class Convoy {
     public eventDeliveries;
     public endpoints;
     public deliveryAttempts;
+    public sqs;
 
     constructor(options: IConfig) {
         this.client = new Client(options);
@@ -29,6 +31,7 @@ class Convoy {
         this.eventDeliveries = new EventDelivery(this.client);
         this.endpoints = new Endpoint(this.client);
         this.deliveryAttempts = new DeliveryAttempt(this.client);
+        this.sqs = new SQS(this.client);
     }
 }
 

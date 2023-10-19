@@ -1,10 +1,12 @@
 import { IConfig } from './interfaces';
 import { ConfigException } from './utils/errors';
+import {SqsOptions} from "./interfaces/sqs-options";
 const axios = require('axios').default;
 
 export class Client {
     private request;
     public baseUri = 'https://dashboard.getconvoy.io/api/v1';
+    public sqs?: SqsOptions;
 
     constructor(options: IConfig) {
         if (!options.api_key) {
@@ -22,6 +24,10 @@ export class Client {
                 'Content-Type': 'application/json',
             },
         });
+
+        if (options.sqsOptions){
+            this.sqs = options.sqsOptions
+        }
     }
 
     getBaseUrl(uri: string): string {

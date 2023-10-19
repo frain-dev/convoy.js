@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { CreateEvent } from '../interfaces/event';
+import {CreateEvent, CreateFanOutEvent} from '../interfaces/event';
 import { ResponseHelper } from '../utils/helpers/response-helper';
 
 export class Event {
@@ -21,6 +21,15 @@ export class Event {
     async create(attributes: CreateEvent, query?: any) {
         try {
             const { data } = await this.client.httpPost(`/events`, attributes, query);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
+
+    async createFanOutEvent(attributes: CreateFanOutEvent, query?: any) {
+        try {
+            const { data } = await this.client.httpPost(`/events/fanout`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
