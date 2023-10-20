@@ -11,19 +11,22 @@ export class Kafka {
 
     constructor(client: Client) {
         this.client = client;
-        this.producer = this.client.kafka?.kafkaClient.producer({ createPartitioner: Partitioners.LegacyPartitioner });
-        this.producer?.on('producer.connect', () => {
-            this.isConnected = true;
-        });
     }
 
     async writeEvent(payload: CreateEvent | CreateFanOutEvent) {
         if (!this.client.kafka) {
-            throw new ConfigException('the kafka client is not configured');
+            ResponseHelper.handleErrors(new ConfigException('the kafka client is not configured'));
         }
 
         try {
             if (!this.isConnected) {
+                this.producer = this.client.kafka?.kafkaClient.producer({
+                    createPartitioner: Partitioners.LegacyPartitioner,
+                });
+                this.producer?.on('producer.connect', () => {
+                    this.isConnected = true;
+                });
+
                 await this.producer?.connect();
             }
 
