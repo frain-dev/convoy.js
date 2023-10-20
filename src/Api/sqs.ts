@@ -13,8 +13,7 @@ export class SQS {
 
     async writeEvent(payload: CreateEvent | CreateFanOutEvent) {
         if (!this.client.sqs) {
-            const error = new ConfigException('the sqs client is not configured');
-            return ResponseHelper.handleErrors(error);
+            return ResponseHelper.handleErrors(new ConfigException('the sqs client is not configured'));
         }
 
         try {
