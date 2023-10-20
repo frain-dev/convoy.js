@@ -1,10 +1,14 @@
 import { IConfig } from './interfaces';
 import { ConfigException } from './utils/errors';
+import { SqsOptions } from './interfaces/sqs-options';
+import { KafkaOptions } from './interfaces/kafka-options';
 const axios = require('axios').default;
 
 export class Client {
     private request;
     public baseUri = 'https://dashboard.getconvoy.io/api/v1';
+    public sqs?: SqsOptions;
+    public kafka?: KafkaOptions;
 
     constructor(options: IConfig) {
         if (!options.api_key) {
@@ -22,6 +26,14 @@ export class Client {
                 'Content-Type': 'application/json',
             },
         });
+
+        if (options.sqsOptions) {
+            this.sqs = options.sqsOptions;
+        }
+
+        if (options.kafkaOptions) {
+            this.kafka = options.kafkaOptions;
+        }
     }
 
     getBaseUrl(uri: string): string {
