@@ -47,13 +47,20 @@ export class Webhook {
         }
 
         let message;
+        let payload;
+
+        if (typeof this.payload !== 'string') {
+            payload = JSON.stringify(this.payload);
+        } else {
+            payload = this.payload;
+        }
 
         if (signedHeader.isAdvanced) {
-            message = `${signedHeader.timestamp},${JSON.stringify(this.payload)}`;
+            message = `${signedHeader.timestamp},${payload}`;
         }
 
         if (!signedHeader.isAdvanced) {
-            message = JSON.stringify(this.payload);
+            message = payload;
         }
 
         const expectedSignature = crypto
