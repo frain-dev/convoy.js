@@ -1,6 +1,6 @@
 {
     "name": "convoy.js",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Convoy JS SDK Library",
     "main": "dist/convoy.js",
     "scripts": {
