@@ -21,10 +21,10 @@
     "author": "Convoy",
     "license": "MIT",
     "dependencies": {
-        "@aws-sdk/client-sqs": "^3.431.0",
-        "axios": "^0.26.0",
+        "@aws-sdk/client-sqs": "^3.449.0",
+        "axios": "^1.6.1",
         "base-64": "^1.0.0",
-        "http-status": "^1.5.0",
+        "http-status": "^1.7.3",
         "kafkajs": "^2.2.4"
     },
     "files": [
