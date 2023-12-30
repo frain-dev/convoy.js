@@ -1,6 +1,7 @@
 import { Client } from '../client';
-import {CreateEvent, CreateFanOutEvent} from '../interfaces/event';
+import { CreateEvent, CreateFanOutEvent } from '../interfaces/event';
 import { ResponseHelper } from '../utils/helpers/response-helper';
+import { ConfigException } from '../utils/errors';
 
 export class Event {
     private client: Client;
@@ -20,6 +21,10 @@ export class Event {
 
     async create(attributes: CreateEvent, query?: any) {
         try {
+            if (attributes.endpoint_id.length === 0) {
+                throw new ConfigException('Endpoint ID is empty');
+            }
+
             const { data } = await this.client.httpPost(`/events`, attributes, query);
             return data;
         } catch (error) {
