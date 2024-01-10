@@ -27,12 +27,12 @@ export class Client {
             },
         });
 
-        if (options.sqsOptions) {
-            this.sqs = options.sqsOptions;
+        if (options.sqs_options) {
+            this.sqs = options.sqs_options;
         }
 
-        if (options.kafkaOptions) {
-            this.kafka = options.kafkaOptions;
+        if (options.kafka_options) {
+            this.kafka = options.kafka_options;
         }
     }
 

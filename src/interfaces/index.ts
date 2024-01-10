@@ -20,10 +20,10 @@ export interface IConfig {
     /**
      * AWS SQS Options
      */
-    sqsOptions?: SqsOptions;
+    sqs_options?: SqsOptions;
 
     /**
      * Apache Kafka Options
      */
-    kafkaOptions?: KafkaOptions;
+    kafka_options?: KafkaOptions;
 }

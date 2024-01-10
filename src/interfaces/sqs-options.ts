@@ -1,6 +1,6 @@
 import { SQS } from '@aws-sdk/client-sqs';
 
 export interface SqsOptions {
-    sqsClient: SQS;
+    sqs_client: SQS;
     queueUrl: string;
 }

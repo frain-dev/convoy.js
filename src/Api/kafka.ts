@@ -20,7 +20,7 @@ export class Kafka {
 
         try {
             if (!this.isConnected) {
-                this.producer = this.client.kafka?.kafkaClient.producer({
+                this.producer = this.client.kafka?.kafka_client.producer({
                     createPartitioner: Partitioners.LegacyPartitioner,
                 });
                 this.producer?.on('producer.connect', () => {
@@ -30,7 +30,7 @@ export class Kafka {
                 await this.producer?.connect();
             }
 
-            const { kafkaClient, ...opts } = this.client.kafka!;
+            const { kafka_client, ...opts } = this.client.kafka!;
             return await this.producer?.send({
                 ...opts,
                 messages: [{ value: JSON.stringify(payload) }],
