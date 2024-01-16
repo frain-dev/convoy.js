@@ -1,7 +1,7 @@
 import { CompressionTypes, Kafka } from 'kafkajs';
 
 export interface KafkaOptions {
-    kafkaClient: Kafka;
+    kafka_client: Kafka;
     topic: string;
     acks?: number;
     timeout?: number;

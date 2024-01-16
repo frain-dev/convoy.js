@@ -21,7 +21,7 @@ export class SQS {
                 MessageBody: JSON.stringify(payload),
                 QueueUrl: this.client.sqs?.queueUrl as string,
             };
-            return await this.client.sqs?.sqsClient.sendMessage(params);
+            return await this.client.sqs?.sqs_client.sendMessage(params);
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
