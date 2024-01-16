@@ -1,7 +1,6 @@
 import { Client } from '../client';
 import { CreateSubscription, UpdateSubscription } from '../interfaces/subscription';
 import { ResponseHelper } from '../utils/helpers/response-helper';
-import { UpdateProject } from '../interfaces/project';
 
 export class Subscription {
     private client: Client;
