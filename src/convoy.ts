@@ -10,6 +10,7 @@ import { DeliveryAttempt } from './Api/delivery-attempt';
 import { Webhook } from './webhook';
 import { SQS } from './Api/sqs';
 import { Kafka } from './Api/kafka';
+import { PortalLink } from './Api/portal-link';
 
 class Convoy {
     private readonly client;
@@ -20,6 +21,7 @@ class Convoy {
     public eventDeliveries;
     public endpoints;
     public deliveryAttempts;
+    public portalLinks;
     public sqs: SQS;
     public kafka: Kafka;
 
@@ -28,6 +30,7 @@ class Convoy {
 
         this.projects = new Project(this.client);
         this.subscriptions = new Subscription(this.client);
+        this.portalLinks = new PortalLink(this.client);
         this.sources = new Source(this.client);
         this.events = new Event(this.client);
         this.eventDeliveries = new EventDelivery(this.client);

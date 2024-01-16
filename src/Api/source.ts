@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { CreateSource } from '../interfaces/source';
+import { CreateSource, UpdateSource } from '../interfaces/source';
 import { ResponseHelper } from '../utils/helpers/response-helper';
 
 export class Source {
@@ -30,6 +30,15 @@ export class Source {
     async find(id: string, query?: any) {
         try {
             const { data } = await this.client.httpGet(`/sources/${id}`, query);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
+
+    async update(id: string, attributes: UpdateSource, query?: any) {
+        try {
+            const { data } = await this.client.httpPut(`/sources/${id}`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
