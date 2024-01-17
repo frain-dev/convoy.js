@@ -29,3 +29,5 @@ export interface CreateSource {
         type: string;
     };
 }
+
+export interface UpdateSource extends CreateSource {}

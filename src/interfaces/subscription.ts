@@ -18,3 +18,5 @@ export interface CreateSubscription {
         event_types: any[];
     };
 }
+
+export interface UpdateSubscription extends CreateSubscription {}
