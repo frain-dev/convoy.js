@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { CreateSource, UpdateSource } from '../interfaces/source';
+import { CreateSource, QuerySources, UpdateSource } from '../interfaces/source';
 import { ResponseHelper } from '../utils/helpers/response-helper';
 
 export class Source {
@@ -9,7 +9,7 @@ export class Source {
         this.client = client;
     }
 
-    async all(query?: any) {
+    async all(query?: QuerySources) {
         try {
             const { data } = await this.client.httpGet(`/sources`, query);
             return data;
@@ -18,36 +18,36 @@ export class Source {
         }
     }
 
-    async create(attributes: CreateSource, query?: any) {
+    async create(attributes: CreateSource) {
         try {
-            const { data } = await this.client.httpPost(`/sources`, attributes, query);
+            const { data } = await this.client.httpPost(`/sources`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async find(id: string, query?: any) {
+    async find(id: string) {
         try {
-            const { data } = await this.client.httpGet(`/sources/${id}`, query);
+            const { data } = await this.client.httpGet(`/sources/${id}`);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async update(id: string, attributes: UpdateSource, query?: any) {
+    async update(id: string, attributes: UpdateSource) {
         try {
-            const { data } = await this.client.httpPut(`/sources/${id}`, attributes, query);
+            const { data } = await this.client.httpPut(`/sources/${id}`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async delete(id: string, attributes?: any, query?: any) {
+    async delete(id: string) {
         try {
-            const { data } = await this.client.httpDelete(`/sources/${id}`, attributes, query);
+            const { data } = await this.client.httpDelete(`/sources/${id}`);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);

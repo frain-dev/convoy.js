@@ -18,18 +18,18 @@ export class Project {
         }
     }
 
-    async update(attributes: UpdateProject, query?: any) {
+    async update(attributes: UpdateProject) {
         try {
-            const { data } = await this.client.httpPut(`/`, attributes, query);
+            const { data } = await this.client.httpPut(`/`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async delete(attributes?: any, query?: any) {
+    async delete(attributes?: any) {
         try {
-            const { data } = await this.client.httpDelete(`/`, attributes, query);
+            const { data } = await this.client.httpDelete(`/`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);

@@ -1,3 +1,5 @@
+import { Pageable } from '../Api/common';
+
 export interface CreateSource {
     created_at: Date;
     deleted_at: number;
@@ -31,3 +33,8 @@ export interface CreateSource {
 }
 
 export interface UpdateSource extends CreateSource {}
+
+export interface QuerySources extends Pageable {
+    type?: string;
+    provider?: string;
+}

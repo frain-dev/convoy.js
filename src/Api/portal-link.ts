@@ -1,6 +1,6 @@
 import { Client } from '../client';
 import { ResponseHelper } from '../utils/helpers/response-helper';
-import { CreatePortalLink, UpdatePortalLink } from '../interfaces/portal-links';
+import { CreatePortalLink, QueryPortalLinks, UpdatePortalLink } from '../interfaces/portal-links';
 
 export class PortalLink {
     private client: Client;
@@ -9,9 +9,9 @@ export class PortalLink {
         this.client = client;
     }
 
-    async create(attributes: CreatePortalLink, query?: any) {
+    async create(attributes: CreatePortalLink) {
         try {
-            const { data } = await this.client.httpPost(`/portal-links`, attributes, query);
+            const { data } = await this.client.httpPost(`/portal-links`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
@@ -27,7 +27,7 @@ export class PortalLink {
         }
     }
 
-    async all(query?: any) {
+    async all(query?: QueryPortalLinks) {
         try {
             const { data } = await this.client.httpGet(`/portal-links`, query);
             return data;
@@ -36,9 +36,9 @@ export class PortalLink {
         }
     }
 
-    async update(id: string, attributes: UpdatePortalLink, query?: any) {
+    async update(id: string, attributes: UpdatePortalLink) {
         try {
-            const { data } = await this.client.httpPut(`/portal-links/${id}`, attributes, query);
+            const { data } = await this.client.httpPut(`/portal-links/${id}`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);

@@ -1,3 +1,5 @@
+import { Pageable } from '../Api/common';
+
 export interface CreateSubscription {
     name: string;
     type: 'cli' | 'api';
@@ -20,3 +22,7 @@ export interface CreateSubscription {
 }
 
 export interface UpdateSubscription extends CreateSubscription {}
+
+export interface QuerySubscriptions extends Pageable {
+    endpointId?: string[];
+}

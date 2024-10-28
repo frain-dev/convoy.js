@@ -1,3 +1,5 @@
+import { Pageable } from '../Api/common';
+
 export interface CreatePortalLink {
     name: string;
     endpoints: string[];
@@ -6,3 +8,7 @@ export interface CreatePortalLink {
 }
 
 export interface UpdatePortalLink extends CreatePortalLink {}
+
+export interface QueryPortalLinks extends Pageable {
+    endpointId?: string[];
+}
