@@ -37,7 +37,7 @@ export class Client {
     }
 
     getBaseUrl(uri: string): string {
-        return uri ? uri : this.baseUri;
+        return uri ? uri.replace(/\/+$/, "") : this.baseUri;
     }
 
     public async httpGet(path: string, query?: any) {
