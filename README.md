@@ -1,6 +1,6 @@
 # Convoy SDK for JS
 
-This is the Convoy JS SDK. This SDK contains methods for easily interacting with Convoy's API. Below are examples to get you started. For additional examples, please see our official documentation at (https://convoy.readme.io/reference)
+This is the Convoy JS SDK. This SDK contains methods for easily interacting with Convoy's API. Below are examples to get you started. You can view the full API Reference [here](https://getconvoy.io/docs/api-reference/welcome)
 
 
 ## Installation
