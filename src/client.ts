@@ -65,7 +65,18 @@ export class Client {
     }
 
     private buildQueryParams(query: any) {
-        return new URLSearchParams(query).toString();
+        const params = new URLSearchParams();
+        for (const k of Object.keys(query)) {
+            if (Array.isArray(query[k])) {
+                for (let i = 0; i < query[k].length; i++) {
+                    params.append(k, query[k][i]);
+                }
+            } else {
+                params.append(k, query[k]);
+            }
+        }
+
+        return params.toString();
     }
 
     private hasQueryParameters(query: any): boolean {

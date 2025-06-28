@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { CreateSubscription, UpdateSubscription } from '../interfaces/subscription';
+import { CreateSubscription, QuerySubscriptions, UpdateSubscription } from '../interfaces/subscription';
 import { ResponseHelper } from '../utils/helpers/response-helper';
 
 export class Subscription {
@@ -9,7 +9,7 @@ export class Subscription {
         this.client = client;
     }
 
-    async all(query?: any) {
+    async all(query?: QuerySubscriptions) {
         try {
             const { data } = await this.client.httpGet(`/subscriptions`, query);
             return data;
@@ -18,9 +18,9 @@ export class Subscription {
         }
     }
 
-    async create(attributes: CreateSubscription, query?: any) {
+    async create(attributes: CreateSubscription) {
         try {
-            const { data } = await this.client.httpPost(`/subscriptions`, attributes, query);
+            const { data } = await this.client.httpPost(`/subscriptions`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
@@ -36,18 +36,18 @@ export class Subscription {
         }
     }
 
-    async update(id: string, attributes: UpdateSubscription, query?: any) {
+    async update(id: string, attributes: UpdateSubscription) {
         try {
-            const { data } = await this.client.httpPut(`/subscriptions/${id}`, attributes, query);
+            const { data } = await this.client.httpPut(`/subscriptions/${id}`, attributes);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
         }
     }
 
-    async delete(id: string, attributes?: any, query?: any) {
+    async delete(id: string) {
         try {
-            const { data } = await this.client.httpDelete(`/subscriptions/${id}`, attributes, query);
+            const { data } = await this.client.httpDelete(`/subscriptions/${id}`);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
