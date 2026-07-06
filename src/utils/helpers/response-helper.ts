@@ -26,8 +26,14 @@ export class ResponseHelper {
             default:
                 // No HTTP response means a transport failure (DNS, refused
                 // connection, timeout); rethrow it instead of mislabelling
-                // it as an internal server error.
+                // it as an internal server error. Strip the axios request
+                // config and raw request first: they carry the Authorization
+                // header, which must not leak into downstream exception logs.
                 if (!error?.response) {
+                    if (error && typeof error === 'object') {
+                        delete error.config;
+                        delete error.request;
+                    }
                     throw error;
                 }
                 throw new ServerException(error?.response?.data?.message, statusCode);

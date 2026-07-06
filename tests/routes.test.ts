@@ -77,4 +77,21 @@ describe('Route contracts', function () {
         await expect(convoy.events.create(undefined as any)).rejects.toThrow('Endpoint ID is empty');
         expect(requestMock.post).not.toHaveBeenCalled();
     });
+
+    test('transport errors are rethrown without the axios config carrying credentials', async () => {
+        const transportError: any = new Error('connect ECONNREFUSED 127.0.0.1:80');
+        transportError.code = 'ECONNREFUSED';
+        transportError.config = { headers: { Authorization: 'Bearer test-api-key' } };
+        transportError.request = {};
+        requestMock.get.mockRejectedValueOnce(transportError);
+
+        try {
+            await convoy.endpoints.all({});
+            throw new Error('expected rejection');
+        } catch (error: any) {
+            expect(error.message).toContain('ECONNREFUSED');
+            expect(error.config).toBeUndefined();
+            expect(error.request).toBeUndefined();
+        }
+    });
 });
