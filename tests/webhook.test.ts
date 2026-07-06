@@ -150,4 +150,21 @@ describe('Webhook Verification', function () {
             webhook.verify();
         }).toThrow('invalid header');
     });
+
+    test('numeric-looking signature is not mistaken for the timestamp', () => {
+        // Regression: a v1 value made only of digits must stay a
+        // signature; classification is by key, not by value shape.
+        const crypto = require('crypto');
+        const payload = '{"m":1}';
+        const t = Math.floor(Date.now() / 1000);
+        const valid = crypto.createHmac('sha256', 'r2-secret').update(`${t},${payload}`, 'utf8').digest('hex');
+
+        const webhook = new Webhook({
+            header: `t=${t},v1=${'0'.repeat(64)},v1=${valid}`,
+            payload,
+            secret: 'r2-secret',
+        });
+
+        expect(webhook.verify()).toBe(true);
+    });
 });

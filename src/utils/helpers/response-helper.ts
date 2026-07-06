@@ -24,6 +24,12 @@ export class ResponseHelper {
             case status.TOO_MANY_REQUESTS:
                 throw new TooManyRequestException(error?.response?.data?.message, statusCode);
             default:
+                // No HTTP response means a transport failure (DNS, refused
+                // connection, timeout); rethrow it instead of mislabelling
+                // it as an internal server error.
+                if (!error?.response) {
+                    throw error;
+                }
                 throw new ServerException(error?.response?.data?.message, statusCode);
         }
     }

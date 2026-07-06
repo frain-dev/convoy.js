@@ -11,27 +11,28 @@ npm install convoy.js
 ```
 
 ## Setup Client
-Next, require the `convoy` module and setup with your auth credentials.
+Next, require the `convoy` module and set it up with your instance URL, API key, and project ID. Both the API key and project ID are available from your **Project Settings** page.
+
+Your instance URL depends on where your project lives:
+
+- Convoy Cloud (US): `https://us.getconvoy.cloud/api/v1`
+- Convoy Cloud (EU): `https://eu.getconvoy.cloud/api/v1`
+- Self-hosted: `https://your-instance/api/v1`
 
 ```js
 
-// HTTP Client which connects to Convoy Cloud
+// HTTP Client
 const { Convoy } = require('convoy.js');
-const convoy = new Convoy({ api_key: 'your_api_key', project_id: 'your_project_id' })
-
-
-// HTTP Client which connects to a self hosted Convoy instance
-const { Convoy } = require('convoy.js');
-const convoy = new Convoy({ uri: "http://your-host/api/v1", api_key: 'your_api_key', project_id: 'your_project_id' })
+const convoy = new Convoy({ uri: 'https://us.getconvoy.cloud/api/v1', api_key: 'your_api_key', project_id: 'your_project_id' })
 
 // Amazon SQS Client
 const { Convoy } = require('convoy.js');
-const convoy = new Convoy({ api_key: 'your_api_key', project_id: 'your_project_id', sqsOptions: {} })
+const convoy = new Convoy({ uri: 'https://us.getconvoy.cloud/api/v1', api_key: 'your_api_key', project_id: 'your_project_id', sqs_options: {} })
 
 
 // Apache Kafka Client
 const { Convoy } = require('convoy.js');
-const convoy = new Convoy({ api_key: 'your_api_key', project_id: 'your_project_id', kafkaOptions: {} })
+const convoy = new Convoy({ uri: 'https://us.getconvoy.cloud/api/v1', api_key: 'your_api_key', project_id: 'your_project_id', kafka_options: {} })
 ```
 
 ### Create an Endpoint
@@ -80,7 +81,7 @@ const eventData = {
 const response = await convoy.events.create(eventData);
 
 // Fanout an event to multiple endpoints.
-const eventData = {
+const fanoutData = {
   owner_id: "some_unique_key",
   event_type: "payment.success",
   data: {
@@ -93,7 +94,18 @@ const eventData = {
   }
 };
 
-const response = await convoy.events.createFanOutEvent(eventData);
+const fanoutResponse = await convoy.events.createFanOutEvent(fanoutData);
+
+// Broadcast an event to every endpoint in the project.
+const broadcastData = {
+  event_type: "payment.success",
+  data: {
+    status: "Completed",
+    description: "Transaction Successful",
+  }
+};
+
+const broadcastResponse = await convoy.events.createBroadcastEvent(broadcastData);
 ```
 
 **Note:** The body struct used above is the same used for the message brokers below.

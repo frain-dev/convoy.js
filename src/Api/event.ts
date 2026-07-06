@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { CreateEvent, CreateFanOutEvent } from '../interfaces/event';
+import { CreateBroadcastEvent, CreateEvent, CreateFanOutEvent } from '../interfaces/event';
 import { ResponseHelper } from '../utils/helpers/response-helper';
 import { ConfigException } from '../utils/errors';
 
@@ -21,7 +21,7 @@ export class Event {
 
     async create(attributes: CreateEvent, query?: any) {
         try {
-            if (attributes.endpoint_id.length === 0) {
+            if (!attributes?.endpoint_id) {
                 throw new ConfigException('Endpoint ID is empty');
             }
 
@@ -35,6 +35,24 @@ export class Event {
     async createFanOutEvent(attributes: CreateFanOutEvent, query?: any) {
         try {
             const { data } = await this.client.httpPost(`/events/fanout`, attributes, query);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
+
+    async createBroadcastEvent(attributes: CreateBroadcastEvent, query?: any) {
+        try {
+            const { data } = await this.client.httpPost(`/events/broadcast`, attributes, query);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
+
+    async replay(id: string, query?: any) {
+        try {
+            const { data } = await this.client.httpPut(`/events/${id}/replay`, undefined, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);
