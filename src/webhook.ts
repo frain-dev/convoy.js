@@ -106,7 +106,9 @@ export class Webhook {
             }
         });
 
-        if (!sh.timestamp || isNaN(sh.timestamp) || sh.timestamp === -1) {
+        // isFinite also rejects Infinity, which would otherwise make
+        // timestampAge -Infinity and bypass the expiry check.
+        if (!sh.timestamp || !Number.isFinite(sh.timestamp) || sh.timestamp === -1) {
             throw new WebhookVerificationException('Webhook has invalid header');
         }
 

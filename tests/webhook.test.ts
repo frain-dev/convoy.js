@@ -151,6 +151,18 @@ describe('Webhook Verification', function () {
         }).toThrow('invalid header');
     });
 
+    test('non-finite timestamp is rejected instead of bypassing expiry', () => {
+        const webhook = new Webhook({
+            header: 't=Infinity,v1=deadbeef',
+            payload: '{"m":1}',
+            secret: 'r2-secret',
+        });
+
+        expect(() => {
+            webhook.verify();
+        }).toThrow('invalid header');
+    });
+
     test('numeric-looking signature is not mistaken for the timestamp', () => {
         // Regression: a v1 value made only of digits must stay a
         // signature; classification is by key, not by value shape.

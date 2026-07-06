@@ -21,7 +21,7 @@ export class Event {
 
     async create(attributes: CreateEvent, query?: any) {
         try {
-            if (!attributes?.endpoint_id) {
+            if (typeof attributes?.endpoint_id !== 'string' || attributes.endpoint_id.length === 0) {
                 throw new ConfigException('Endpoint ID is empty');
             }
 

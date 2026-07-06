@@ -75,6 +75,8 @@ describe('Route contracts', function () {
     test('event create rejects missing endpoint_id with a clear error', async () => {
         await expect(convoy.events.create({} as any)).rejects.toThrow('Endpoint ID is empty');
         await expect(convoy.events.create(undefined as any)).rejects.toThrow('Endpoint ID is empty');
+        await expect(convoy.events.create({ endpoint_id: [] } as any)).rejects.toThrow('Endpoint ID is empty');
+        await expect(convoy.events.create({ endpoint_id: '' } as any)).rejects.toThrow('Endpoint ID is empty');
         expect(requestMock.post).not.toHaveBeenCalled();
     });
 
