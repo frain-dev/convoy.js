@@ -36,9 +36,21 @@ export class EventDelivery {
         }
     }
 
-    async batchResend(attributes: BatchResend, query?: any) {
+    // Batch retries deliveries matching the query filters; the server reads
+    // filters from query params only (e.g. { endpointId, eventId, status }).
+    async batchResend(query?: any) {
         try {
-            const { data } = await this.client.httpPut(`/eventdeliveries/batchretry`, attributes, query);
+            const { data } = await this.client.httpPost(`/eventdeliveries/batchretry`, {}, query);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
+
+    // Force resends previously successful deliveries by ID.
+    async forceResend(attributes: BatchResend, query?: any) {
+        try {
+            const { data } = await this.client.httpPost(`/eventdeliveries/forceresend`, attributes, query);
             return data;
         } catch (error) {
             ResponseHelper.handleErrors(error);

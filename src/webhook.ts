@@ -92,17 +92,23 @@ export class Webhook {
     }
 
     private decodeAdvanced(sh: SignedHeader, pairs: string[]): SignedHeader {
-        pairs.map((sig: string) => {
-            const item = sig.split('=').slice(1).join('=');
-            if (isNaN(Number(item))) {
-                // We're not dealing with a timestamp at this point
-                sh.signatures.push(item);
+        pairs.map((pair: string) => {
+            const [key, ...rest] = pair.split('=');
+            const value = rest.join('=');
+            // Classify by key, not by value shape: a purely numeric
+            // signature must not be mistaken for the timestamp.
+            if (key.trim() === 't') {
+                // Number() is strict: partial-numeric values like
+                // "2202-1-1" become NaN instead of a bogus timestamp.
+                sh.timestamp = Number(value);
             } else {
-                sh.timestamp = parseInt(item, 10);
+                sh.signatures.push(value);
             }
         });
 
-        if (!sh.timestamp || sh.timestamp === -1) {
+        // isFinite also rejects Infinity, which would otherwise make
+        // timestampAge -Infinity and bypass the expiry check.
+        if (!sh.timestamp || !Number.isFinite(sh.timestamp) || sh.timestamp === -1) {
             throw new WebhookVerificationException('Webhook has invalid header');
         }
 

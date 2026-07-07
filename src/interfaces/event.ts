@@ -14,6 +14,13 @@ export interface CreateFanOutEvent {
     data: object;
 }
 
+export interface CreateBroadcastEvent {
+    idempotency_key?: string;
+    custom_headers?: object;
+    event_type: string;
+    data: object;
+}
+
 export interface CreateDynamicEvent {
     subscription: string;
     endpoint: string;

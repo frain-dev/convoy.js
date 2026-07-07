@@ -54,6 +54,15 @@ export class Endpoint {
         }
     }
 
+    async pause(endpointId: string) {
+        try {
+            const { data } = await this.client.httpPut(`/endpoints/${endpointId}/pause`);
+            return data;
+        } catch (error) {
+            ResponseHelper.handleErrors(error);
+        }
+    }
+
     async expireSecret(endpointId: string, attributes: ExpireSecret) {
         try {
             const { data } = await this.client.httpPut(`/endpoints/${endpointId}/expire_secret`, attributes);

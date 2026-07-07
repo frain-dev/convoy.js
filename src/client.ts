@@ -6,7 +6,6 @@ const axios = require('axios').default;
 
 export class Client {
     private request;
-    public baseUri = 'https://dashboard.getconvoy.io/api/v1';
     public sqs?: SqsOptions;
     public kafka?: KafkaOptions;
 
@@ -19,11 +18,24 @@ export class Client {
             throw new ConfigException('Project ID is required');
         }
 
+        if (!options.uri) {
+            throw new ConfigException('URI is required, e.g. https://us.getconvoy.cloud/api/v1');
+        }
+
+        if (options.uri.includes('/projects/') || options.uri.replace(/\/+$/, '').endsWith('/projects')) {
+            throw new ConfigException(
+                'URI must be the instance API base without a project path; pass project_id separately',
+            );
+        }
+
         this.request = axios.create({
-            baseURL: `${this.getBaseUrl(options.uri as string)}/projects/${options.project_id}`,
+            baseURL: `${this.getBaseUrl(options.uri)}/projects/${options.project_id}`,
             headers: {
                 Authorization: `Bearer ${options.api_key}`,
                 'Content-Type': 'application/json',
+                // Pin the API version this SDK release was built against; the
+                // server's request migrations translate for older instances.
+                'X-Convoy-Version': '2025-11-24',
             },
         });
 
@@ -37,7 +49,7 @@ export class Client {
     }
 
     getBaseUrl(uri: string): string {
-        return uri ? uri : this.baseUri;
+        return uri.replace(/\/+$/, '');
     }
 
     public async httpGet(path: string, query?: any) {
