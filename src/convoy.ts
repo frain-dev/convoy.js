@@ -1,3 +1,4 @@
+/** Speakeasy migration: hand-written HTTP API is deprecated; next major replaces this with OpenAPI-generated clients. Webhook verify stays hand-written. */
 import { IConfig } from './interfaces';
 import { Client } from './client';
 import { Project } from './Api/project';
