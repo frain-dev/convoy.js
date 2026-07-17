@@ -1,14 +1,15 @@
 {
     "name": "convoy.js",
-    "version": "1.2.0",
-    "description": "Convoy JS SDK Library",
+    "version": "2.0.0-alpha.0",
+    "description": "Convoy JS SDK (Speakeasy-generated API client; hand-written webhook verify)",
     "main": "dist/convoy.js",
     "scripts": {
         "test": "jest --config jestconfig.json",
         "prepare": "npm run build",
         "build": "tsc",
         "format": "prettier --write \"src/**/*.ts\"",
-        "lint": "tslint -p tsconfig.json"
+        "lint": "tslint -p tsconfig.json",
+        "test:verify": "jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'"
     },
     "repository": {
         "type": "git",
