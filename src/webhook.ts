@@ -97,7 +97,7 @@ export class Webhook {
             const value = rest.join('=');
             // Classify by key, not by value shape: a purely numeric
             // signature must not be mistaken for the timestamp.
-            if (key.trim() === 't') {
+            if ((key ?? '').trim() === 't') {
                 // Number() is strict: partial-numeric values like
                 // "2202-1-1" become NaN instead of a bogus timestamp.
                 sh.timestamp = Number(value);
