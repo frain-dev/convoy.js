@@ -5,14 +5,14 @@ management:
   docVersion: 26.3.5
   speakeasyVersion: 1.790.2
   generationVersion: 2.918.3
-  releaseVersion: 2.0.1
-  configChecksum: 36ac1101c879626c82bcc25ec96bdca1
+  releaseVersion: 2.0.2
+  configChecksum: b07447c4a0b85fc0bc898b568f4fe9d5
   repoURL: https://github.com/frain-dev/convoy.js.git
   installationURL: https://github.com/frain-dev/convoy.js
 persistentEdits:
-  generation_id: d9b00a69-5eb4-48d8-bae9-3b5e07560eca
-  pristine_commit_hash: 1c94532b6df178c27c9e24147119644cc7fed3bf
-  pristine_tree_hash: 873d9e4c522fc19238e547ad86651d001f41aefb
+  generation_id: 2da38dc1-f8d9-4362-a98f-c86ba1679090
+  pristine_commit_hash: abaf24a3871c9adc2bec8c4c64b52082b8811822
+  pristine_tree_hash: 03a3a5fed42a09a8924e0ba24e281aff680e5a88
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -2162,12 +2162,12 @@ trackedFiles:
     pristine_git_object: 8aebcee364c87e6c642247a8df7ee51a86f46fbc
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:2669c7f9b4993c994b929c75b07b1b82e54a5b88
-    pristine_git_object: 1b2e88a921a63df14ab9faaccac882a701a908fb
+    last_write_checksum: sha1:ed8f0baa3c943cceb30f9fd7ee747189cc5c330b
+    pristine_git_object: 4c464e6435429c3a08aab439cfc2738256d31076
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:278bd26c00d6d15de0845a4b6f430cca343d90dd
-    pristine_git_object: 35f0da2b1d14e844f297c06e2d5c76165d8b9503
+    last_write_checksum: sha1:e717d051b68b81b21517df6c1ec9c9d1fa6b28e0
+    pristine_git_object: 90bf17fa7502be97e43b0cdafc22d9e4b7b8f4c4
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:cd83f57bf86f572739a193e44e313c43ca8e5b53
@@ -2462,8 +2462,8 @@ trackedFiles:
     pristine_git_object: 0b2543a00780f8844dcd1fbdcbc51a91262d91bc
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:b570c27642e1b477144a8bed51e758a4e03ff5af
-    pristine_git_object: d3599805979b43084e777f412af68ae531bec6ae
+    last_write_checksum: sha1:7e6b5367355688ad020119f49d97477b19f96625
+    pristine_git_object: e5681edf5ab3c3d76585b444a3bf29d93a73249d
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:e49f64fdecc307c8d2868f6f31b3dc7d36349c8b
@@ -4870,4 +4870,3 @@ examples:
         "404":
           application/json: {}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `convoy.projects.getProjects()`:  `response.data[].config.metaEvent.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.projects.createProject()`:  `response.data.project.config.metaEvent.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.projects.getProject()`:  `response.data.config.metaEvent.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.projects.updateProject()`:  `response.data.config.metaEvent.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.getEventTypes()`:  `response.data[].jsonSchema` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.createEventType()`:  `response.data.jsonSchema` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.importOpenApiSpec()`:  `response.data[].jsonSchema` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.updateEventType()`:  `response.data.jsonSchema` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.deprecateEventType()`:  `response.data.jsonSchema` **Changed** (Breaking ⚠️)\n* `convoy.eventDeliveries.getEventDeliveriesPaged()`:  `response.data.content[]` **Changed** (Breaking ⚠️)\n* `convoy.eventDeliveries.getEventDelivery()`:  `response.data` **Changed** (Breaking ⚠️)\n* `convoy.eventDeliveries.resendEventDelivery()`:  `response.data` **Changed** (Breaking ⚠️)\n* `convoy.events.getEventsPaged()`:  `response.data.content[]` **Changed** (Breaking ⚠️)\n* `convoy.events.createEndpointEvent()`: \n  *  `request.body.data` **Changed** (Breaking ⚠️)\n* `convoy.events.createBroadcastEvent()`: \n  *  `request.body.data` **Changed** (Breaking ⚠️)\n  *  `response.data` **Changed** (Breaking ⚠️)\n* `convoy.events.createDynamicEvent()`: \n  *  `request.body.data` **Changed** (Breaking ⚠️)\n  *  `response` **Changed**\n* `convoy.events.createEndpointFanoutEvent()`: \n  *  `request.body.data` **Changed** (Breaking ⚠️)\n* `convoy.events.getEndpointEvent()`:  `response.data` **Changed** (Breaking ⚠️)\n* `convoy.events.replayEndpointEvent()`:  `response.data` **Changed** (Breaking ⚠️)\n* `convoy.metaEvents.getMetaEventsPaged()`:  `response.data.content[].metadata.data` **Changed** (Breaking ⚠️)\n* `convoy.metaEvents.getMetaEvent()`:  `response.data.metadata.data` **Changed** (Breaking ⚠️)\n* `convoy.metaEvents.resendMetaEvent()`:  `response.data.metadata.data` **Changed** (Breaking ⚠️)\n* `convoy.sources.loadSourcesPaged()`:  `response.data.content[].pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.sources.createSource()`: \n  *  `request.body.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n  *  `response.data.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.sources.getSource()`:  `response.data.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.sources.updateSource()`: \n  *  `request.body.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n  *  `response.data.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.getSubscriptions()`:  `response.data.content[].sourceMetadata.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.createSubscription()`:  `response.data.sourceMetadata.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.getSubscription()`:  `response.data.sourceMetadata.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.updateSubscription()`:  `response.data.sourceMetadata.pubSub.google.serviceAccount` **Changed** (Breaking ⚠️)\n"
