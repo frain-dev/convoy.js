@@ -346,6 +346,14 @@ export class ClientSDK {
 const jsonLikeContentTypeRE = /^(application|text)\/([^+]+\+)*json.*/;
 const jsonlLikeContentTypeRE =
   /^(application|text)\/([^+]+\+)*(jsonl|x-ndjson)\b.*/;
+
+// Persistent edit: never emit credential-bearing header values through the
+// opt-in debug logger. The real headers still go on the wire untouched.
+const sensitiveHeaderRE = /^(authorization|proxy-authorization|cookie|set-cookie|x-api-key)$/i;
+function redactHeaderValue(key: string, value: string): string {
+  return sensitiveHeaderRE.test(key) ? "<redacted>" : value;
+}
+
 async function logRequest(logger: Logger | undefined, req: Request) {
   if (!logger) {
     return;
@@ -358,7 +366,7 @@ async function logRequest(logger: Logger | undefined, req: Request) {
 
   logger.group("Headers:");
   for (const [k, v] of req.headers.entries()) {
-    logger.log(`${k}: ${v}`);
+    logger.log(`${k}: ${redactHeaderValue(k, v)}`);
   }
   logger.groupEnd();
 
@@ -404,7 +412,7 @@ async function logResponse(
 
   logger.group("Headers:");
   for (const [k, v] of res.headers.entries()) {
-    logger.log(`${k}: ${v}`);
+    logger.log(`${k}: ${redactHeaderValue(k, v)}`);
   }
   logger.groupEnd();
 
