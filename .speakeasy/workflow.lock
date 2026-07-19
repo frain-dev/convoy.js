@@ -1,0 +1,29 @@
+speakeasyVersion: 1.790.2
+sources:
+    convoy:
+        sourceNamespace: convoy
+        sourceRevisionDigest: sha256:dc5bfdc1480d2b13ba5230fe703b357593d628ff6adf3dba06a9b3fab99104f6
+        sourceBlobDigest: sha256:befa5118e18fccaec51e52104edcbb2ef7793469ec7eb88ec10dc59d3ea9fac4
+        tags:
+            - latest
+            - 26.3.5
+targets:
+    typescript:
+        source: convoy
+        sourceNamespace: convoy
+        sourceRevisionDigest: sha256:dc5bfdc1480d2b13ba5230fe703b357593d628ff6adf3dba06a9b3fab99104f6
+        sourceBlobDigest: sha256:befa5118e18fccaec51e52104edcbb2ef7793469ec7eb88ec10dc59d3ea9fac4
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: 1.790.2
+    sources:
+        convoy:
+            inputs:
+                - location: https://raw.githubusercontent.com/frain-dev/convoy/main/docs/v3/openapi3.yaml
+            registry:
+                location: registry.speakeasyapi.dev/smarts-org/convoy/convoy
+    targets:
+        typescript:
+            target: typescript
+            source: convoy
+            output: .

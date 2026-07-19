@@ -1,12 +1,13 @@
 workflowVersion: 1.0.0
-# Pin the CLI so generation runs a reviewed, immutable release.
 speakeasyVersion: 1.790.2
 sources:
-  convoy:
-    inputs:
-      - location: https://raw.githubusercontent.com/frain-dev/convoy/main/docs/v3/openapi3.yaml
+    convoy:
+        inputs:
+            - location: https://raw.githubusercontent.com/frain-dev/convoy/main/docs/v3/openapi3.yaml
+        registry:
+            location: registry.speakeasyapi.dev/smarts-org/convoy/convoy
 targets:
-  typescript:
-    target: typescript
-    source: convoy
-    output: .
+    typescript:
+        target: typescript
+        source: convoy
+        output: .
