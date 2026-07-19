@@ -4,6 +4,10 @@
  */
 
 import * as z from "zod/v4-mini";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import * as types from "../../types/primitives.js";
+import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type CreateDynamicEventRequest = {
@@ -15,6 +19,15 @@ export type CreateDynamicEventRequest = {
    * Event Details
    */
   body: models.ModelsDynamicEvent;
+};
+
+/**
+ * Created
+ */
+export type CreateDynamicEventResponse = {
+  message?: string | undefined;
+  status?: boolean | undefined;
+  data?: models.HandlersStub | undefined;
 };
 
 /** @internal */
@@ -37,5 +50,25 @@ export function createDynamicEventRequestToJSON(
 ): string {
   return JSON.stringify(
     CreateDynamicEventRequest$outboundSchema.parse(createDynamicEventRequest),
+  );
+}
+
+/** @internal */
+export const CreateDynamicEventResponse$inboundSchema: z.ZodMiniType<
+  CreateDynamicEventResponse,
+  unknown
+> = z.object({
+  message: types.optional(types.string()),
+  status: types.optional(types.boolean()),
+  data: types.optional(models.HandlersStub$inboundSchema),
+});
+
+export function createDynamicEventResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateDynamicEventResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateDynamicEventResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateDynamicEventResponse' from JSON`,
   );
 }

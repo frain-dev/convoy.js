@@ -14,11 +14,16 @@ import {
 } from "./datastore-strategy-provider.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * Data to be sent to endpoint.
+ */
+export type DatastoreMetadataData = {};
+
 export type DatastoreMetadata = {
   /**
    * Data to be sent to endpoint.
    */
-  data?: Array<number> | undefined;
+  data?: DatastoreMetadataData | undefined;
   intervalSeconds?: number | undefined;
   maxRetrySeconds?: number | undefined;
   nextSendTime?: string | undefined;
@@ -35,12 +40,28 @@ export type DatastoreMetadata = {
 };
 
 /** @internal */
+export const DatastoreMetadataData$inboundSchema: z.ZodMiniType<
+  DatastoreMetadataData,
+  unknown
+> = z.object({});
+
+export function datastoreMetadataDataFromJSON(
+  jsonString: string,
+): SafeParseResult<DatastoreMetadataData, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DatastoreMetadataData$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DatastoreMetadataData' from JSON`,
+  );
+}
+
+/** @internal */
 export const DatastoreMetadata$inboundSchema: z.ZodMiniType<
   DatastoreMetadata,
   unknown
 > = z.pipe(
   z.object({
-    data: types.optional(z.array(types.number())),
+    data: types.optional(z.lazy(() => DatastoreMetadataData$inboundSchema)),
     interval_seconds: types.optional(types.number()),
     max_retry_seconds: types.optional(types.number()),
     next_send_time: types.optional(types.string()),

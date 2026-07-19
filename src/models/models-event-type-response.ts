@@ -10,14 +10,30 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+export type JsonSchema = {};
+
 export type ModelsEventTypeResponse = {
   category?: string | undefined;
   deprecatedAt?: string | undefined;
   description?: string | undefined;
-  jsonSchema?: Array<number> | undefined;
+  jsonSchema?: JsonSchema | undefined;
   name?: string | undefined;
   uid?: string | undefined;
 };
+
+/** @internal */
+export const JsonSchema$inboundSchema: z.ZodMiniType<JsonSchema, unknown> = z
+  .object({});
+
+export function jsonSchemaFromJSON(
+  jsonString: string,
+): SafeParseResult<JsonSchema, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => JsonSchema$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'JsonSchema' from JSON`,
+  );
+}
 
 /** @internal */
 export const ModelsEventTypeResponse$inboundSchema: z.ZodMiniType<
@@ -28,7 +44,7 @@ export const ModelsEventTypeResponse$inboundSchema: z.ZodMiniType<
     category: types.optional(types.string()),
     deprecated_at: types.optional(types.string()),
     description: types.optional(types.string()),
-    json_schema: types.optional(z.array(types.number())),
+    json_schema: types.optional(z.lazy(() => JsonSchema$inboundSchema)),
     name: types.optional(types.string()),
     uid: types.optional(types.string()),
   }),

@@ -22,6 +22,14 @@ import {
 } from "./datastore-source.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * Data is an arbitrary JSON value that gets sent as the body of the
+ *
+ * @remarks
+ * webhook to the endpoints
+ */
+export type ModelsEventResponseData = {};
+
 export type ModelsEventResponse = {
   acknowledgedAt?: string | undefined;
   /**
@@ -35,7 +43,7 @@ export type ModelsEventResponse = {
    * @remarks
    * webhook to the endpoints
    */
-  data?: Array<number> | undefined;
+  data?: ModelsEventResponseData | undefined;
   deletedAt?: string | undefined;
   endpointMetadata?: Array<DatastoreEndpoint> | undefined;
   endpoints?: Array<string> | undefined;
@@ -56,6 +64,22 @@ export type ModelsEventResponse = {
 };
 
 /** @internal */
+export const ModelsEventResponseData$inboundSchema: z.ZodMiniType<
+  ModelsEventResponseData,
+  unknown
+> = z.object({});
+
+export function modelsEventResponseDataFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventResponseData, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsEventResponseData$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventResponseData' from JSON`,
+  );
+}
+
+/** @internal */
 export const ModelsEventResponse$inboundSchema: z.ZodMiniType<
   ModelsEventResponse,
   unknown
@@ -64,7 +88,7 @@ export const ModelsEventResponse$inboundSchema: z.ZodMiniType<
     acknowledged_at: types.optional(types.string()),
     app_id: types.optional(types.string()),
     created_at: types.optional(types.string()),
-    data: types.optional(z.array(types.number())),
+    data: types.optional(z.lazy(() => ModelsEventResponseData$inboundSchema)),
     deleted_at: types.optional(types.string()),
     endpoint_metadata: types.optional(z.array(DatastoreEndpoint$inboundSchema)),
     endpoints: types.optional(z.array(types.string())),
