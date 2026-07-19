@@ -12,7 +12,10 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type DatastoreGooglePubSubConfig = {
   projectId?: string | undefined;
-  serviceAccount?: Array<number> | undefined;
+  /**
+   * encoding/json marshals []byte as a base64 string on the wire.
+   */
+  serviceAccount?: string | undefined;
   subscriptionId?: string | undefined;
 };
 
@@ -23,7 +26,7 @@ export const DatastoreGooglePubSubConfig$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     project_id: types.optional(types.string()),
-    service_account: types.optional(z.array(types.number())),
+    service_account: types.optional(types.string()),
     subscription_id: types.optional(types.string()),
   }),
   z.transform((v) => {

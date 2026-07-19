@@ -117,7 +117,7 @@ export class Events extends ClientSDK {
     projectID: string,
     body: models.ModelsDynamicEvent,
     options?: RequestOptions,
-  ): Promise<models.HandlersStub> {
+  ): Promise<operations.CreateDynamicEventResponse> {
     return unwrapAsync(eventsCreateDynamicEvent(
       this,
       projectID,

@@ -42,7 +42,7 @@ export function eventsCreateDynamicEvent(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    models.HandlersStub,
+    operations.CreateDynamicEventResponse,
     | errors.CreateDynamicEventBadRequestError
     | errors.CreateDynamicEventUnauthorizedError
     | errors.CreateDynamicEventNotFoundError
@@ -72,7 +72,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      models.HandlersStub,
+      operations.CreateDynamicEventResponse,
       | errors.CreateDynamicEventBadRequestError
       | errors.CreateDynamicEventUnauthorizedError
       | errors.CreateDynamicEventNotFoundError
@@ -171,7 +171,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    models.HandlersStub,
+    operations.CreateDynamicEventResponse,
     | errors.CreateDynamicEventBadRequestError
     | errors.CreateDynamicEventUnauthorizedError
     | errors.CreateDynamicEventNotFoundError
@@ -184,7 +184,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(201, models.HandlersStub$inboundSchema),
+    M.json(201, operations.CreateDynamicEventResponse$inboundSchema),
     M.jsonErr(400, errors.CreateDynamicEventBadRequestError$inboundSchema),
     M.jsonErr(401, errors.CreateDynamicEventUnauthorizedError$inboundSchema),
     M.jsonErr(404, errors.CreateDynamicEventNotFoundError$inboundSchema),

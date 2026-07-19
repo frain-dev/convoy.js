@@ -6,14 +6,6 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 
-/**
- * Data is an arbitrary JSON value that gets sent as the body of the
- *
- * @remarks
- * webhook to the endpoints
- */
-export type ModelsDynamicEventData = {};
-
 export type ModelsDynamicEvent = {
   /**
    * Specifies custom headers you want convoy to add when the event is dispatched to your endpoint
@@ -25,7 +17,7 @@ export type ModelsDynamicEvent = {
    * @remarks
    * webhook to the endpoints
    */
-  data?: ModelsDynamicEventData | undefined;
+  data?: { [k: string]: any } | undefined;
   /**
    * Event Type is used for filtering and debugging e.g invoice.paid
    */
@@ -52,26 +44,9 @@ export type ModelsDynamicEvent = {
 };
 
 /** @internal */
-export type ModelsDynamicEventData$Outbound = {};
-
-/** @internal */
-export const ModelsDynamicEventData$outboundSchema: z.ZodMiniType<
-  ModelsDynamicEventData$Outbound,
-  ModelsDynamicEventData
-> = z.object({});
-
-export function modelsDynamicEventDataToJSON(
-  modelsDynamicEventData: ModelsDynamicEventData,
-): string {
-  return JSON.stringify(
-    ModelsDynamicEventData$outboundSchema.parse(modelsDynamicEventData),
-  );
-}
-
-/** @internal */
 export type ModelsDynamicEvent$Outbound = {
   custom_headers?: { [k: string]: string } | undefined;
-  data?: ModelsDynamicEventData$Outbound | undefined;
+  data?: { [k: string]: any } | undefined;
   event_type?: string | undefined;
   event_types?: Array<string> | undefined;
   idempotency_key?: string | undefined;
@@ -86,7 +61,7 @@ export const ModelsDynamicEvent$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     customHeaders: z.optional(z.record(z.string(), z.string())),
-    data: z.optional(z.lazy(() => ModelsDynamicEventData$outboundSchema)),
+    data: z.optional(z.record(z.string(), z.any())),
     eventType: z.optional(z.string()),
     eventTypes: z.optional(z.array(z.string())),
     idempotencyKey: z.optional(z.string()),

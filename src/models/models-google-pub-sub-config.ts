@@ -8,14 +8,17 @@ import { remap as remap$ } from "../lib/primitives.js";
 
 export type ModelsGooglePubSubConfig = {
   projectId?: string | undefined;
-  serviceAccount?: Array<number> | undefined;
+  /**
+   * encoding/json marshals []byte as a base64 string on the wire.
+   */
+  serviceAccount?: string | undefined;
   subscriptionId?: string | undefined;
 };
 
 /** @internal */
 export type ModelsGooglePubSubConfig$Outbound = {
   project_id?: string | undefined;
-  service_account?: Array<number> | undefined;
+  service_account?: string | undefined;
   subscription_id?: string | undefined;
 };
 
@@ -26,7 +29,7 @@ export const ModelsGooglePubSubConfig$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     projectId: z.optional(z.string()),
-    serviceAccount: z.optional(z.array(z.int())),
+    serviceAccount: z.optional(z.string()),
     subscriptionId: z.optional(z.string()),
   }),
   z.transform((v) => {

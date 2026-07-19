@@ -6,14 +6,6 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 
-/**
- * Data is an arbitrary JSON value that gets sent as the body of the
- *
- * @remarks
- * webhook to the endpoints
- */
-export type ModelsBroadcastEventData = {};
-
 export type ModelsBroadcastEvent = {
   acknowledgedAt?: string | undefined;
   /**
@@ -26,7 +18,7 @@ export type ModelsBroadcastEvent = {
    * @remarks
    * webhook to the endpoints
    */
-  data?: ModelsBroadcastEventData | undefined;
+  data?: { [k: string]: any } | undefined;
   /**
    * Event Type is used for filtering and debugging e.g invoice.paid
    */
@@ -38,27 +30,10 @@ export type ModelsBroadcastEvent = {
 };
 
 /** @internal */
-export type ModelsBroadcastEventData$Outbound = {};
-
-/** @internal */
-export const ModelsBroadcastEventData$outboundSchema: z.ZodMiniType<
-  ModelsBroadcastEventData$Outbound,
-  ModelsBroadcastEventData
-> = z.object({});
-
-export function modelsBroadcastEventDataToJSON(
-  modelsBroadcastEventData: ModelsBroadcastEventData,
-): string {
-  return JSON.stringify(
-    ModelsBroadcastEventData$outboundSchema.parse(modelsBroadcastEventData),
-  );
-}
-
-/** @internal */
 export type ModelsBroadcastEvent$Outbound = {
   acknowledged_at?: string | undefined;
   custom_headers?: { [k: string]: string } | undefined;
-  data?: ModelsBroadcastEventData$Outbound | undefined;
+  data?: { [k: string]: any } | undefined;
   event_type?: string | undefined;
   idempotency_key?: string | undefined;
 };
@@ -71,7 +46,7 @@ export const ModelsBroadcastEvent$outboundSchema: z.ZodMiniType<
   z.object({
     acknowledgedAt: z.optional(z.string()),
     customHeaders: z.optional(z.record(z.string(), z.string())),
-    data: z.optional(z.lazy(() => ModelsBroadcastEventData$outboundSchema)),
+    data: z.optional(z.record(z.string(), z.any())),
     eventType: z.optional(z.string()),
     idempotencyKey: z.optional(z.string()),
   }),
