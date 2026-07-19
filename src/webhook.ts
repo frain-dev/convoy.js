@@ -1,4 +1,4 @@
-import { WebhookVerificationException } from './utils/errors';
+import { WebhookVerificationException } from './utils/errors/index.js';
 const crypto = require('crypto');
 
 type SignedHeader = {

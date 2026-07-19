@@ -1,4 +1,4 @@
-import { Webhook } from '../src/webhook';
+import { Webhook } from '../src/webhook.js';
 
 describe('Webhook Verification', function () {
     test('no valid signature', () => {
