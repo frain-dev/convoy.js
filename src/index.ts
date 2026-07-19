@@ -8,3 +8,6 @@ export * as files from "./lib/files.js";
 export { HTTPClient } from "./lib/http.js";
 export type { Fetcher, HTTPClientOptions } from "./lib/http.js";
 export * from "./sdk/sdk.js";
+
+// Hand-written webhook signature verification (persistent edit; see MIGRATION.md).
+export { Webhook } from "./webhook.js";
