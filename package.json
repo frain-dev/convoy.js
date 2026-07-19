@@ -1,37 +1,129 @@
 {
-    "name": "convoy.js",
-    "version": "2.0.0-alpha.0",
-    "description": "Convoy JS SDK (Speakeasy-generated API client; hand-written webhook verify)",
-    "main": "dist/convoy.js",
-    "scripts": {
-        "test": "jest --config jestconfig.json",
-        "prepare": "npm run build",
-        "build": "tsc",
-        "format": "prettier --write \"src/**/*.ts\"",
-        "lint": "tslint -p tsconfig.json",
-        "test:verify": "jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/frain-dev/convoy.js"
-    },
-    "keywords": [
-        "convoy",
-        "webhooks"
+  "name": "convoy.js",
+  "version": "2.0.0",
+  "author": "Convoy",
+  "type": "module",
+  "tshy": {
+    "compiler": "tsgo",
+    "sourceDialects": [
+      "convoy.js/source"
     ],
-    "author": "Convoy",
-    "license": "MIT",
-    "dependencies": {},
-    "files": [
-        "dist/**/*"
-    ],
-    "devDependencies": {
-        "@types/jest": "^29.5.8",
-        "@types/node": "^20.9.0",
-        "jest": "^29.7.0",
-        "prettier": "^3.1.0",
-        "ts-jest": "^29.1.1",
-        "tslint-config-prettier": "^1.18.0",
-        "typescript": "^5.2.2"
+    "exports": {
+      ".": "./src/index.ts",
+      "./package.json": "./package.json",
+      "./types": "./src/types/index.ts",
+      "./models/errors": "./src/models/errors/index.ts",
+      "./models": "./src/models/index.ts",
+      "./models/operations": "./src/models/operations/index.ts",
+      "./*.js": "./src/*.ts",
+      "./*": "./src/*.ts"
     }
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frain-dev/convoy.js.git"
+  },
+  "scripts": {
+    "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
+    "build": "tshy",
+    "prepublishOnly": "npm run build",
+    "test:verify": "jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "@types/jest": "^29.5.8",
+    "@typescript/native-preview": "7.0.0-dev.20260302.1",
+    "jest": "^29.7.0",
+    "oxlint": "^1.60.0",
+    "ts-jest": "^29.1.1",
+    "tshy": "^3.3.2",
+    "typescript": "~5.8.3"
+  },
+  "dependencies": {
+    "zod": "^3.25.65 || ^4.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "convoy.js/source": "./src/index.ts",
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json",
+    "./types": {
+      "import": {
+        "convoy.js/source": "./src/types/index.ts",
+        "types": "./dist/esm/types/index.d.ts",
+        "default": "./dist/esm/types/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/types/index.d.ts",
+        "default": "./dist/commonjs/types/index.js"
+      }
+    },
+    "./models/errors": {
+      "import": {
+        "convoy.js/source": "./src/models/errors/index.ts",
+        "types": "./dist/esm/models/errors/index.d.ts",
+        "default": "./dist/esm/models/errors/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/models/errors/index.d.ts",
+        "default": "./dist/commonjs/models/errors/index.js"
+      }
+    },
+    "./models": {
+      "import": {
+        "convoy.js/source": "./src/models/index.ts",
+        "types": "./dist/esm/models/index.d.ts",
+        "default": "./dist/esm/models/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/models/index.d.ts",
+        "default": "./dist/commonjs/models/index.js"
+      }
+    },
+    "./models/operations": {
+      "import": {
+        "convoy.js/source": "./src/models/operations/index.ts",
+        "types": "./dist/esm/models/operations/index.d.ts",
+        "default": "./dist/esm/models/operations/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/models/operations/index.d.ts",
+        "default": "./dist/commonjs/models/operations/index.js"
+      }
+    },
+    "./*.js": {
+      "import": {
+        "convoy.js/source": "./src/*.ts",
+        "types": "./dist/esm/*.d.ts",
+        "default": "./dist/esm/*.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/*.d.ts",
+        "default": "./dist/commonjs/*.js"
+      }
+    },
+    "./*": {
+      "import": {
+        "convoy.js/source": "./src/*.ts",
+        "types": "./dist/esm/*.d.ts",
+        "default": "./dist/esm/*.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/*.d.ts",
+        "default": "./dist/commonjs/*.js"
+      }
+    }
+  },
+  "main": "./dist/commonjs/index.js",
+  "types": "./dist/commonjs/index.d.ts",
+  "module": "./dist/esm/index.js"
 }
