@@ -488,7 +488,7 @@ run();
 
 ### Response
 
-**Promise\<[models.HandlersStub](../../models/handlers-stub.md)\>**
+**Promise\<[operations.CreateDynamicEventResponse](../../models/operations/create-dynamic-event-response.md)\>**
 
 ### Errors
 

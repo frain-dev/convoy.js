@@ -6,14 +6,6 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 
-/**
- * Data is an arbitrary JSON value that gets sent as the body of the
- *
- * @remarks
- * webhook to the endpoints
- */
-export type ModelsFanoutEventData = {};
-
 export type ModelsFanoutEvent = {
   /**
    * Specifies custom headers you want convoy to add when the event is dispatched to your endpoint
@@ -25,7 +17,7 @@ export type ModelsFanoutEvent = {
    * @remarks
    * webhook to the endpoints
    */
-  data?: ModelsFanoutEventData | undefined;
+  data?: { [k: string]: any } | undefined;
   /**
    * Event Type is used for filtering and debugging e.g invoice.paid
    */
@@ -41,26 +33,9 @@ export type ModelsFanoutEvent = {
 };
 
 /** @internal */
-export type ModelsFanoutEventData$Outbound = {};
-
-/** @internal */
-export const ModelsFanoutEventData$outboundSchema: z.ZodMiniType<
-  ModelsFanoutEventData$Outbound,
-  ModelsFanoutEventData
-> = z.object({});
-
-export function modelsFanoutEventDataToJSON(
-  modelsFanoutEventData: ModelsFanoutEventData,
-): string {
-  return JSON.stringify(
-    ModelsFanoutEventData$outboundSchema.parse(modelsFanoutEventData),
-  );
-}
-
-/** @internal */
 export type ModelsFanoutEvent$Outbound = {
   custom_headers?: { [k: string]: string } | undefined;
-  data?: ModelsFanoutEventData$Outbound | undefined;
+  data?: { [k: string]: any } | undefined;
   event_type?: string | undefined;
   idempotency_key?: string | undefined;
   owner_id?: string | undefined;
@@ -73,7 +48,7 @@ export const ModelsFanoutEvent$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     customHeaders: z.optional(z.record(z.string(), z.string())),
-    data: z.optional(z.lazy(() => ModelsFanoutEventData$outboundSchema)),
+    data: z.optional(z.record(z.string(), z.any())),
     eventType: z.optional(z.string()),
     idempotencyKey: z.optional(z.string()),
     ownerId: z.optional(z.string()),

@@ -14,7 +14,7 @@ export type ModelsEventTypeResponse = {
   category?: string | undefined;
   deprecatedAt?: string | undefined;
   description?: string | undefined;
-  jsonSchema?: Array<number> | undefined;
+  jsonSchema?: { [k: string]: any } | undefined;
   name?: string | undefined;
   uid?: string | undefined;
 };
@@ -28,7 +28,7 @@ export const ModelsEventTypeResponse$inboundSchema: z.ZodMiniType<
     category: types.optional(types.string()),
     deprecated_at: types.optional(types.string()),
     description: types.optional(types.string()),
-    json_schema: types.optional(z.array(types.number())),
+    json_schema: types.optional(z.record(z.string(), z.any())),
     name: types.optional(types.string()),
     uid: types.optional(types.string()),
   }),

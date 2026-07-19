@@ -18,7 +18,7 @@ export type DatastoreMetadata = {
   /**
    * Data to be sent to endpoint.
    */
-  data?: Array<number> | undefined;
+  data?: { [k: string]: any } | undefined;
   intervalSeconds?: number | undefined;
   maxRetrySeconds?: number | undefined;
   nextSendTime?: string | undefined;
@@ -40,7 +40,7 @@ export const DatastoreMetadata$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    data: types.optional(z.array(types.number())),
+    data: types.optional(z.record(z.string(), z.any())),
     interval_seconds: types.optional(types.number()),
     max_retry_seconds: types.optional(types.number()),
     next_send_time: types.optional(types.string()),

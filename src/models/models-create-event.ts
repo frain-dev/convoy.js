@@ -6,14 +6,6 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 
-/**
- * Data is an arbitrary JSON value that gets sent as the body of the
- *
- * @remarks
- * webhook to the endpoints
- */
-export type ModelsCreateEventData = {};
-
 export type ModelsCreateEvent = {
   /**
    * Deprecated but necessary for backward compatibility.
@@ -29,7 +21,7 @@ export type ModelsCreateEvent = {
    * @remarks
    * webhook to the endpoints
    */
-  data?: ModelsCreateEventData | undefined;
+  data?: { [k: string]: any } | undefined;
   /**
    * Specifies the endpoint to send this event to.
    */
@@ -45,27 +37,10 @@ export type ModelsCreateEvent = {
 };
 
 /** @internal */
-export type ModelsCreateEventData$Outbound = {};
-
-/** @internal */
-export const ModelsCreateEventData$outboundSchema: z.ZodMiniType<
-  ModelsCreateEventData$Outbound,
-  ModelsCreateEventData
-> = z.object({});
-
-export function modelsCreateEventDataToJSON(
-  modelsCreateEventData: ModelsCreateEventData,
-): string {
-  return JSON.stringify(
-    ModelsCreateEventData$outboundSchema.parse(modelsCreateEventData),
-  );
-}
-
-/** @internal */
 export type ModelsCreateEvent$Outbound = {
   app_id?: string | undefined;
   custom_headers?: { [k: string]: string } | undefined;
-  data?: ModelsCreateEventData$Outbound | undefined;
+  data?: { [k: string]: any } | undefined;
   endpoint_id?: string | undefined;
   event_type?: string | undefined;
   idempotency_key?: string | undefined;
@@ -79,7 +54,7 @@ export const ModelsCreateEvent$outboundSchema: z.ZodMiniType<
   z.object({
     appId: z.optional(z.string()),
     customHeaders: z.optional(z.record(z.string(), z.string())),
-    data: z.optional(z.lazy(() => ModelsCreateEventData$outboundSchema)),
+    data: z.optional(z.record(z.string(), z.any())),
     endpointId: z.optional(z.string()),
     eventType: z.optional(z.string()),
     idempotencyKey: z.optional(z.string()),

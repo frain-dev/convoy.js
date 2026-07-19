@@ -35,7 +35,7 @@ export type ModelsEventResponse = {
    * @remarks
    * webhook to the endpoints
    */
-  data?: Array<number> | undefined;
+  data?: { [k: string]: any } | undefined;
   deletedAt?: string | undefined;
   endpointMetadata?: Array<DatastoreEndpoint> | undefined;
   endpoints?: Array<string> | undefined;
@@ -64,7 +64,7 @@ export const ModelsEventResponse$inboundSchema: z.ZodMiniType<
     acknowledged_at: types.optional(types.string()),
     app_id: types.optional(types.string()),
     created_at: types.optional(types.string()),
-    data: types.optional(z.array(types.number())),
+    data: types.optional(z.record(z.string(), z.any())),
     deleted_at: types.optional(types.string()),
     endpoint_metadata: types.optional(z.array(DatastoreEndpoint$inboundSchema)),
     endpoints: types.optional(z.array(types.string())),
