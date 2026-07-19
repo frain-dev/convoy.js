@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Webhook } from '../src/webhook';
+import { Webhook } from '../src/webhook.js';
 
 // signature-vectors.json is generated from the server signing code
 // (convoy/pkg/signature) and vendored here so this SDK verifies against the same
