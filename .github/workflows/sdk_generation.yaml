@@ -33,15 +33,154 @@ permissions:
 
 jobs:
   generate:
-    # Pin to commit SHA for v15 (mutable tags can be retargeted).
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@7276a3ae83eafb7fe37630fb1fefea3f2649debd # v15
-    with:
-      mode: pr
-      force: ${{ inputs.force || 'false' }}
-      feature_branch: ${{ inputs.feature_branch }}
-      environment: ${{ inputs.environment }}
-    secrets:
-      # Prefer a PAT: PRs opened with GITHUB_TOKEN do not trigger
-      # pull_request workflows, so verify CI would never run on them.
-      github_access_token: ${{ secrets.SDK_BOT_PAT || secrets.GITHUB_TOKEN }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+    # The Speakeasy reusable executor (workflow-executor.yaml) only accepts
+    # github_access_token from the caller's secrets context, and a step-minted
+    # app token cannot cross jobs (the runner drops masked job outputs), so
+    # this inlines the executor's run-workflow job at the same pinned action
+    # SHA. Publish jobs are skipped in pr mode, so nothing else is lost.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint bot app token
+        id: bot-token
+        # Pin to commit SHA for v1 (mutable tags can be retargeted).
+        uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1
+        with:
+          app-id: ${{ secrets.SDK_BOT_APP_ID }}
+          private-key: ${{ secrets.SDK_BOT_APP_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+          # App token, not GITHUB_TOKEN: PRs opened with GITHUB_TOKEN do not
+          # trigger pull_request workflows, so verify CI would never run on
+          # them. The convoy-sdk-bot app token triggers CI like a PAT.
+          token: ${{ steps.bot-token.outputs.token }}
+
+      - name: Checkout sdk-generation-action repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          repository: speakeasy-api/sdk-generation-action
+          # Same pinned ref the v15 reusable executor uses internally.
+          ref: 7625cebc33f047f014c65479a7743c3ac337c2f0
+          path: _speakeasy
+
+      - name: Run Generation Workflow
+        uses: ./_speakeasy
+        with:
+          github_access_token: ${{ steps.bot-token.outputs.token }}
+          speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+          mode: pr
+          force: ${{ inputs.force || 'false' }}
+          feature_branch: ${{ inputs.feature_branch }}
+          cli_environment_variables: ${{ inputs.environment }}
+
+  auto-approve:
+    # Finds the regen PR by the branch the Speakeasy executor manages
+    # (speakeasy-sdk-regen-* or the validated feature_branch input).
+    needs: generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint reviewer app token
+        id: app-token
+        # Pin to commit SHA for v1 (mutable tags can be retargeted).
+        uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1
+        with:
+          app-id: ${{ secrets.SDK_REVIEWER_APP_ID }}
+          private-key: ${{ secrets.SDK_REVIEWER_APP_KEY }}
+
+      - name: Mint bot app token
+        id: bot-token
+        # Minted per job: a masked app token cannot cross job boundaries.
+        uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1
+        with:
+          app-id: ${{ secrets.SDK_BOT_APP_ID }}
+          private-key: ${{ secrets.SDK_BOT_APP_KEY }}
+
+      - name: Approve and enable auto-merge
+        env:
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          # Merge via the bot app token, not GITHUB_TOKEN: merges performed
+          # by GITHUB_TOKEN do not trigger the downstream publish workflows.
+          MERGE_TOKEN: ${{ steps.bot-token.outputs.token }}
+          GH_REPO: ${{ github.repository }}
+          # Never interpolate free-form dispatch inputs into run: directly.
+          FEATURE_BRANCH_INPUT: ${{ inputs.feature_branch }}
+        run: |
+          # Failure policy: fail open to human review, never to merge. Any
+          # gate miss below (wrong author, non-generated paths) leaves the PR
+          # unapproved with the offending reason printed and commented on the
+          # PR. Auto-merge completes only after the required status checks
+          # pass.
+          if [ -n "$FEATURE_BRANCH_INPUT" ]; then
+            case "$FEATURE_BRANCH_INPUT" in
+              main|master|release/*|refs/*|-*|*[!a-zA-Z0-9._/-]*)
+                echo "Invalid feature_branch; skipping approval."
+                exit 0
+                ;;
+            esac
+            branch="$FEATURE_BRANCH_INPUT"
+          else
+            branch=$(GH_TOKEN="$APP_TOKEN" gh pr list --state open --json headRefName \
+              --jq '[.[].headRefName | select(startswith("speakeasy-sdk-regen-"))] | .[0] // empty')
+          fi
+          if [ -z "$branch" ]; then
+            echo "No open regen PR branch found; nothing to approve."
+            exit 0
+          fi
+
+          pr=$(GH_TOKEN="$APP_TOKEN" gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$pr" ]; then
+            echo "No open PR for $branch; nothing to approve."
+            exit 0
+          fi
+
+          # Only regen PRs authored by the bot app qualify for auto-review.
+          # REST is used because it returns the stable "convoy-sdk-bot[bot]"
+          # login for app-authored PRs.
+          author=$(GH_TOKEN="$APP_TOKEN" gh api "repos/$GH_REPO/pulls/$pr" --jq '.user.login')
+          if [ "$author" != "convoy-sdk-bot[bot]" ]; then
+            echo "Not approving PR #$pr: author is $author, not convoy-sdk-bot[bot]."
+            GH_TOKEN="$APP_TOKEN" gh pr comment "$pr" --body "SDK reviewer app: not auto-approving; PR author is not convoy-sdk-bot[bot]. Left for human review (policy: fail open to human review, never to merge)."
+            exit 0
+          fi
+
+          # Allowlist mirrors the Speakeasy-managed paths; .genignore paths
+          # (hand-written webhook verify, its tests, contributor docs) are
+          # denied explicitly.
+          bad=$(GH_TOKEN="$APP_TOKEN" gh api "repos/$GH_REPO/pulls/$pr/files" --paginate --jq '.[].filename' \
+            | while read -r f; do
+                case "$f" in
+                  src/webhook.ts|src/utils/errors/*) echo "$f" ;;
+                  tests/signature-vectors.json|tests/shared-vectors.test.ts|tests/webhook.test.ts) echo "$f" ;;
+                  .speakeasy/*|docs/*|examples/*|src/*|tests/*) ;;
+                  RELEASES.md|README.md|USAGE.md|FUNCTIONS.md|RUNTIMES.md) ;;
+                  jsr.json|package.json|package-lock.json|.gitattributes|.npmignore) ;;
+                  *) echo "$f" ;;
+                esac
+              done)
+          if [ -n "$bad" ]; then
+            echo "Not approving PR #$pr: diff touches non-generated paths:"
+            echo "$bad"
+            {
+              echo "SDK reviewer app: not auto-approving; the diff touches paths outside the generated allowlist:"
+              echo
+              echo '```'
+              echo "$bad"
+              echo '```'
+              echo
+              echo "Left for human review (policy: fail open to human review, never to merge)."
+            } | GH_TOKEN="$APP_TOKEN" gh pr comment "$pr" --body-file -
+            exit 0
+          fi
+
+          GH_TOKEN="$APP_TOKEN" gh api -X POST "repos/$GH_REPO/pulls/$pr/reviews" \
+            -f event=APPROVE \
+            -f body="SDK reviewer app: approving a generated-paths-only diff on the regen branch. Auto-merge completes only after required status checks pass."
+
+          enabled=$(GH_TOKEN="$APP_TOKEN" gh pr view "$pr" --json autoMergeRequest --jq '.autoMergeRequest != null')
+          if [ "$enabled" = "true" ]; then
+            echo "Auto-merge already enabled on PR #$pr."
+          else
+            GH_TOKEN="$MERGE_TOKEN" gh pr merge "$pr" --auto --squash
+          fi
