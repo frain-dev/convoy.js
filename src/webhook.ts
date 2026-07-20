@@ -1,5 +1,5 @@
 import { WebhookVerificationException } from './utils/errors/index.js';
-const crypto = require('crypto');
+import * as crypto from 'node:crypto';
 
 type SignedHeader = {
     timestamp: number;
@@ -46,7 +46,6 @@ export class Webhook {
             throw new WebhookVerificationException('Webhook has no valid signature');
         }
 
-        let message;
         let payload;
 
         if (typeof this.payload !== 'string') {
@@ -55,18 +54,12 @@ export class Webhook {
             payload = this.payload;
         }
 
-        if (signedHeader.isAdvanced) {
-            message = `${signedHeader.timestamp},${payload}`;
-        }
-
-        if (!signedHeader.isAdvanced) {
-            message = payload;
-        }
+        const message = signedHeader.isAdvanced ? `${signedHeader.timestamp},${payload}` : payload;
 
         const expectedSignature = crypto
             .createHmac(this.hash, this.secret)
             .update(message, 'utf8')
-            .digest(this.encoding);
+            .digest(this.encoding as crypto.BinaryToTextEncoding);
 
         return this.validateComputedSignature(signedHeader.signatures, expectedSignature);
     }
