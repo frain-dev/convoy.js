@@ -5,7 +5,7 @@
 ```typescript
 import { DatastoreEncodingType } from "convoy.js/models";
 
-let value: DatastoreEncodingType = "hex";
+let value: DatastoreEncodingType = "";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: DatastoreEncodingType = "hex";
 ## Values
 
 ```typescript
-"base64" | "hex" | Unrecognized<string>
+"base64" | "hex" | "" | Unrecognized<string>
 ```

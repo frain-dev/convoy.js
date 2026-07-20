@@ -13,5 +13,5 @@ let value: DatastoreSourceProvider = "github";
 ## Values
 
 ```typescript
-"github" | "twitter" | "shopify" | Unrecognized<string>
+"github" | "twitter" | "shopify" | "" | Unrecognized<string>
 ```

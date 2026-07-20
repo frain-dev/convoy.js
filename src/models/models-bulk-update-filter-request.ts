@@ -12,23 +12,23 @@ import {
 } from "./models-optional-time.js";
 
 export type ModelsBulkUpdateFilterRequest = {
-  body?: { [k: string]: any } | undefined;
+  body?: { [k: string]: any } | null | undefined;
   enabledAt?: ModelsOptionalTime | undefined;
   eventType?: string | undefined;
-  headers?: { [k: string]: any } | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
+  headers?: { [k: string]: any } | null | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
   uid: string;
 };
 
 /** @internal */
 export type ModelsBulkUpdateFilterRequest$Outbound = {
-  body?: { [k: string]: any } | undefined;
+  body?: { [k: string]: any } | null | undefined;
   enabled_at?: ModelsOptionalTime$Outbound | undefined;
   event_type?: string | undefined;
-  headers?: { [k: string]: any } | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
+  headers?: { [k: string]: any } | null | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
   uid: string;
 };
 
@@ -38,12 +38,12 @@ export const ModelsBulkUpdateFilterRequest$outboundSchema: z.ZodMiniType<
   ModelsBulkUpdateFilterRequest
 > = z.pipe(
   z.object({
-    body: z.optional(z.record(z.string(), z.any())),
+    body: z.optional(z.nullable(z.record(z.string(), z.any()))),
     enabledAt: z.optional(ModelsOptionalTime$outboundSchema),
     eventType: z.optional(z.string()),
-    headers: z.optional(z.record(z.string(), z.any())),
-    path: z.optional(z.record(z.string(), z.any())),
-    query: z.optional(z.record(z.string(), z.any())),
+    headers: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    path: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    query: z.optional(z.nullable(z.record(z.string(), z.any()))),
     uid: z.string(),
   }),
   z.transform((v) => {

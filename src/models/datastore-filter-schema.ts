@@ -11,11 +11,11 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type DatastoreFilterSchema = {
-  body?: { [k: string]: any } | undefined;
-  headers?: { [k: string]: any } | undefined;
+  body?: { [k: string]: any } | null | undefined;
+  headers?: { [k: string]: any } | null | undefined;
   isFlattened?: boolean | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
@@ -24,11 +24,11 @@ export const DatastoreFilterSchema$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    body: types.optional(z.record(z.string(), z.any())),
-    headers: types.optional(z.record(z.string(), z.any())),
+    body: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    headers: z.optional(z.nullable(z.record(z.string(), z.any()))),
     is_flattened: types.optional(types.boolean()),
-    path: types.optional(z.record(z.string(), z.any())),
-    query: types.optional(z.record(z.string(), z.any())),
+    path: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    query: z.optional(z.nullable(z.record(z.string(), z.any()))),
   }),
   z.transform((v) => {
     return remap$(v, {

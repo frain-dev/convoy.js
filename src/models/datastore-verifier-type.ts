@@ -12,6 +12,7 @@ export const DatastoreVerifierType = {
   Hmac: "hmac",
   BasicAuth: "basic_auth",
   ApiKey: "api_key",
+  Unknown: "",
 } as const;
 export type DatastoreVerifierType = OpenEnum<typeof DatastoreVerifierType>;
 

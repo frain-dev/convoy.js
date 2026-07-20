@@ -5,7 +5,7 @@
 ```typescript
 import { DatastoreEventStatus } from "convoy.js/models";
 
-let value: DatastoreEventStatus = "Failure";
+let value: DatastoreEventStatus = "Success";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: DatastoreEventStatus = "Failure";
 ## Values
 
 ```typescript
-"Processing" | "Failure" | "Success" | "Retry" | "Pending" | Unrecognized<string>
+"Processing" | "Failure" | "Success" | "Retry" | "Pending" | "" | Unrecognized<string>
 ```

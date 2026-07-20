@@ -10,6 +10,7 @@ import { OpenEnum } from "../types/enums.js";
 export const DatastoreDeliveryMode = {
   AtLeastOnce: "at_least_once",
   AtMostOnce: "at_most_once",
+  Unknown: "",
 } as const;
 export type DatastoreDeliveryMode = OpenEnum<typeof DatastoreDeliveryMode>;
 

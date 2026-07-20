@@ -13,5 +13,5 @@ let value: DatastoreMetaEventType = "http";
 ## Values
 
 ```typescript
-"http" | "pub_sub" | Unrecognized<string>
+"http" | "pub_sub" | "" | Unrecognized<string>
 ```

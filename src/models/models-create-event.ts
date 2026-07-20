@@ -14,14 +14,14 @@ export type ModelsCreateEvent = {
   /**
    * Specifies custom headers you want convoy to add when the event is dispatched to your endpoint
    */
-  customHeaders?: { [k: string]: string } | undefined;
+  customHeaders?: { [k: string]: string } | null | undefined;
   /**
    * Data is an arbitrary JSON value that gets sent as the body of the
    *
    * @remarks
    * webhook to the endpoints
    */
-  data?: { [k: string]: any } | undefined;
+  data?: { [k: string]: any } | null | undefined;
   /**
    * Specifies the endpoint to send this event to.
    */
@@ -39,8 +39,8 @@ export type ModelsCreateEvent = {
 /** @internal */
 export type ModelsCreateEvent$Outbound = {
   app_id?: string | undefined;
-  custom_headers?: { [k: string]: string } | undefined;
-  data?: { [k: string]: any } | undefined;
+  custom_headers?: { [k: string]: string } | null | undefined;
+  data?: { [k: string]: any } | null | undefined;
   endpoint_id?: string | undefined;
   event_type?: string | undefined;
   idempotency_key?: string | undefined;
@@ -53,8 +53,8 @@ export const ModelsCreateEvent$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     appId: z.optional(z.string()),
-    customHeaders: z.optional(z.record(z.string(), z.string())),
-    data: z.optional(z.record(z.string(), z.any())),
+    customHeaders: z.optional(z.nullable(z.record(z.string(), z.string()))),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     endpointId: z.optional(z.string()),
     eventType: z.optional(z.string()),
     idempotencyKey: z.optional(z.string()),

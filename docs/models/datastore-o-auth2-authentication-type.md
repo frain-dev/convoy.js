@@ -5,7 +5,7 @@
 ```typescript
 import { DatastoreOAuth2AuthenticationType } from "convoy.js/models";
 
-let value: DatastoreOAuth2AuthenticationType = "shared_secret";
+let value: DatastoreOAuth2AuthenticationType = "client_assertion";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: DatastoreOAuth2AuthenticationType = "shared_secret";
 ## Values
 
 ```typescript
-"shared_secret" | "client_assertion" | Unrecognized<string>
+"shared_secret" | "client_assertion" | "" | Unrecognized<string>
 ```

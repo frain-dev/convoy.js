@@ -11,6 +11,7 @@ export const DatastoreEndpointStatus = {
   Active: "active",
   Inactive: "inactive",
   Paused: "paused",
+  Unknown: "",
 } as const;
 export type DatastoreEndpointStatus = OpenEnum<typeof DatastoreEndpointStatus>;
 

@@ -13,5 +13,5 @@ let value: DatastoreDeliveryMode = "at_least_once";
 ## Values
 
 ```typescript
-"at_least_once" | "at_most_once" | Unrecognized<string>
+"at_least_once" | "at_most_once" | "" | Unrecognized<string>
 ```

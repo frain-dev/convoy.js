@@ -13,5 +13,5 @@ let value: DatastoreEventDeliveryStatus = "Scheduled";
 ## Values
 
 ```typescript
-"Scheduled" | "Processing" | "Discarded" | "Failure" | "Success" | "Retry" | Unrecognized<string>
+"Scheduled" | "Processing" | "Discarded" | "Failure" | "Success" | "Retry" | "" | Unrecognized<string>
 ```

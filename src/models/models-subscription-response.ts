@@ -9,64 +9,1313 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  DatastoreAlertConfiguration,
-  DatastoreAlertConfiguration$inboundSchema,
-} from "./datastore-alert-configuration.js";
+  DatastoreCustomResponse,
+  DatastoreCustomResponse$inboundSchema,
+} from "./datastore-custom-response.js";
 import {
   DatastoreDeliveryMode,
   DatastoreDeliveryMode$inboundSchema,
 } from "./datastore-delivery-mode.js";
 import {
-  DatastoreDevice,
-  DatastoreDevice$inboundSchema,
-} from "./datastore-device.js";
+  DatastoreDeviceStatus,
+  DatastoreDeviceStatus$inboundSchema,
+} from "./datastore-device-status.js";
 import {
-  DatastoreEndpoint,
-  DatastoreEndpoint$inboundSchema,
-} from "./datastore-endpoint.js";
+  DatastoreEncodingType,
+  DatastoreEncodingType$inboundSchema,
+} from "./datastore-encoding-type.js";
 import {
-  DatastoreFilterConfiguration,
-  DatastoreFilterConfiguration$inboundSchema,
-} from "./datastore-filter-configuration.js";
+  DatastoreEndpointAuthenticationType,
+  DatastoreEndpointAuthenticationType$inboundSchema,
+} from "./datastore-endpoint-authentication-type.js";
 import {
-  DatastoreRateLimitConfiguration,
-  DatastoreRateLimitConfiguration$inboundSchema,
-} from "./datastore-rate-limit-configuration.js";
+  DatastoreEndpointStatus,
+  DatastoreEndpointStatus$inboundSchema,
+} from "./datastore-endpoint-status.js";
 import {
-  DatastoreRetryConfiguration,
-  DatastoreRetryConfiguration$inboundSchema,
-} from "./datastore-retry-configuration.js";
+  DatastoreFilterSchema,
+  DatastoreFilterSchema$inboundSchema,
+} from "./datastore-filter-schema.js";
 import {
-  DatastoreSource,
-  DatastoreSource$inboundSchema,
-} from "./datastore-source.js";
+  DatastoreOAuth2AuthenticationType,
+  DatastoreOAuth2AuthenticationType$inboundSchema,
+} from "./datastore-o-auth2-authentication-type.js";
+import {
+  DatastoreOAuth2ExpiryTimeUnit,
+  DatastoreOAuth2ExpiryTimeUnit$inboundSchema,
+} from "./datastore-o-auth2-expiry-time-unit.js";
+import {
+  DatastorePubSubType,
+  DatastorePubSubType$inboundSchema,
+} from "./datastore-pub-sub-type.js";
+import {
+  DatastoreSecret,
+  DatastoreSecret$inboundSchema,
+} from "./datastore-secret.js";
+import {
+  DatastoreSourceProvider,
+  DatastoreSourceProvider$inboundSchema,
+} from "./datastore-source-provider.js";
+import {
+  DatastoreSourceType,
+  DatastoreSourceType$inboundSchema,
+} from "./datastore-source-type.js";
+import {
+  DatastoreStrategyProvider,
+  DatastoreStrategyProvider$inboundSchema,
+} from "./datastore-strategy-provider.js";
 import {
   DatastoreSubscriptionType,
   DatastoreSubscriptionType$inboundSchema,
 } from "./datastore-subscription-type.js";
+import {
+  DatastoreVerifierType,
+  DatastoreVerifierType$inboundSchema,
+} from "./datastore-verifier-type.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+
+/**
+ * subscription config
+ */
+export type AlertConfig = {
+  count?: number | undefined;
+  threshold?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseDeviceMetadata = {
+  createdAt?: string | undefined;
+  deletedAt?: string | null | undefined;
+  endpointId?: string | undefined;
+  hostName?: string | undefined;
+  lastSeenAt?: string | undefined;
+  projectId?: string | undefined;
+  status?: DatastoreDeviceStatus | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseEndpointMetadataApiKey = {
+  headerName?: string | undefined;
+  headerValue?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseEndpointMetadataBasicAuth = {
+  password?: string | undefined;
+  username?: string | undefined;
+};
+
+/**
+ * Field mapping for flexible token response parsing
+ */
+export type ModelsSubscriptionResponseFieldMapping = {
+  /**
+   * Field name for access token (e.g., "accessToken", "access_token", "token")
+   */
+  accessToken?: string | undefined;
+  /**
+   * Field name for expiry time (e.g., "expiresIn", "expires_in", "expiresAt")
+   */
+  expiresIn?: string | undefined;
+  /**
+   * Field name for token type (e.g., "tokenType", "token_type")
+   */
+  tokenType?: string | undefined;
+};
+
+/**
+ * Encrypted at rest
+ */
+export type ModelsSubscriptionResponseSigningKey = {
+  /**
+   * EC (Elliptic Curve) key fields
+   */
+  crv?: string | undefined;
+  /**
+   * Private key (EC only)
+   */
+  d?: string | undefined;
+  /**
+   * RSA first factor CRT exponent (RSA private key only)
+   */
+  dp?: string | undefined;
+  /**
+   * RSA second factor CRT exponent (RSA private key only)
+   */
+  dq?: string | undefined;
+  /**
+   * RSA public exponent (RSA only)
+   */
+  e?: string | undefined;
+  /**
+   * Key ID
+   */
+  kid?: string | undefined;
+  /**
+   * Key type: "EC" or "RSA"
+   */
+  kty?: string | undefined;
+  /**
+   * RSA key fields
+   */
+  n?: string | undefined;
+  /**
+   * RSA first prime factor (RSA private key only)
+   */
+  p?: string | undefined;
+  /**
+   * RSA second prime factor (RSA private key only)
+   */
+  q?: string | undefined;
+  /**
+   * RSA first CRT coefficient (RSA private key only)
+   */
+  qi?: string | undefined;
+  /**
+   * X coordinate (EC only)
+   */
+  x?: string | undefined;
+  /**
+   * Y coordinate (EC only)
+   */
+  y?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseOauth2 = {
+  audience?: string | undefined;
+  authenticationType?: DatastoreOAuth2AuthenticationType | undefined;
+  clientId?: string | undefined;
+  /**
+   * Encrypted at rest
+   */
+  clientSecret?: string | undefined;
+  /**
+   * Expiry time unit (seconds, milliseconds, minutes, hours)
+   */
+  expiryTimeUnit?: DatastoreOAuth2ExpiryTimeUnit | undefined;
+  /**
+   * Field mapping for flexible token response parsing
+   */
+  fieldMapping?: ModelsSubscriptionResponseFieldMapping | null | undefined;
+  grantType?: string | undefined;
+  issuer?: string | undefined;
+  scope?: string | undefined;
+  signingAlgorithm?: string | undefined;
+  /**
+   * Encrypted at rest
+   */
+  signingKey?: ModelsSubscriptionResponseSigningKey | null | undefined;
+  subject?: string | undefined;
+  url?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseAuthentication = {
+  apiKey?: ModelsSubscriptionResponseEndpointMetadataApiKey | null | undefined;
+  basicAuth?:
+    | ModelsSubscriptionResponseEndpointMetadataBasicAuth
+    | null
+    | undefined;
+  oauth2?: ModelsSubscriptionResponseOauth2 | null | undefined;
+  type?: DatastoreEndpointAuthenticationType | undefined;
+};
+
+/**
+ * mTLS client certificate configuration
+ */
+export type ModelsSubscriptionResponseMtlsClientCert = {
+  /**
+   * ClientCert is the client certificate PEM string
+   */
+  clientCert?: string | undefined;
+  /**
+   * ClientKey is the client private key PEM string
+   */
+  clientKey?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseEndpointMetadata = {
+  advancedSignatures?: boolean | undefined;
+  authentication?: ModelsSubscriptionResponseAuthentication | null | undefined;
+  /**
+   * CBState is the circuit breaker state ("open", "half-open", "closed") so the UI
+   *
+   * @remarks
+   * can reflect a tripped breaker on the endpoint status. Nil when CB is
+   * off/unlicensed or has no sample for this endpoint.
+   */
+  cbState?: string | null | undefined;
+  contentType?: string | undefined;
+  createdAt?: string | undefined;
+  deletedAt?: string | null | undefined;
+  description?: string | undefined;
+  events?: number | undefined;
+  failureCount?: number | null | undefined;
+  /**
+   * FailureRate is the circuit breaker's rolling failure rate for this endpoint.
+   *
+   * @remarks
+   * It is a pointer so the API can return null when no rate was computed (circuit
+   * breaker feature off, or sampler not running), distinct from a genuine 0%.
+   */
+  failureRate?: number | null | undefined;
+  httpTimeout?: number | undefined;
+  /**
+   * mTLS client certificate configuration
+   */
+  mtlsClientCert?: ModelsSubscriptionResponseMtlsClientCert | null | undefined;
+  name?: string | undefined;
+  ownerId?: string | undefined;
+  /**
+   * PeriodFailureRate is the period failure rate from event_deliveries,
+   *
+   * @remarks
+   * (Failure+Retry)/(Success+Failure+Retry). Retry counts as failed-so-far.
+   * Nil when the range has no counted deliveries; sibling counts are transient.
+   */
+  periodFailureRate?: number | null | undefined;
+  projectId?: string | undefined;
+  rateLimit?: number | undefined;
+  rateLimitDuration?: number | undefined;
+  retryCount?: number | null | undefined;
+  secrets?: Array<DatastoreSecret> | undefined;
+  slackWebhookUrl?: string | undefined;
+  status?: DatastoreEndpointStatus | undefined;
+  successCount?: number | null | undefined;
+  supportEmail?: string | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+  url?: string | undefined;
+};
+
+export type FilterConfig = {
+  eventTypes?: Array<string> | undefined;
+  filter?: DatastoreFilterSchema | undefined;
+};
+
+export type RateLimitConfig = {
+  count?: number | undefined;
+  duration?: number | undefined;
+};
+
+export type RetryConfig = {
+  duration?: number | undefined;
+  retryCount?: number | undefined;
+  type?: DatastoreStrategyProvider | undefined;
+};
+
+export type ModelsSubscriptionResponseTwitter = {
+  crcVerifiedAt?: string | null | undefined;
+};
+
+export type ModelsSubscriptionResponseProviderConfig = {
+  twitter?: ModelsSubscriptionResponseTwitter | null | undefined;
+};
+
+export type ModelsSubscriptionResponseAmqpAuth = {
+  password?: string | undefined;
+  user?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseAmqp = {
+  host?: string | undefined;
+  auth?: ModelsSubscriptionResponseAmqpAuth | null | undefined;
+  bindedExchange?: string | null | undefined;
+  deadLetterExchange?: string | null | undefined;
+  port?: string | undefined;
+  queue?: string | undefined;
+  routingKey?: string | undefined;
+  schema?: string | undefined;
+  vhost?: string | null | undefined;
+};
+
+export type ModelsSubscriptionResponseGoogle = {
+  projectId?: string | undefined;
+  /**
+   * encoding/json marshals []byte as a base64 string on the wire.
+   */
+  serviceAccount?: string | undefined;
+  subscriptionId?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseKafkaAuth = {
+  hash?: string | undefined;
+  password?: string | undefined;
+  tls?: boolean | undefined;
+  type?: string | undefined;
+  username?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseKafka = {
+  auth?: ModelsSubscriptionResponseKafkaAuth | null | undefined;
+  brokers?: Array<string> | undefined;
+  consumerGroupId?: string | undefined;
+  topicName?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseSqs = {
+  accessKeyId?: string | undefined;
+  defaultRegion?: string | undefined;
+  /**
+   * Optional: for LocalStack testing
+   */
+  endpoint?: string | undefined;
+  queueName?: string | undefined;
+  secretKey?: string | undefined;
+};
+
+export type ModelsSubscriptionResponsePubSub = {
+  amqp?: ModelsSubscriptionResponseAmqp | null | undefined;
+  google?: ModelsSubscriptionResponseGoogle | null | undefined;
+  kafka?: ModelsSubscriptionResponseKafka | null | undefined;
+  sqs?: ModelsSubscriptionResponseSqs | null | undefined;
+  type?: DatastorePubSubType | undefined;
+  workers?: number | undefined;
+};
+
+export type ModelsSubscriptionResponseSourceMetadataApiKey = {
+  headerName?: string | undefined;
+  headerValue?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseSourceMetadataBasicAuth = {
+  password?: string | undefined;
+  username?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseHmac = {
+  encoding?: DatastoreEncodingType | undefined;
+  hash?: string | undefined;
+  header?: string | undefined;
+  secret?: string | undefined;
+};
+
+export type ModelsSubscriptionResponseVerifier = {
+  apiKey?: ModelsSubscriptionResponseSourceMetadataApiKey | null | undefined;
+  basicAuth?:
+    | ModelsSubscriptionResponseSourceMetadataBasicAuth
+    | null
+    | undefined;
+  hmac?: ModelsSubscriptionResponseHmac | null | undefined;
+  type?: DatastoreVerifierType | undefined;
+};
+
+export type ModelsSubscriptionResponseSourceMetadata = {
+  bodyFunction?: string | null | undefined;
+  createdAt?: string | undefined;
+  customResponse?: DatastoreCustomResponse | undefined;
+  deletedAt?: string | null | undefined;
+  eventTypeLocation?: string | undefined;
+  forwardHeaders?: Array<string> | undefined;
+  headerFunction?: string | null | undefined;
+  idempotencyKeys?: Array<string> | undefined;
+  isDisabled?: boolean | undefined;
+  maskId?: string | undefined;
+  name?: string | undefined;
+  projectId?: string | undefined;
+  provider?: DatastoreSourceProvider | undefined;
+  providerConfig?: ModelsSubscriptionResponseProviderConfig | null | undefined;
+  pubSub?: ModelsSubscriptionResponsePubSub | null | undefined;
+  type?: DatastoreSourceType | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+  url?: string | undefined;
+  verifier?: ModelsSubscriptionResponseVerifier | null | undefined;
+};
 
 export type ModelsSubscriptionResponse = {
   /**
    * subscription config
    */
-  alertConfig?: DatastoreAlertConfiguration | undefined;
+  alertConfig?: AlertConfig | null | undefined;
   createdAt?: string | undefined;
-  deletedAt?: string | undefined;
+  deletedAt?: string | null | undefined;
   deliveryMode?: DatastoreDeliveryMode | undefined;
-  deviceMetadata?: DatastoreDevice | undefined;
-  endpointMetadata?: DatastoreEndpoint | undefined;
-  filterConfig?: DatastoreFilterConfiguration | undefined;
-  function?: string | undefined;
+  deviceMetadata?: ModelsSubscriptionResponseDeviceMetadata | null | undefined;
+  endpointMetadata?:
+    | ModelsSubscriptionResponseEndpointMetadata
+    | null
+    | undefined;
+  filterConfig?: FilterConfig | null | undefined;
+  function?: string | null | undefined;
   name?: string | undefined;
   projectId?: string | undefined;
-  rateLimitConfig?: DatastoreRateLimitConfiguration | undefined;
-  retryConfig?: DatastoreRetryConfiguration | undefined;
-  sourceMetadata?: DatastoreSource | undefined;
+  rateLimitConfig?: RateLimitConfig | null | undefined;
+  retryConfig?: RetryConfig | null | undefined;
+  sourceMetadata?: ModelsSubscriptionResponseSourceMetadata | null | undefined;
   type?: DatastoreSubscriptionType | undefined;
   uid?: string | undefined;
   updatedAt?: string | undefined;
 };
+
+/** @internal */
+export const AlertConfig$inboundSchema: z.ZodMiniType<AlertConfig, unknown> = z
+  .object({
+    count: types.optional(types.number()),
+    threshold: types.optional(types.string()),
+  });
+
+export function alertConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<AlertConfig, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => AlertConfig$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'AlertConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseDeviceMetadata$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseDeviceMetadata, unknown> = z.pipe(
+    z.object({
+      created_at: types.optional(types.string()),
+      deleted_at: z.optional(z.nullable(types.string())),
+      endpoint_id: types.optional(types.string()),
+      host_name: types.optional(types.string()),
+      last_seen_at: types.optional(types.string()),
+      project_id: types.optional(types.string()),
+      status: types.optional(DatastoreDeviceStatus$inboundSchema),
+      uid: types.optional(types.string()),
+      updated_at: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "created_at": "createdAt",
+        "deleted_at": "deletedAt",
+        "endpoint_id": "endpointId",
+        "host_name": "hostName",
+        "last_seen_at": "lastSeenAt",
+        "project_id": "projectId",
+        "updated_at": "updatedAt",
+      });
+    }),
+  );
+
+export function modelsSubscriptionResponseDeviceMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseDeviceMetadata,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseDeviceMetadata$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseDeviceMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseEndpointMetadataApiKey$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseEndpointMetadataApiKey, unknown> = z
+    .pipe(
+      z.object({
+        header_name: types.optional(types.string()),
+        header_value: types.optional(types.string()),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          "header_name": "headerName",
+          "header_value": "headerValue",
+        });
+      }),
+    );
+
+export function modelsSubscriptionResponseEndpointMetadataApiKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseEndpointMetadataApiKey,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseEndpointMetadataApiKey$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseEndpointMetadataApiKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseEndpointMetadataBasicAuth$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseEndpointMetadataBasicAuth, unknown> =
+    z.object({
+      password: types.optional(types.string()),
+      username: types.optional(types.string()),
+    });
+
+export function modelsSubscriptionResponseEndpointMetadataBasicAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseEndpointMetadataBasicAuth,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseEndpointMetadataBasicAuth$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseEndpointMetadataBasicAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseFieldMapping$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseFieldMapping, unknown> = z.pipe(
+    z.object({
+      access_token: types.optional(types.string()),
+      expires_in: types.optional(types.string()),
+      token_type: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "access_token": "accessToken",
+        "expires_in": "expiresIn",
+        "token_type": "tokenType",
+      });
+    }),
+  );
+
+export function modelsSubscriptionResponseFieldMappingFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseFieldMapping, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseFieldMapping$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseFieldMapping' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseSigningKey$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseSigningKey,
+  unknown
+> = z.object({
+  crv: types.optional(types.string()),
+  d: types.optional(types.string()),
+  dp: types.optional(types.string()),
+  dq: types.optional(types.string()),
+  e: types.optional(types.string()),
+  kid: types.optional(types.string()),
+  kty: types.optional(types.string()),
+  n: types.optional(types.string()),
+  p: types.optional(types.string()),
+  q: types.optional(types.string()),
+  qi: types.optional(types.string()),
+  x: types.optional(types.string()),
+  y: types.optional(types.string()),
+});
+
+export function modelsSubscriptionResponseSigningKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseSigningKey, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseSigningKey$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseSigningKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseOauth2$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseOauth2,
+  unknown
+> = z.pipe(
+  z.object({
+    audience: types.optional(types.string()),
+    authentication_type: types.optional(
+      DatastoreOAuth2AuthenticationType$inboundSchema,
+    ),
+    client_id: types.optional(types.string()),
+    client_secret: types.optional(types.string()),
+    expiry_time_unit: types.optional(
+      DatastoreOAuth2ExpiryTimeUnit$inboundSchema,
+    ),
+    field_mapping: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseFieldMapping$inboundSchema
+      )),
+    ),
+    grant_type: types.optional(types.string()),
+    issuer: types.optional(types.string()),
+    scope: types.optional(types.string()),
+    signing_algorithm: types.optional(types.string()),
+    signing_key: z.optional(
+      z.nullable(
+        z.lazy(() => ModelsSubscriptionResponseSigningKey$inboundSchema),
+      ),
+    ),
+    subject: types.optional(types.string()),
+    url: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "authentication_type": "authenticationType",
+      "client_id": "clientId",
+      "client_secret": "clientSecret",
+      "expiry_time_unit": "expiryTimeUnit",
+      "field_mapping": "fieldMapping",
+      "grant_type": "grantType",
+      "signing_algorithm": "signingAlgorithm",
+      "signing_key": "signingKey",
+    });
+  }),
+);
+
+export function modelsSubscriptionResponseOauth2FromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseOauth2, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSubscriptionResponseOauth2$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseOauth2' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseAuthentication$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseAuthentication, unknown> = z.pipe(
+    z.object({
+      api_key: z.optional(z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseEndpointMetadataApiKey$inboundSchema
+      ))),
+      basic_auth: z.optional(z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseEndpointMetadataBasicAuth$inboundSchema
+      ))),
+      oauth2: z.optional(z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseOauth2$inboundSchema
+      ))),
+      type: types.optional(DatastoreEndpointAuthenticationType$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "api_key": "apiKey",
+        "basic_auth": "basicAuth",
+      });
+    }),
+  );
+
+export function modelsSubscriptionResponseAuthenticationFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseAuthentication,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseAuthentication$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseAuthentication' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseMtlsClientCert$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseMtlsClientCert, unknown> = z.pipe(
+    z.object({
+      client_cert: types.optional(types.string()),
+      client_key: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "client_cert": "clientCert",
+        "client_key": "clientKey",
+      });
+    }),
+  );
+
+export function modelsSubscriptionResponseMtlsClientCertFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseMtlsClientCert,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseMtlsClientCert$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseMtlsClientCert' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseEndpointMetadata$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseEndpointMetadata, unknown> = z.pipe(
+    z.object({
+      advanced_signatures: types.optional(types.boolean()),
+      authentication: z.optional(z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseAuthentication$inboundSchema
+      ))),
+      cb_state: z.optional(z.nullable(types.string())),
+      content_type: types.optional(types.string()),
+      created_at: types.optional(types.string()),
+      deleted_at: z.optional(z.nullable(types.string())),
+      description: types.optional(types.string()),
+      events: types.optional(types.number()),
+      failure_count: z.optional(z.nullable(types.number())),
+      failure_rate: z.optional(z.nullable(types.number())),
+      http_timeout: types.optional(types.number()),
+      mtls_client_cert: z.optional(z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseMtlsClientCert$inboundSchema
+      ))),
+      name: types.optional(types.string()),
+      owner_id: types.optional(types.string()),
+      period_failure_rate: z.optional(z.nullable(types.number())),
+      project_id: types.optional(types.string()),
+      rate_limit: types.optional(types.number()),
+      rate_limit_duration: types.optional(types.number()),
+      retry_count: z.optional(z.nullable(types.number())),
+      secrets: types.optional(z.array(DatastoreSecret$inboundSchema)),
+      slack_webhook_url: types.optional(types.string()),
+      status: types.optional(DatastoreEndpointStatus$inboundSchema),
+      success_count: z.optional(z.nullable(types.number())),
+      support_email: types.optional(types.string()),
+      uid: types.optional(types.string()),
+      updated_at: types.optional(types.string()),
+      url: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "advanced_signatures": "advancedSignatures",
+        "cb_state": "cbState",
+        "content_type": "contentType",
+        "created_at": "createdAt",
+        "deleted_at": "deletedAt",
+        "failure_count": "failureCount",
+        "failure_rate": "failureRate",
+        "http_timeout": "httpTimeout",
+        "mtls_client_cert": "mtlsClientCert",
+        "owner_id": "ownerId",
+        "period_failure_rate": "periodFailureRate",
+        "project_id": "projectId",
+        "rate_limit": "rateLimit",
+        "rate_limit_duration": "rateLimitDuration",
+        "retry_count": "retryCount",
+        "slack_webhook_url": "slackWebhookUrl",
+        "success_count": "successCount",
+        "support_email": "supportEmail",
+        "updated_at": "updatedAt",
+      });
+    }),
+  );
+
+export function modelsSubscriptionResponseEndpointMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseEndpointMetadata,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseEndpointMetadata$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseEndpointMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const FilterConfig$inboundSchema: z.ZodMiniType<FilterConfig, unknown> =
+  z.pipe(
+    z.object({
+      event_types: types.optional(z.array(types.string())),
+      filter: types.optional(DatastoreFilterSchema$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "event_types": "eventTypes",
+      });
+    }),
+  );
+
+export function filterConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<FilterConfig, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => FilterConfig$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'FilterConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const RateLimitConfig$inboundSchema: z.ZodMiniType<
+  RateLimitConfig,
+  unknown
+> = z.object({
+  count: types.optional(types.number()),
+  duration: types.optional(types.number()),
+});
+
+export function rateLimitConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<RateLimitConfig, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => RateLimitConfig$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'RateLimitConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const RetryConfig$inboundSchema: z.ZodMiniType<RetryConfig, unknown> = z
+  .pipe(
+    z.object({
+      duration: types.optional(types.number()),
+      retry_count: types.optional(types.number()),
+      type: types.optional(DatastoreStrategyProvider$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "retry_count": "retryCount",
+      });
+    }),
+  );
+
+export function retryConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<RetryConfig, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => RetryConfig$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'RetryConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseTwitter$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseTwitter,
+  unknown
+> = z.pipe(
+  z.object({
+    crc_verified_at: z.optional(z.nullable(types.string())),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "crc_verified_at": "crcVerifiedAt",
+    });
+  }),
+);
+
+export function modelsSubscriptionResponseTwitterFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseTwitter, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSubscriptionResponseTwitter$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseTwitter' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseProviderConfig$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseProviderConfig, unknown> = z.object({
+    twitter: z.optional(
+      z.nullable(z.lazy(() => ModelsSubscriptionResponseTwitter$inboundSchema)),
+    ),
+  });
+
+export function modelsSubscriptionResponseProviderConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseProviderConfig,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseProviderConfig$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseProviderConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseAmqpAuth$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseAmqpAuth,
+  unknown
+> = z.object({
+  password: types.optional(types.string()),
+  user: types.optional(types.string()),
+});
+
+export function modelsSubscriptionResponseAmqpAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseAmqpAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseAmqpAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseAmqpAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseAmqp$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseAmqp,
+  unknown
+> = z.object({
+  host: types.optional(types.string()),
+  auth: z.optional(
+    z.nullable(z.lazy(() => ModelsSubscriptionResponseAmqpAuth$inboundSchema)),
+  ),
+  bindedExchange: z.optional(z.nullable(types.string())),
+  deadLetterExchange: z.optional(z.nullable(types.string())),
+  port: types.optional(types.string()),
+  queue: types.optional(types.string()),
+  routingKey: types.optional(types.string()),
+  schema: types.optional(types.string()),
+  vhost: z.optional(z.nullable(types.string())),
+});
+
+export function modelsSubscriptionResponseAmqpFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseAmqp, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSubscriptionResponseAmqp$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseAmqp' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseGoogle$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseGoogle,
+  unknown
+> = z.pipe(
+  z.object({
+    project_id: types.optional(types.string()),
+    service_account: types.optional(types.string()),
+    subscription_id: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "project_id": "projectId",
+      "service_account": "serviceAccount",
+      "subscription_id": "subscriptionId",
+    });
+  }),
+);
+
+export function modelsSubscriptionResponseGoogleFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseGoogle, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSubscriptionResponseGoogle$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseGoogle' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseKafkaAuth$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseKafkaAuth,
+  unknown
+> = z.object({
+  hash: types.optional(types.string()),
+  password: types.optional(types.string()),
+  tls: types.optional(types.boolean()),
+  type: types.optional(types.string()),
+  username: types.optional(types.string()),
+});
+
+export function modelsSubscriptionResponseKafkaAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseKafkaAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseKafkaAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseKafkaAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseKafka$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseKafka,
+  unknown
+> = z.pipe(
+  z.object({
+    auth: z.optional(
+      z.nullable(
+        z.lazy(() => ModelsSubscriptionResponseKafkaAuth$inboundSchema),
+      ),
+    ),
+    brokers: types.optional(z.array(types.string())),
+    consumer_group_id: types.optional(types.string()),
+    topic_name: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "consumer_group_id": "consumerGroupId",
+      "topic_name": "topicName",
+    });
+  }),
+);
+
+export function modelsSubscriptionResponseKafkaFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseKafka, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSubscriptionResponseKafka$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseKafka' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseSqs$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseSqs,
+  unknown
+> = z.pipe(
+  z.object({
+    access_key_id: types.optional(types.string()),
+    default_region: types.optional(types.string()),
+    endpoint: types.optional(types.string()),
+    queue_name: types.optional(types.string()),
+    secret_key: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "access_key_id": "accessKeyId",
+      "default_region": "defaultRegion",
+      "queue_name": "queueName",
+      "secret_key": "secretKey",
+    });
+  }),
+);
+
+export function modelsSubscriptionResponseSqsFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseSqs, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSubscriptionResponseSqs$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseSqs' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponsePubSub$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponsePubSub,
+  unknown
+> = z.object({
+  amqp: z.optional(
+    z.nullable(z.lazy(() => ModelsSubscriptionResponseAmqp$inboundSchema)),
+  ),
+  google: z.optional(
+    z.nullable(z.lazy(() => ModelsSubscriptionResponseGoogle$inboundSchema)),
+  ),
+  kafka: z.optional(
+    z.nullable(z.lazy(() => ModelsSubscriptionResponseKafka$inboundSchema)),
+  ),
+  sqs: z.optional(
+    z.nullable(z.lazy(() => ModelsSubscriptionResponseSqs$inboundSchema)),
+  ),
+  type: types.optional(DatastorePubSubType$inboundSchema),
+  workers: types.optional(types.number()),
+});
+
+export function modelsSubscriptionResponsePubSubFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponsePubSub, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSubscriptionResponsePubSub$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponsePubSub' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseSourceMetadataApiKey$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseSourceMetadataApiKey, unknown> = z
+    .pipe(
+      z.object({
+        header_name: types.optional(types.string()),
+        header_value: types.optional(types.string()),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          "header_name": "headerName",
+          "header_value": "headerValue",
+        });
+      }),
+    );
+
+export function modelsSubscriptionResponseSourceMetadataApiKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseSourceMetadataApiKey,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseSourceMetadataApiKey$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseSourceMetadataApiKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseSourceMetadataBasicAuth$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseSourceMetadataBasicAuth, unknown> = z
+    .object({
+      password: types.optional(types.string()),
+      username: types.optional(types.string()),
+    });
+
+export function modelsSubscriptionResponseSourceMetadataBasicAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseSourceMetadataBasicAuth,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseSourceMetadataBasicAuth$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseSourceMetadataBasicAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseHmac$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseHmac,
+  unknown
+> = z.object({
+  encoding: types.optional(DatastoreEncodingType$inboundSchema),
+  hash: types.optional(types.string()),
+  header: types.optional(types.string()),
+  secret: types.optional(types.string()),
+});
+
+export function modelsSubscriptionResponseHmacFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseHmac, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSubscriptionResponseHmac$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseHmac' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseVerifier$inboundSchema: z.ZodMiniType<
+  ModelsSubscriptionResponseVerifier,
+  unknown
+> = z.pipe(
+  z.object({
+    api_key: z.optional(z.nullable(z.lazy(() =>
+      ModelsSubscriptionResponseSourceMetadataApiKey$inboundSchema
+    ))),
+    basic_auth: z.optional(z.nullable(z.lazy(() =>
+      ModelsSubscriptionResponseSourceMetadataBasicAuth$inboundSchema
+    ))),
+    hmac: z.optional(z.nullable(z.lazy(() =>
+      ModelsSubscriptionResponseHmac$inboundSchema
+    ))),
+    type: types.optional(DatastoreVerifierType$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "api_key": "apiKey",
+      "basic_auth": "basicAuth",
+    });
+  }),
+);
+
+export function modelsSubscriptionResponseVerifierFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSubscriptionResponseVerifier, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseVerifier$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSubscriptionResponseVerifier' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSubscriptionResponseSourceMetadata$inboundSchema:
+  z.ZodMiniType<ModelsSubscriptionResponseSourceMetadata, unknown> = z.pipe(
+    z.object({
+      body_function: z.optional(z.nullable(types.string())),
+      created_at: types.optional(types.string()),
+      custom_response: types.optional(DatastoreCustomResponse$inboundSchema),
+      deleted_at: z.optional(z.nullable(types.string())),
+      event_type_location: types.optional(types.string()),
+      forward_headers: types.optional(z.array(types.string())),
+      header_function: z.optional(z.nullable(types.string())),
+      idempotency_keys: types.optional(z.array(types.string())),
+      is_disabled: types.optional(types.boolean()),
+      mask_id: types.optional(types.string()),
+      name: types.optional(types.string()),
+      project_id: types.optional(types.string()),
+      provider: types.optional(DatastoreSourceProvider$inboundSchema),
+      provider_config: z.optional(z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseProviderConfig$inboundSchema
+      ))),
+      pub_sub: z.optional(z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponsePubSub$inboundSchema
+      ))),
+      type: types.optional(DatastoreSourceType$inboundSchema),
+      uid: types.optional(types.string()),
+      updated_at: types.optional(types.string()),
+      url: types.optional(types.string()),
+      verifier: z.optional(z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseVerifier$inboundSchema
+      ))),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "body_function": "bodyFunction",
+        "created_at": "createdAt",
+        "custom_response": "customResponse",
+        "deleted_at": "deletedAt",
+        "event_type_location": "eventTypeLocation",
+        "forward_headers": "forwardHeaders",
+        "header_function": "headerFunction",
+        "idempotency_keys": "idempotencyKeys",
+        "is_disabled": "isDisabled",
+        "mask_id": "maskId",
+        "project_id": "projectId",
+        "provider_config": "providerConfig",
+        "pub_sub": "pubSub",
+        "updated_at": "updatedAt",
+      });
+    }),
+  );
+
+export function modelsSubscriptionResponseSourceMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsSubscriptionResponseSourceMetadata,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSubscriptionResponseSourceMetadata$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsSubscriptionResponseSourceMetadata' from JSON`,
+  );
+}
 
 /** @internal */
 export const ModelsSubscriptionResponse$inboundSchema: z.ZodMiniType<
@@ -74,21 +1323,39 @@ export const ModelsSubscriptionResponse$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    alert_config: types.optional(DatastoreAlertConfiguration$inboundSchema),
+    alert_config: z.optional(
+      z.nullable(z.lazy(() => AlertConfig$inboundSchema)),
+    ),
     created_at: types.optional(types.string()),
-    deleted_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
     delivery_mode: types.optional(DatastoreDeliveryMode$inboundSchema),
-    device_metadata: types.optional(DatastoreDevice$inboundSchema),
-    endpoint_metadata: types.optional(DatastoreEndpoint$inboundSchema),
-    filter_config: types.optional(DatastoreFilterConfiguration$inboundSchema),
-    function: types.optional(types.string()),
+    device_metadata: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseDeviceMetadata$inboundSchema
+      )),
+    ),
+    endpoint_metadata: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseEndpointMetadata$inboundSchema
+      )),
+    ),
+    filter_config: z.optional(
+      z.nullable(z.lazy(() => FilterConfig$inboundSchema)),
+    ),
+    function: z.optional(z.nullable(types.string())),
     name: types.optional(types.string()),
     project_id: types.optional(types.string()),
-    rate_limit_config: types.optional(
-      DatastoreRateLimitConfiguration$inboundSchema,
+    rate_limit_config: z.optional(
+      z.nullable(z.lazy(() => RateLimitConfig$inboundSchema)),
     ),
-    retry_config: types.optional(DatastoreRetryConfiguration$inboundSchema),
-    source_metadata: types.optional(DatastoreSource$inboundSchema),
+    retry_config: z.optional(
+      z.nullable(z.lazy(() => RetryConfig$inboundSchema)),
+    ),
+    source_metadata: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsSubscriptionResponseSourceMetadata$inboundSchema
+      )),
+    ),
     type: types.optional(DatastoreSubscriptionType$inboundSchema),
     uid: types.optional(types.string()),
     updated_at: types.optional(types.string()),

@@ -6,18 +6,18 @@
 import * as z from "zod/v4-mini";
 
 export type ModelsFS = {
-  body?: { [k: string]: any } | undefined;
-  headers?: { [k: string]: any } | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
+  body?: { [k: string]: any } | null | undefined;
+  headers?: { [k: string]: any } | null | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
 export type ModelsFS$Outbound = {
-  body?: { [k: string]: any } | undefined;
-  headers?: { [k: string]: any } | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
+  body?: { [k: string]: any } | null | undefined;
+  headers?: { [k: string]: any } | null | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
@@ -25,10 +25,10 @@ export const ModelsFS$outboundSchema: z.ZodMiniType<
   ModelsFS$Outbound,
   ModelsFS
 > = z.object({
-  body: z.optional(z.record(z.string(), z.any())),
-  headers: z.optional(z.record(z.string(), z.any())),
-  path: z.optional(z.record(z.string(), z.any())),
-  query: z.optional(z.record(z.string(), z.any())),
+  body: z.optional(z.nullable(z.record(z.string(), z.any()))),
+  headers: z.optional(z.nullable(z.record(z.string(), z.any()))),
+  path: z.optional(z.nullable(z.record(z.string(), z.any()))),
+  query: z.optional(z.nullable(z.record(z.string(), z.any()))),
 });
 
 export function modelsFSToJSON(modelsFS: ModelsFS): string {

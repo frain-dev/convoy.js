@@ -27,7 +27,7 @@ This endpoint fetches an endpoints
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -58,7 +58,7 @@ import { endpointsGetEndpoints } from "convoy.js/funcs/endpoints-get-endpoints.j
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -115,7 +115,7 @@ This endpoint creates an endpoint
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -138,7 +138,7 @@ import { endpointsCreateEndpoint } from "convoy.js/funcs/endpoints-create-endpoi
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -188,7 +188,7 @@ This endpoint tests the OAuth2 connection by attempting to exchange a token
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -211,7 +211,7 @@ import { endpointsTestOAuth2Connection } from "convoy.js/funcs/endpoints-test-o-
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -261,7 +261,7 @@ This endpoint deletes an endpoint
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -284,7 +284,7 @@ import { endpointsDeleteEndpoint } from "convoy.js/funcs/endpoints-delete-endpoi
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -334,7 +334,7 @@ This endpoint fetches an endpoint
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -357,7 +357,7 @@ import { endpointsGetEndpoint } from "convoy.js/funcs/endpoints-get-endpoint.js"
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -407,7 +407,7 @@ This endpoint updates an endpoint
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -430,7 +430,7 @@ import { endpointsUpdateEndpoint } from "convoy.js/funcs/endpoints-update-endpoi
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -481,7 +481,7 @@ Activated an inactive endpoint
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -504,7 +504,7 @@ import { endpointsActivateEndpoint } from "convoy.js/funcs/endpoints-activate-en
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -554,7 +554,7 @@ This endpoint expires and re-generates the endpoint secret.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -577,7 +577,7 @@ import { endpointsExpireSecret } from "convoy.js/funcs/endpoints-expire-secret.j
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -628,7 +628,7 @@ Toggles an endpoint's status between active and paused states
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -651,7 +651,7 @@ import { endpointsPauseEndpoint } from "convoy.js/funcs/endpoints-pause-endpoint
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {

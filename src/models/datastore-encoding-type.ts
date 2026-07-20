@@ -10,6 +10,7 @@ import { OpenEnum } from "../types/enums.js";
 export const DatastoreEncodingType = {
   Base64: "base64",
   Hex: "hex",
+  Unknown: "",
 } as const;
 export type DatastoreEncodingType = OpenEnum<typeof DatastoreEncodingType>;
 

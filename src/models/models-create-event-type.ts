@@ -18,7 +18,7 @@ export type ModelsCreateEventType = {
   /**
    * JSONSchema is the JSON structure of the event type
    */
-  jsonSchema?: { [k: string]: any } | undefined;
+  jsonSchema?: { [k: string]: any } | null | undefined;
   /**
    * Name is the event type name. E.g., invoice.created
    */
@@ -29,7 +29,7 @@ export type ModelsCreateEventType = {
 export type ModelsCreateEventType$Outbound = {
   category?: string | undefined;
   description?: string | undefined;
-  json_schema?: { [k: string]: any } | undefined;
+  json_schema?: { [k: string]: any } | null | undefined;
   name?: string | undefined;
 };
 
@@ -41,7 +41,7 @@ export const ModelsCreateEventType$outboundSchema: z.ZodMiniType<
   z.object({
     category: z.optional(z.string()),
     description: z.optional(z.string()),
-    jsonSchema: z.optional(z.record(z.string(), z.any())),
+    jsonSchema: z.optional(z.nullable(z.record(z.string(), z.any()))),
     name: z.optional(z.string()),
   }),
   z.transform((v) => {

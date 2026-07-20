@@ -10,6 +10,7 @@ import { OpenEnum } from "../types/enums.js";
 export const DatastoreStrategyProvider = {
   Linear: "linear",
   Exponential: "exponential",
+  Unknown: "",
 } as const;
 export type DatastoreStrategyProvider = OpenEnum<
   typeof DatastoreStrategyProvider

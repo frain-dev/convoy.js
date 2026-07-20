@@ -11,6 +11,7 @@ export const DatastoreSourceProvider = {
   Github: "github",
   Twitter: "twitter",
   Shopify: "shopify",
+  Unknown: "",
 } as const;
 export type DatastoreSourceProvider = OpenEnum<typeof DatastoreSourceProvider>;
 

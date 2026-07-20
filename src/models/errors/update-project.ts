@@ -5,7 +5,6 @@
 
 import * as z from "zod/v4-mini";
 import * as types from "../../types/primitives.js";
-import * as models from "../index.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
@@ -14,7 +13,7 @@ import { ConvoyError } from "./convoy-error.js";
 export type UpdateProjectNotFoundErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -22,7 +21,7 @@ export type UpdateProjectNotFoundErrorData = {
  */
 export class UpdateProjectNotFoundError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: UpdateProjectNotFoundErrorData;
@@ -47,7 +46,7 @@ export class UpdateProjectNotFoundError extends ConvoyError {
 export type UpdateProjectForbiddenErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -55,7 +54,7 @@ export type UpdateProjectForbiddenErrorData = {
  */
 export class UpdateProjectForbiddenError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: UpdateProjectForbiddenErrorData;
@@ -80,7 +79,7 @@ export class UpdateProjectForbiddenError extends ConvoyError {
 export type UpdateProjectUnauthorizedErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -88,7 +87,7 @@ export type UpdateProjectUnauthorizedErrorData = {
  */
 export class UpdateProjectUnauthorizedError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: UpdateProjectUnauthorizedErrorData;
@@ -113,7 +112,7 @@ export class UpdateProjectUnauthorizedError extends ConvoyError {
 export type UpdateProjectBadRequestErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -121,7 +120,7 @@ export type UpdateProjectBadRequestErrorData = {
  */
 export class UpdateProjectBadRequestError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: UpdateProjectBadRequestErrorData;
@@ -148,7 +147,7 @@ export const UpdateProjectNotFoundError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),
@@ -170,7 +169,7 @@ export const UpdateProjectForbiddenError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),
@@ -192,7 +191,7 @@ export const UpdateProjectUnauthorizedError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),
@@ -214,7 +213,7 @@ export const UpdateProjectBadRequestError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),

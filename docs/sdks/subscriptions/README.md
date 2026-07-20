@@ -27,7 +27,7 @@ This endpoint validates that a filter will match a certain payload structure.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -50,7 +50,7 @@ import { subscriptionsPostV1ProjectsProjectIDSourcesTestFunction } from "convoy.
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -100,7 +100,7 @@ This endpoint fetches all the subscriptions
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -129,7 +129,7 @@ import { subscriptionsGetSubscriptions } from "convoy.js/funcs/subscriptions-get
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -184,7 +184,7 @@ This endpoint creates a subscriptions
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -207,7 +207,7 @@ import { subscriptionsCreateSubscription } from "convoy.js/funcs/subscriptions-c
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -257,7 +257,7 @@ This endpoint validates that a filter will match a certain payload structure.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -280,7 +280,7 @@ import { subscriptionsTestSubscriptionFilter } from "convoy.js/funcs/subscriptio
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -330,7 +330,7 @@ This endpoint test runs a transform function against a payload.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -353,7 +353,7 @@ import { subscriptionsTestSubscriptionFunction } from "convoy.js/funcs/subscript
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -403,7 +403,7 @@ This endpoint deletes a subscription
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -426,7 +426,7 @@ import { subscriptionsDeleteSubscription } from "convoy.js/funcs/subscriptions-d
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -476,7 +476,7 @@ This endpoint retrieves a single subscription
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -499,7 +499,7 @@ import { subscriptionsGetSubscription } from "convoy.js/funcs/subscriptions-get-
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -549,7 +549,7 @@ This endpoint updates a subscription
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -572,7 +572,7 @@ import { subscriptionsUpdateSubscription } from "convoy.js/funcs/subscriptions-u
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -623,7 +623,7 @@ This endpoint toggles a subscription status. Retained for backward compatibility
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -646,7 +646,7 @@ import { subscriptionsToggleSubscriptionStatus } from "convoy.js/funcs/subscript
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
