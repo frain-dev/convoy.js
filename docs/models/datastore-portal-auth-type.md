@@ -13,5 +13,5 @@ let value: DatastorePortalAuthType = "refresh_token";
 ## Values
 
 ```typescript
-"refresh_token" | "static_token" | Unrecognized<string>
+"refresh_token" | "static_token" | "" | Unrecognized<string>
 ```

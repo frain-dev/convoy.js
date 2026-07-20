@@ -24,7 +24,7 @@ This endpoint fetches multiple portal links
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -55,7 +55,7 @@ import { portalLinksLoadPortalLinksPaged } from "convoy.js/funcs/portal-links-lo
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -112,7 +112,7 @@ This endpoint creates a portal link
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -135,7 +135,7 @@ import { portalLinksCreatePortalLink } from "convoy.js/funcs/portal-links-create
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -185,7 +185,7 @@ This endpoint retrieves a portal link by its id.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -208,7 +208,7 @@ import { portalLinksGetPortalLink } from "convoy.js/funcs/portal-links-get-porta
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -258,7 +258,7 @@ This endpoint updates a portal link
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -281,7 +281,7 @@ import { portalLinksUpdatePortalLink } from "convoy.js/funcs/portal-links-update
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -332,7 +332,7 @@ This endpoint retrieves a portal link auth token
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -355,7 +355,7 @@ import { portalLinksRefreshPortalLinkAuthToken } from "convoy.js/funcs/portal-li
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -405,7 +405,7 @@ This endpoint revokes a portal link
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -428,7 +428,7 @@ import { portalLinksRevokePortalLink } from "convoy.js/funcs/portal-links-revoke
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {

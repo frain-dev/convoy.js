@@ -10,14 +10,14 @@ export type ModelsDynamicEvent = {
   /**
    * Specifies custom headers you want convoy to add when the event is dispatched to your endpoint
    */
-  customHeaders?: { [k: string]: string } | undefined;
+  customHeaders?: { [k: string]: string } | null | undefined;
   /**
    * Data is an arbitrary JSON value that gets sent as the body of the
    *
    * @remarks
    * webhook to the endpoints
    */
-  data?: { [k: string]: any } | undefined;
+  data?: { [k: string]: any } | null | undefined;
   /**
    * Event Type is used for filtering and debugging e.g invoice.paid
    */
@@ -45,8 +45,8 @@ export type ModelsDynamicEvent = {
 
 /** @internal */
 export type ModelsDynamicEvent$Outbound = {
-  custom_headers?: { [k: string]: string } | undefined;
-  data?: { [k: string]: any } | undefined;
+  custom_headers?: { [k: string]: string } | null | undefined;
+  data?: { [k: string]: any } | null | undefined;
   event_type?: string | undefined;
   event_types?: Array<string> | undefined;
   idempotency_key?: string | undefined;
@@ -60,8 +60,8 @@ export const ModelsDynamicEvent$outboundSchema: z.ZodMiniType<
   ModelsDynamicEvent
 > = z.pipe(
   z.object({
-    customHeaders: z.optional(z.record(z.string(), z.string())),
-    data: z.optional(z.record(z.string(), z.any())),
+    customHeaders: z.optional(z.nullable(z.record(z.string(), z.string()))),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     eventType: z.optional(z.string()),
     eventTypes: z.optional(z.array(z.string())),
     idempotencyKey: z.optional(z.string()),

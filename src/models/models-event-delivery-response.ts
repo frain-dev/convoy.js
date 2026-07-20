@@ -9,17 +9,29 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  DatastoreCLIMetadata,
-  DatastoreCLIMetadata$inboundSchema,
-} from "./datastore-cli-metadata.js";
+  DatastoreCustomResponse,
+  DatastoreCustomResponse$inboundSchema,
+} from "./datastore-custom-response.js";
 import {
   DatastoreDeliveryMode,
   DatastoreDeliveryMode$inboundSchema,
 } from "./datastore-delivery-mode.js";
 import {
-  DatastoreDevice,
-  DatastoreDevice$inboundSchema,
-} from "./datastore-device.js";
+  DatastoreDeviceStatus,
+  DatastoreDeviceStatus$inboundSchema,
+} from "./datastore-device-status.js";
+import {
+  DatastoreEncodingType,
+  DatastoreEncodingType$inboundSchema,
+} from "./datastore-encoding-type.js";
+import {
+  DatastoreEndpointAuthenticationType,
+  DatastoreEndpointAuthenticationType$inboundSchema,
+} from "./datastore-endpoint-authentication-type.js";
+import {
+  DatastoreEndpointStatus,
+  DatastoreEndpointStatus$inboundSchema,
+} from "./datastore-endpoint-status.js";
 import {
   DatastoreEndpoint,
   DatastoreEndpoint$inboundSchema,
@@ -29,43 +41,567 @@ import {
   DatastoreEventDeliveryStatus$inboundSchema,
 } from "./datastore-event-delivery-status.js";
 import {
-  DatastoreEvent,
-  DatastoreEvent$inboundSchema,
-} from "./datastore-event.js";
+  DatastoreEventStatus,
+  DatastoreEventStatus$inboundSchema,
+} from "./datastore-event-status.js";
 import {
-  DatastoreMetadata,
-  DatastoreMetadata$inboundSchema,
-} from "./datastore-metadata.js";
+  DatastoreOAuth2AuthenticationType,
+  DatastoreOAuth2AuthenticationType$inboundSchema,
+} from "./datastore-o-auth2-authentication-type.js";
 import {
-  DatastoreSource,
-  DatastoreSource$inboundSchema,
-} from "./datastore-source.js";
+  DatastoreOAuth2ExpiryTimeUnit,
+  DatastoreOAuth2ExpiryTimeUnit$inboundSchema,
+} from "./datastore-o-auth2-expiry-time-unit.js";
+import {
+  DatastorePubSubType,
+  DatastorePubSubType$inboundSchema,
+} from "./datastore-pub-sub-type.js";
+import {
+  DatastoreSecret,
+  DatastoreSecret$inboundSchema,
+} from "./datastore-secret.js";
+import {
+  DatastoreSourceProvider,
+  DatastoreSourceProvider$inboundSchema,
+} from "./datastore-source-provider.js";
+import {
+  DatastoreSourceType,
+  DatastoreSourceType$inboundSchema,
+} from "./datastore-source-type.js";
+import {
+  DatastoreStrategyProvider,
+  DatastoreStrategyProvider$inboundSchema,
+} from "./datastore-strategy-provider.js";
+import {
+  DatastoreVerifierType,
+  DatastoreVerifierType$inboundSchema,
+} from "./datastore-verifier-type.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export type ModelsEventDeliveryResponse = {
-  acknowledgedAt?: string | undefined;
-  cliMetadata?: DatastoreCLIMetadata | undefined;
+export type CliMetadata = {
+  eventType?: string | undefined;
+  sourceId?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseDeviceMetadata = {
   createdAt?: string | undefined;
-  deletedAt?: string | undefined;
+  deletedAt?: string | null | undefined;
+  endpointId?: string | undefined;
+  hostName?: string | undefined;
+  lastSeenAt?: string | undefined;
+  projectId?: string | undefined;
+  status?: DatastoreDeviceStatus | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseEndpointMetadataApiKey = {
+  headerName?: string | undefined;
+  headerValue?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseEndpointMetadataBasicAuth = {
+  password?: string | undefined;
+  username?: string | undefined;
+};
+
+/**
+ * Field mapping for flexible token response parsing
+ */
+export type ModelsEventDeliveryResponseFieldMapping = {
+  /**
+   * Field name for access token (e.g., "accessToken", "access_token", "token")
+   */
+  accessToken?: string | undefined;
+  /**
+   * Field name for expiry time (e.g., "expiresIn", "expires_in", "expiresAt")
+   */
+  expiresIn?: string | undefined;
+  /**
+   * Field name for token type (e.g., "tokenType", "token_type")
+   */
+  tokenType?: string | undefined;
+};
+
+/**
+ * Encrypted at rest
+ */
+export type ModelsEventDeliveryResponseSigningKey = {
+  /**
+   * EC (Elliptic Curve) key fields
+   */
+  crv?: string | undefined;
+  /**
+   * Private key (EC only)
+   */
+  d?: string | undefined;
+  /**
+   * RSA first factor CRT exponent (RSA private key only)
+   */
+  dp?: string | undefined;
+  /**
+   * RSA second factor CRT exponent (RSA private key only)
+   */
+  dq?: string | undefined;
+  /**
+   * RSA public exponent (RSA only)
+   */
+  e?: string | undefined;
+  /**
+   * Key ID
+   */
+  kid?: string | undefined;
+  /**
+   * Key type: "EC" or "RSA"
+   */
+  kty?: string | undefined;
+  /**
+   * RSA key fields
+   */
+  n?: string | undefined;
+  /**
+   * RSA first prime factor (RSA private key only)
+   */
+  p?: string | undefined;
+  /**
+   * RSA second prime factor (RSA private key only)
+   */
+  q?: string | undefined;
+  /**
+   * RSA first CRT coefficient (RSA private key only)
+   */
+  qi?: string | undefined;
+  /**
+   * X coordinate (EC only)
+   */
+  x?: string | undefined;
+  /**
+   * Y coordinate (EC only)
+   */
+  y?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseOauth2 = {
+  audience?: string | undefined;
+  authenticationType?: DatastoreOAuth2AuthenticationType | undefined;
+  clientId?: string | undefined;
+  /**
+   * Encrypted at rest
+   */
+  clientSecret?: string | undefined;
+  /**
+   * Expiry time unit (seconds, milliseconds, minutes, hours)
+   */
+  expiryTimeUnit?: DatastoreOAuth2ExpiryTimeUnit | undefined;
+  /**
+   * Field mapping for flexible token response parsing
+   */
+  fieldMapping?: ModelsEventDeliveryResponseFieldMapping | null | undefined;
+  grantType?: string | undefined;
+  issuer?: string | undefined;
+  scope?: string | undefined;
+  signingAlgorithm?: string | undefined;
+  /**
+   * Encrypted at rest
+   */
+  signingKey?: ModelsEventDeliveryResponseSigningKey | null | undefined;
+  subject?: string | undefined;
+  url?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseAuthentication = {
+  apiKey?: ModelsEventDeliveryResponseEndpointMetadataApiKey | null | undefined;
+  basicAuth?:
+    | ModelsEventDeliveryResponseEndpointMetadataBasicAuth
+    | null
+    | undefined;
+  oauth2?: ModelsEventDeliveryResponseOauth2 | null | undefined;
+  type?: DatastoreEndpointAuthenticationType | undefined;
+};
+
+/**
+ * mTLS client certificate configuration
+ */
+export type ModelsEventDeliveryResponseMtlsClientCert = {
+  /**
+   * ClientCert is the client certificate PEM string
+   */
+  clientCert?: string | undefined;
+  /**
+   * ClientKey is the client private key PEM string
+   */
+  clientKey?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseEndpointMetadata = {
+  advancedSignatures?: boolean | undefined;
+  authentication?: ModelsEventDeliveryResponseAuthentication | null | undefined;
+  /**
+   * CBState is the circuit breaker state ("open", "half-open", "closed") so the UI
+   *
+   * @remarks
+   * can reflect a tripped breaker on the endpoint status. Nil when CB is
+   * off/unlicensed or has no sample for this endpoint.
+   */
+  cbState?: string | null | undefined;
+  contentType?: string | undefined;
+  createdAt?: string | undefined;
+  deletedAt?: string | null | undefined;
+  description?: string | undefined;
+  events?: number | undefined;
+  failureCount?: number | null | undefined;
+  /**
+   * FailureRate is the circuit breaker's rolling failure rate for this endpoint.
+   *
+   * @remarks
+   * It is a pointer so the API can return null when no rate was computed (circuit
+   * breaker feature off, or sampler not running), distinct from a genuine 0%.
+   */
+  failureRate?: number | null | undefined;
+  httpTimeout?: number | undefined;
+  /**
+   * mTLS client certificate configuration
+   */
+  mtlsClientCert?: ModelsEventDeliveryResponseMtlsClientCert | null | undefined;
+  name?: string | undefined;
+  ownerId?: string | undefined;
+  /**
+   * PeriodFailureRate is the period failure rate from event_deliveries,
+   *
+   * @remarks
+   * (Failure+Retry)/(Success+Failure+Retry). Retry counts as failed-so-far.
+   * Nil when the range has no counted deliveries; sibling counts are transient.
+   */
+  periodFailureRate?: number | null | undefined;
+  projectId?: string | undefined;
+  rateLimit?: number | undefined;
+  rateLimitDuration?: number | undefined;
+  retryCount?: number | null | undefined;
+  secrets?: Array<DatastoreSecret> | undefined;
+  slackWebhookUrl?: string | undefined;
+  status?: DatastoreEndpointStatus | undefined;
+  successCount?: number | null | undefined;
+  supportEmail?: string | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+  url?: string | undefined;
+};
+
+export type EventMetadataTwitter = {
+  crcVerifiedAt?: string | null | undefined;
+};
+
+export type EventMetadataProviderConfig = {
+  twitter?: EventMetadataTwitter | null | undefined;
+};
+
+export type EventMetadataAmqpAuth = {
+  password?: string | undefined;
+  user?: string | undefined;
+};
+
+export type EventMetadataAmqp = {
+  host?: string | undefined;
+  auth?: EventMetadataAmqpAuth | null | undefined;
+  bindedExchange?: string | null | undefined;
+  deadLetterExchange?: string | null | undefined;
+  port?: string | undefined;
+  queue?: string | undefined;
+  routingKey?: string | undefined;
+  schema?: string | undefined;
+  vhost?: string | null | undefined;
+};
+
+export type EventMetadataGoogle = {
+  projectId?: string | undefined;
+  /**
+   * encoding/json marshals []byte as a base64 string on the wire.
+   */
+  serviceAccount?: string | undefined;
+  subscriptionId?: string | undefined;
+};
+
+export type EventMetadataKafkaAuth = {
+  hash?: string | undefined;
+  password?: string | undefined;
+  tls?: boolean | undefined;
+  type?: string | undefined;
+  username?: string | undefined;
+};
+
+export type EventMetadataKafka = {
+  auth?: EventMetadataKafkaAuth | null | undefined;
+  brokers?: Array<string> | undefined;
+  consumerGroupId?: string | undefined;
+  topicName?: string | undefined;
+};
+
+export type EventMetadataSqs = {
+  accessKeyId?: string | undefined;
+  defaultRegion?: string | undefined;
+  /**
+   * Optional: for LocalStack testing
+   */
+  endpoint?: string | undefined;
+  queueName?: string | undefined;
+  secretKey?: string | undefined;
+};
+
+export type EventMetadataPubSub = {
+  amqp?: EventMetadataAmqp | null | undefined;
+  google?: EventMetadataGoogle | null | undefined;
+  kafka?: EventMetadataKafka | null | undefined;
+  sqs?: EventMetadataSqs | null | undefined;
+  type?: DatastorePubSubType | undefined;
+  workers?: number | undefined;
+};
+
+export type EventMetadataApiKey = {
+  headerName?: string | undefined;
+  headerValue?: string | undefined;
+};
+
+export type EventMetadataBasicAuth = {
+  password?: string | undefined;
+  username?: string | undefined;
+};
+
+export type EventMetadataHmac = {
+  encoding?: DatastoreEncodingType | undefined;
+  hash?: string | undefined;
+  header?: string | undefined;
+  secret?: string | undefined;
+};
+
+export type EventMetadataVerifier = {
+  apiKey?: EventMetadataApiKey | null | undefined;
+  basicAuth?: EventMetadataBasicAuth | null | undefined;
+  hmac?: EventMetadataHmac | null | undefined;
+  type?: DatastoreVerifierType | undefined;
+};
+
+export type EventMetadataSourceMetadata = {
+  bodyFunction?: string | null | undefined;
+  createdAt?: string | undefined;
+  customResponse?: DatastoreCustomResponse | undefined;
+  deletedAt?: string | null | undefined;
+  eventTypeLocation?: string | undefined;
+  forwardHeaders?: Array<string> | undefined;
+  headerFunction?: string | null | undefined;
+  idempotencyKeys?: Array<string> | undefined;
+  isDisabled?: boolean | undefined;
+  maskId?: string | undefined;
+  name?: string | undefined;
+  projectId?: string | undefined;
+  provider?: DatastoreSourceProvider | undefined;
+  providerConfig?: EventMetadataProviderConfig | null | undefined;
+  pubSub?: EventMetadataPubSub | null | undefined;
+  type?: DatastoreSourceType | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+  url?: string | undefined;
+  verifier?: EventMetadataVerifier | null | undefined;
+};
+
+export type EventMetadata = {
+  acknowledgedAt?: string | null | undefined;
+  /**
+   * Deprecated
+   */
+  appId?: string | undefined;
+  createdAt?: string | undefined;
+  /**
+   * Data is an arbitrary JSON value that gets sent as the body of the
+   *
+   * @remarks
+   * webhook to the endpoints
+   */
+  data?: { [k: string]: any } | null | undefined;
+  deletedAt?: string | null | undefined;
+  endpointMetadata?: Array<DatastoreEndpoint> | undefined;
+  endpoints?: Array<string> | undefined;
+  eventType?: string | undefined;
+  headers?: { [k: string]: Array<string> } | null | undefined;
+  idempotencyKey?: string | undefined;
+  isDuplicateEvent?: boolean | undefined;
+  metadata?: string | undefined;
+  projectId?: string | undefined;
+  raw?: string | undefined;
+  sourceId?: string | undefined;
+  sourceMetadata?: EventMetadataSourceMetadata | null | undefined;
+  status?: DatastoreEventStatus | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+  urlPath?: string | undefined;
+  urlQueryParams?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseMetadata = {
+  /**
+   * Data to be sent to endpoint.
+   */
+  data?: { [k: string]: any } | null | undefined;
+  intervalSeconds?: number | undefined;
+  maxRetrySeconds?: number | undefined;
+  nextSendTime?: string | undefined;
+  /**
+   * NumTrials: number of times we have tried to deliver this Event to
+   *
+   * @remarks
+   * an application
+   */
+  numTrials?: number | undefined;
+  raw?: string | undefined;
+  retryLimit?: number | undefined;
+  strategy?: DatastoreStrategyProvider | undefined;
+};
+
+export type ModelsEventDeliveryResponseTwitter = {
+  crcVerifiedAt?: string | null | undefined;
+};
+
+export type ModelsEventDeliveryResponseProviderConfig = {
+  twitter?: ModelsEventDeliveryResponseTwitter | null | undefined;
+};
+
+export type ModelsEventDeliveryResponseAmqpAuth = {
+  password?: string | undefined;
+  user?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseAmqp = {
+  host?: string | undefined;
+  auth?: ModelsEventDeliveryResponseAmqpAuth | null | undefined;
+  bindedExchange?: string | null | undefined;
+  deadLetterExchange?: string | null | undefined;
+  port?: string | undefined;
+  queue?: string | undefined;
+  routingKey?: string | undefined;
+  schema?: string | undefined;
+  vhost?: string | null | undefined;
+};
+
+export type ModelsEventDeliveryResponseGoogle = {
+  projectId?: string | undefined;
+  /**
+   * encoding/json marshals []byte as a base64 string on the wire.
+   */
+  serviceAccount?: string | undefined;
+  subscriptionId?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseKafkaAuth = {
+  hash?: string | undefined;
+  password?: string | undefined;
+  tls?: boolean | undefined;
+  type?: string | undefined;
+  username?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseKafka = {
+  auth?: ModelsEventDeliveryResponseKafkaAuth | null | undefined;
+  brokers?: Array<string> | undefined;
+  consumerGroupId?: string | undefined;
+  topicName?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseSqs = {
+  accessKeyId?: string | undefined;
+  defaultRegion?: string | undefined;
+  /**
+   * Optional: for LocalStack testing
+   */
+  endpoint?: string | undefined;
+  queueName?: string | undefined;
+  secretKey?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponsePubSub = {
+  amqp?: ModelsEventDeliveryResponseAmqp | null | undefined;
+  google?: ModelsEventDeliveryResponseGoogle | null | undefined;
+  kafka?: ModelsEventDeliveryResponseKafka | null | undefined;
+  sqs?: ModelsEventDeliveryResponseSqs | null | undefined;
+  type?: DatastorePubSubType | undefined;
+  workers?: number | undefined;
+};
+
+export type ModelsEventDeliveryResponseSourceMetadataApiKey = {
+  headerName?: string | undefined;
+  headerValue?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseSourceMetadataBasicAuth = {
+  password?: string | undefined;
+  username?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseHmac = {
+  encoding?: DatastoreEncodingType | undefined;
+  hash?: string | undefined;
+  header?: string | undefined;
+  secret?: string | undefined;
+};
+
+export type ModelsEventDeliveryResponseVerifier = {
+  apiKey?: ModelsEventDeliveryResponseSourceMetadataApiKey | null | undefined;
+  basicAuth?:
+    | ModelsEventDeliveryResponseSourceMetadataBasicAuth
+    | null
+    | undefined;
+  hmac?: ModelsEventDeliveryResponseHmac | null | undefined;
+  type?: DatastoreVerifierType | undefined;
+};
+
+export type ModelsEventDeliveryResponseSourceMetadata = {
+  bodyFunction?: string | null | undefined;
+  createdAt?: string | undefined;
+  customResponse?: DatastoreCustomResponse | undefined;
+  deletedAt?: string | null | undefined;
+  eventTypeLocation?: string | undefined;
+  forwardHeaders?: Array<string> | undefined;
+  headerFunction?: string | null | undefined;
+  idempotencyKeys?: Array<string> | undefined;
+  isDisabled?: boolean | undefined;
+  maskId?: string | undefined;
+  name?: string | undefined;
+  projectId?: string | undefined;
+  provider?: DatastoreSourceProvider | undefined;
+  providerConfig?: ModelsEventDeliveryResponseProviderConfig | null | undefined;
+  pubSub?: ModelsEventDeliveryResponsePubSub | null | undefined;
+  type?: DatastoreSourceType | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+  url?: string | undefined;
+  verifier?: ModelsEventDeliveryResponseVerifier | null | undefined;
+};
+
+export type ModelsEventDeliveryResponse = {
+  acknowledgedAt?: string | null | undefined;
+  cliMetadata?: CliMetadata | null | undefined;
+  createdAt?: string | undefined;
+  deletedAt?: string | null | undefined;
   deliveryMode?: DatastoreDeliveryMode | undefined;
   description?: string | undefined;
   deviceId?: string | undefined;
-  deviceMetadata?: DatastoreDevice | undefined;
+  deviceMetadata?: ModelsEventDeliveryResponseDeviceMetadata | null | undefined;
   endpointId?: string | undefined;
-  endpointMetadata?: DatastoreEndpoint | undefined;
+  endpointMetadata?:
+    | ModelsEventDeliveryResponseEndpointMetadata
+    | null
+    | undefined;
   eventId?: string | undefined;
-  eventMetadata?: DatastoreEvent | undefined;
+  eventMetadata?: EventMetadata | null | undefined;
   eventType?: string | undefined;
-  headers?: { [k: string]: Array<string> } | undefined;
+  headers?: { [k: string]: Array<string> } | null | undefined;
   idempotencyKey?: string | undefined;
   /**
    * Deprecated: Latency is deprecated.
    */
   latency?: string | undefined;
   latencySeconds?: number | undefined;
-  metadata?: DatastoreMetadata | undefined;
+  metadata?: ModelsEventDeliveryResponseMetadata | null | undefined;
   projectId?: string | undefined;
-  sourceMetadata?: DatastoreSource | undefined;
+  sourceMetadata?: ModelsEventDeliveryResponseSourceMetadata | null | undefined;
   status?: DatastoreEventDeliveryStatus | undefined;
   subscriptionId?: string | undefined;
   targetUrl?: string | undefined;
@@ -75,31 +611,1363 @@ export type ModelsEventDeliveryResponse = {
 };
 
 /** @internal */
+export const CliMetadata$inboundSchema: z.ZodMiniType<CliMetadata, unknown> = z
+  .pipe(
+    z.object({
+      event_type: types.optional(types.string()),
+      source_id: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "event_type": "eventType",
+        "source_id": "sourceId",
+      });
+    }),
+  );
+
+export function cliMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<CliMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CliMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CliMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseDeviceMetadata$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseDeviceMetadata, unknown> = z.pipe(
+    z.object({
+      created_at: types.optional(types.string()),
+      deleted_at: z.optional(z.nullable(types.string())),
+      endpoint_id: types.optional(types.string()),
+      host_name: types.optional(types.string()),
+      last_seen_at: types.optional(types.string()),
+      project_id: types.optional(types.string()),
+      status: types.optional(DatastoreDeviceStatus$inboundSchema),
+      uid: types.optional(types.string()),
+      updated_at: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "created_at": "createdAt",
+        "deleted_at": "deletedAt",
+        "endpoint_id": "endpointId",
+        "host_name": "hostName",
+        "last_seen_at": "lastSeenAt",
+        "project_id": "projectId",
+        "updated_at": "updatedAt",
+      });
+    }),
+  );
+
+export function modelsEventDeliveryResponseDeviceMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseDeviceMetadata,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseDeviceMetadata$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseDeviceMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseEndpointMetadataApiKey$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseEndpointMetadataApiKey, unknown> = z
+    .pipe(
+      z.object({
+        header_name: types.optional(types.string()),
+        header_value: types.optional(types.string()),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          "header_name": "headerName",
+          "header_value": "headerValue",
+        });
+      }),
+    );
+
+export function modelsEventDeliveryResponseEndpointMetadataApiKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseEndpointMetadataApiKey,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseEndpointMetadataApiKey$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseEndpointMetadataApiKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseEndpointMetadataBasicAuth$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseEndpointMetadataBasicAuth, unknown> =
+    z.object({
+      password: types.optional(types.string()),
+      username: types.optional(types.string()),
+    });
+
+export function modelsEventDeliveryResponseEndpointMetadataBasicAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseEndpointMetadataBasicAuth,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseEndpointMetadataBasicAuth$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseEndpointMetadataBasicAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseFieldMapping$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseFieldMapping, unknown> = z.pipe(
+    z.object({
+      access_token: types.optional(types.string()),
+      expires_in: types.optional(types.string()),
+      token_type: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "access_token": "accessToken",
+        "expires_in": "expiresIn",
+        "token_type": "tokenType",
+      });
+    }),
+  );
+
+export function modelsEventDeliveryResponseFieldMappingFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseFieldMapping,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseFieldMapping$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseFieldMapping' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseSigningKey$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseSigningKey,
+  unknown
+> = z.object({
+  crv: types.optional(types.string()),
+  d: types.optional(types.string()),
+  dp: types.optional(types.string()),
+  dq: types.optional(types.string()),
+  e: types.optional(types.string()),
+  kid: types.optional(types.string()),
+  kty: types.optional(types.string()),
+  n: types.optional(types.string()),
+  p: types.optional(types.string()),
+  q: types.optional(types.string()),
+  qi: types.optional(types.string()),
+  x: types.optional(types.string()),
+  y: types.optional(types.string()),
+});
+
+export function modelsEventDeliveryResponseSigningKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseSigningKey, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseSigningKey$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseSigningKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseOauth2$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseOauth2,
+  unknown
+> = z.pipe(
+  z.object({
+    audience: types.optional(types.string()),
+    authentication_type: types.optional(
+      DatastoreOAuth2AuthenticationType$inboundSchema,
+    ),
+    client_id: types.optional(types.string()),
+    client_secret: types.optional(types.string()),
+    expiry_time_unit: types.optional(
+      DatastoreOAuth2ExpiryTimeUnit$inboundSchema,
+    ),
+    field_mapping: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseFieldMapping$inboundSchema
+      )),
+    ),
+    grant_type: types.optional(types.string()),
+    issuer: types.optional(types.string()),
+    scope: types.optional(types.string()),
+    signing_algorithm: types.optional(types.string()),
+    signing_key: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseSigningKey$inboundSchema
+      )),
+    ),
+    subject: types.optional(types.string()),
+    url: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "authentication_type": "authenticationType",
+      "client_id": "clientId",
+      "client_secret": "clientSecret",
+      "expiry_time_unit": "expiryTimeUnit",
+      "field_mapping": "fieldMapping",
+      "grant_type": "grantType",
+      "signing_algorithm": "signingAlgorithm",
+      "signing_key": "signingKey",
+    });
+  }),
+);
+
+export function modelsEventDeliveryResponseOauth2FromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseOauth2, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsEventDeliveryResponseOauth2$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseOauth2' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseAuthentication$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseAuthentication, unknown> = z.pipe(
+    z.object({
+      api_key: z.optional(z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseEndpointMetadataApiKey$inboundSchema
+      ))),
+      basic_auth: z.optional(z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseEndpointMetadataBasicAuth$inboundSchema
+      ))),
+      oauth2: z.optional(z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseOauth2$inboundSchema
+      ))),
+      type: types.optional(DatastoreEndpointAuthenticationType$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "api_key": "apiKey",
+        "basic_auth": "basicAuth",
+      });
+    }),
+  );
+
+export function modelsEventDeliveryResponseAuthenticationFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseAuthentication,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseAuthentication$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseAuthentication' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseMtlsClientCert$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseMtlsClientCert, unknown> = z.pipe(
+    z.object({
+      client_cert: types.optional(types.string()),
+      client_key: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "client_cert": "clientCert",
+        "client_key": "clientKey",
+      });
+    }),
+  );
+
+export function modelsEventDeliveryResponseMtlsClientCertFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseMtlsClientCert,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseMtlsClientCert$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseMtlsClientCert' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseEndpointMetadata$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseEndpointMetadata, unknown> = z.pipe(
+    z.object({
+      advanced_signatures: types.optional(types.boolean()),
+      authentication: z.optional(z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseAuthentication$inboundSchema
+      ))),
+      cb_state: z.optional(z.nullable(types.string())),
+      content_type: types.optional(types.string()),
+      created_at: types.optional(types.string()),
+      deleted_at: z.optional(z.nullable(types.string())),
+      description: types.optional(types.string()),
+      events: types.optional(types.number()),
+      failure_count: z.optional(z.nullable(types.number())),
+      failure_rate: z.optional(z.nullable(types.number())),
+      http_timeout: types.optional(types.number()),
+      mtls_client_cert: z.optional(z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseMtlsClientCert$inboundSchema
+      ))),
+      name: types.optional(types.string()),
+      owner_id: types.optional(types.string()),
+      period_failure_rate: z.optional(z.nullable(types.number())),
+      project_id: types.optional(types.string()),
+      rate_limit: types.optional(types.number()),
+      rate_limit_duration: types.optional(types.number()),
+      retry_count: z.optional(z.nullable(types.number())),
+      secrets: types.optional(z.array(DatastoreSecret$inboundSchema)),
+      slack_webhook_url: types.optional(types.string()),
+      status: types.optional(DatastoreEndpointStatus$inboundSchema),
+      success_count: z.optional(z.nullable(types.number())),
+      support_email: types.optional(types.string()),
+      uid: types.optional(types.string()),
+      updated_at: types.optional(types.string()),
+      url: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "advanced_signatures": "advancedSignatures",
+        "cb_state": "cbState",
+        "content_type": "contentType",
+        "created_at": "createdAt",
+        "deleted_at": "deletedAt",
+        "failure_count": "failureCount",
+        "failure_rate": "failureRate",
+        "http_timeout": "httpTimeout",
+        "mtls_client_cert": "mtlsClientCert",
+        "owner_id": "ownerId",
+        "period_failure_rate": "periodFailureRate",
+        "project_id": "projectId",
+        "rate_limit": "rateLimit",
+        "rate_limit_duration": "rateLimitDuration",
+        "retry_count": "retryCount",
+        "slack_webhook_url": "slackWebhookUrl",
+        "success_count": "successCount",
+        "support_email": "supportEmail",
+        "updated_at": "updatedAt",
+      });
+    }),
+  );
+
+export function modelsEventDeliveryResponseEndpointMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseEndpointMetadata,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseEndpointMetadata$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseEndpointMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataTwitter$inboundSchema: z.ZodMiniType<
+  EventMetadataTwitter,
+  unknown
+> = z.pipe(
+  z.object({
+    crc_verified_at: z.optional(z.nullable(types.string())),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "crc_verified_at": "crcVerifiedAt",
+    });
+  }),
+);
+
+export function eventMetadataTwitterFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataTwitter, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataTwitter$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataTwitter' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataProviderConfig$inboundSchema: z.ZodMiniType<
+  EventMetadataProviderConfig,
+  unknown
+> = z.object({
+  twitter: z.optional(
+    z.nullable(z.lazy(() => EventMetadataTwitter$inboundSchema)),
+  ),
+});
+
+export function eventMetadataProviderConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataProviderConfig, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataProviderConfig$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataProviderConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataAmqpAuth$inboundSchema: z.ZodMiniType<
+  EventMetadataAmqpAuth,
+  unknown
+> = z.object({
+  password: types.optional(types.string()),
+  user: types.optional(types.string()),
+});
+
+export function eventMetadataAmqpAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataAmqpAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataAmqpAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataAmqpAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataAmqp$inboundSchema: z.ZodMiniType<
+  EventMetadataAmqp,
+  unknown
+> = z.object({
+  host: types.optional(types.string()),
+  auth: z.optional(
+    z.nullable(z.lazy(() => EventMetadataAmqpAuth$inboundSchema)),
+  ),
+  bindedExchange: z.optional(z.nullable(types.string())),
+  deadLetterExchange: z.optional(z.nullable(types.string())),
+  port: types.optional(types.string()),
+  queue: types.optional(types.string()),
+  routingKey: types.optional(types.string()),
+  schema: types.optional(types.string()),
+  vhost: z.optional(z.nullable(types.string())),
+});
+
+export function eventMetadataAmqpFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataAmqp, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataAmqp$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataAmqp' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataGoogle$inboundSchema: z.ZodMiniType<
+  EventMetadataGoogle,
+  unknown
+> = z.pipe(
+  z.object({
+    project_id: types.optional(types.string()),
+    service_account: types.optional(types.string()),
+    subscription_id: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "project_id": "projectId",
+      "service_account": "serviceAccount",
+      "subscription_id": "subscriptionId",
+    });
+  }),
+);
+
+export function eventMetadataGoogleFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataGoogle, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataGoogle$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataGoogle' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataKafkaAuth$inboundSchema: z.ZodMiniType<
+  EventMetadataKafkaAuth,
+  unknown
+> = z.object({
+  hash: types.optional(types.string()),
+  password: types.optional(types.string()),
+  tls: types.optional(types.boolean()),
+  type: types.optional(types.string()),
+  username: types.optional(types.string()),
+});
+
+export function eventMetadataKafkaAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataKafkaAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataKafkaAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataKafkaAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataKafka$inboundSchema: z.ZodMiniType<
+  EventMetadataKafka,
+  unknown
+> = z.pipe(
+  z.object({
+    auth: z.optional(
+      z.nullable(z.lazy(() => EventMetadataKafkaAuth$inboundSchema)),
+    ),
+    brokers: types.optional(z.array(types.string())),
+    consumer_group_id: types.optional(types.string()),
+    topic_name: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "consumer_group_id": "consumerGroupId",
+      "topic_name": "topicName",
+    });
+  }),
+);
+
+export function eventMetadataKafkaFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataKafka, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataKafka$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataKafka' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataSqs$inboundSchema: z.ZodMiniType<
+  EventMetadataSqs,
+  unknown
+> = z.pipe(
+  z.object({
+    access_key_id: types.optional(types.string()),
+    default_region: types.optional(types.string()),
+    endpoint: types.optional(types.string()),
+    queue_name: types.optional(types.string()),
+    secret_key: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "access_key_id": "accessKeyId",
+      "default_region": "defaultRegion",
+      "queue_name": "queueName",
+      "secret_key": "secretKey",
+    });
+  }),
+);
+
+export function eventMetadataSqsFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataSqs, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataSqs$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataSqs' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataPubSub$inboundSchema: z.ZodMiniType<
+  EventMetadataPubSub,
+  unknown
+> = z.object({
+  amqp: z.optional(z.nullable(z.lazy(() => EventMetadataAmqp$inboundSchema))),
+  google: z.optional(
+    z.nullable(z.lazy(() => EventMetadataGoogle$inboundSchema)),
+  ),
+  kafka: z.optional(z.nullable(z.lazy(() => EventMetadataKafka$inboundSchema))),
+  sqs: z.optional(z.nullable(z.lazy(() => EventMetadataSqs$inboundSchema))),
+  type: types.optional(DatastorePubSubType$inboundSchema),
+  workers: types.optional(types.number()),
+});
+
+export function eventMetadataPubSubFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataPubSub, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataPubSub$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataPubSub' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataApiKey$inboundSchema: z.ZodMiniType<
+  EventMetadataApiKey,
+  unknown
+> = z.pipe(
+  z.object({
+    header_name: types.optional(types.string()),
+    header_value: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "header_name": "headerName",
+      "header_value": "headerValue",
+    });
+  }),
+);
+
+export function eventMetadataApiKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataApiKey, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataApiKey$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataApiKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataBasicAuth$inboundSchema: z.ZodMiniType<
+  EventMetadataBasicAuth,
+  unknown
+> = z.object({
+  password: types.optional(types.string()),
+  username: types.optional(types.string()),
+});
+
+export function eventMetadataBasicAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataBasicAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataBasicAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataBasicAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataHmac$inboundSchema: z.ZodMiniType<
+  EventMetadataHmac,
+  unknown
+> = z.object({
+  encoding: types.optional(DatastoreEncodingType$inboundSchema),
+  hash: types.optional(types.string()),
+  header: types.optional(types.string()),
+  secret: types.optional(types.string()),
+});
+
+export function eventMetadataHmacFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataHmac, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataHmac$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataHmac' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataVerifier$inboundSchema: z.ZodMiniType<
+  EventMetadataVerifier,
+  unknown
+> = z.pipe(
+  z.object({
+    api_key: z.optional(
+      z.nullable(z.lazy(() => EventMetadataApiKey$inboundSchema)),
+    ),
+    basic_auth: z.optional(
+      z.nullable(z.lazy(() => EventMetadataBasicAuth$inboundSchema)),
+    ),
+    hmac: z.optional(z.nullable(z.lazy(() => EventMetadataHmac$inboundSchema))),
+    type: types.optional(DatastoreVerifierType$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "api_key": "apiKey",
+      "basic_auth": "basicAuth",
+    });
+  }),
+);
+
+export function eventMetadataVerifierFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataVerifier, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataVerifier$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataVerifier' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadataSourceMetadata$inboundSchema: z.ZodMiniType<
+  EventMetadataSourceMetadata,
+  unknown
+> = z.pipe(
+  z.object({
+    body_function: z.optional(z.nullable(types.string())),
+    created_at: types.optional(types.string()),
+    custom_response: types.optional(DatastoreCustomResponse$inboundSchema),
+    deleted_at: z.optional(z.nullable(types.string())),
+    event_type_location: types.optional(types.string()),
+    forward_headers: types.optional(z.array(types.string())),
+    header_function: z.optional(z.nullable(types.string())),
+    idempotency_keys: types.optional(z.array(types.string())),
+    is_disabled: types.optional(types.boolean()),
+    mask_id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    project_id: types.optional(types.string()),
+    provider: types.optional(DatastoreSourceProvider$inboundSchema),
+    provider_config: z.optional(
+      z.nullable(z.lazy(() => EventMetadataProviderConfig$inboundSchema)),
+    ),
+    pub_sub: z.optional(
+      z.nullable(z.lazy(() => EventMetadataPubSub$inboundSchema)),
+    ),
+    type: types.optional(DatastoreSourceType$inboundSchema),
+    uid: types.optional(types.string()),
+    updated_at: types.optional(types.string()),
+    url: types.optional(types.string()),
+    verifier: z.optional(
+      z.nullable(z.lazy(() => EventMetadataVerifier$inboundSchema)),
+    ),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "body_function": "bodyFunction",
+      "created_at": "createdAt",
+      "custom_response": "customResponse",
+      "deleted_at": "deletedAt",
+      "event_type_location": "eventTypeLocation",
+      "forward_headers": "forwardHeaders",
+      "header_function": "headerFunction",
+      "idempotency_keys": "idempotencyKeys",
+      "is_disabled": "isDisabled",
+      "mask_id": "maskId",
+      "project_id": "projectId",
+      "provider_config": "providerConfig",
+      "pub_sub": "pubSub",
+      "updated_at": "updatedAt",
+    });
+  }),
+);
+
+export function eventMetadataSourceMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadataSourceMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadataSourceMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadataSourceMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const EventMetadata$inboundSchema: z.ZodMiniType<
+  EventMetadata,
+  unknown
+> = z.pipe(
+  z.object({
+    acknowledged_at: z.optional(z.nullable(types.string())),
+    app_id: types.optional(types.string()),
+    created_at: types.optional(types.string()),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    deleted_at: z.optional(z.nullable(types.string())),
+    endpoint_metadata: types.optional(z.array(DatastoreEndpoint$inboundSchema)),
+    endpoints: types.optional(z.array(types.string())),
+    event_type: types.optional(types.string()),
+    headers: z.optional(
+      z.nullable(z.record(z.string(), z.array(types.string()))),
+    ),
+    idempotency_key: types.optional(types.string()),
+    is_duplicate_event: types.optional(types.boolean()),
+    metadata: types.optional(types.string()),
+    project_id: types.optional(types.string()),
+    raw: types.optional(types.string()),
+    source_id: types.optional(types.string()),
+    source_metadata: z.optional(
+      z.nullable(z.lazy(() => EventMetadataSourceMetadata$inboundSchema)),
+    ),
+    status: types.optional(DatastoreEventStatus$inboundSchema),
+    uid: types.optional(types.string()),
+    updated_at: types.optional(types.string()),
+    url_path: types.optional(types.string()),
+    url_query_params: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "acknowledged_at": "acknowledgedAt",
+      "app_id": "appId",
+      "created_at": "createdAt",
+      "deleted_at": "deletedAt",
+      "endpoint_metadata": "endpointMetadata",
+      "event_type": "eventType",
+      "idempotency_key": "idempotencyKey",
+      "is_duplicate_event": "isDuplicateEvent",
+      "project_id": "projectId",
+      "source_id": "sourceId",
+      "source_metadata": "sourceMetadata",
+      "updated_at": "updatedAt",
+      "url_path": "urlPath",
+      "url_query_params": "urlQueryParams",
+    });
+  }),
+);
+
+export function eventMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<EventMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EventMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EventMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseMetadata$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseMetadata,
+  unknown
+> = z.pipe(
+  z.object({
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    interval_seconds: types.optional(types.number()),
+    max_retry_seconds: types.optional(types.number()),
+    next_send_time: types.optional(types.string()),
+    num_trials: types.optional(types.number()),
+    raw: types.optional(types.string()),
+    retry_limit: types.optional(types.number()),
+    strategy: types.optional(DatastoreStrategyProvider$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "interval_seconds": "intervalSeconds",
+      "max_retry_seconds": "maxRetrySeconds",
+      "next_send_time": "nextSendTime",
+      "num_trials": "numTrials",
+      "retry_limit": "retryLimit",
+    });
+  }),
+);
+
+export function modelsEventDeliveryResponseMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseTwitter$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseTwitter,
+  unknown
+> = z.pipe(
+  z.object({
+    crc_verified_at: z.optional(z.nullable(types.string())),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "crc_verified_at": "crcVerifiedAt",
+    });
+  }),
+);
+
+export function modelsEventDeliveryResponseTwitterFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseTwitter, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseTwitter$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseTwitter' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseProviderConfig$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseProviderConfig, unknown> = z.object({
+    twitter: z.optional(
+      z.nullable(
+        z.lazy(() => ModelsEventDeliveryResponseTwitter$inboundSchema),
+      ),
+    ),
+  });
+
+export function modelsEventDeliveryResponseProviderConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseProviderConfig,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseProviderConfig$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseProviderConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseAmqpAuth$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseAmqpAuth,
+  unknown
+> = z.object({
+  password: types.optional(types.string()),
+  user: types.optional(types.string()),
+});
+
+export function modelsEventDeliveryResponseAmqpAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseAmqpAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseAmqpAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseAmqpAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseAmqp$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseAmqp,
+  unknown
+> = z.object({
+  host: types.optional(types.string()),
+  auth: z.optional(
+    z.nullable(z.lazy(() => ModelsEventDeliveryResponseAmqpAuth$inboundSchema)),
+  ),
+  bindedExchange: z.optional(z.nullable(types.string())),
+  deadLetterExchange: z.optional(z.nullable(types.string())),
+  port: types.optional(types.string()),
+  queue: types.optional(types.string()),
+  routingKey: types.optional(types.string()),
+  schema: types.optional(types.string()),
+  vhost: z.optional(z.nullable(types.string())),
+});
+
+export function modelsEventDeliveryResponseAmqpFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseAmqp, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsEventDeliveryResponseAmqp$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseAmqp' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseGoogle$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseGoogle,
+  unknown
+> = z.pipe(
+  z.object({
+    project_id: types.optional(types.string()),
+    service_account: types.optional(types.string()),
+    subscription_id: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "project_id": "projectId",
+      "service_account": "serviceAccount",
+      "subscription_id": "subscriptionId",
+    });
+  }),
+);
+
+export function modelsEventDeliveryResponseGoogleFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseGoogle, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsEventDeliveryResponseGoogle$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseGoogle' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseKafkaAuth$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseKafkaAuth,
+  unknown
+> = z.object({
+  hash: types.optional(types.string()),
+  password: types.optional(types.string()),
+  tls: types.optional(types.boolean()),
+  type: types.optional(types.string()),
+  username: types.optional(types.string()),
+});
+
+export function modelsEventDeliveryResponseKafkaAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseKafkaAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseKafkaAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseKafkaAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseKafka$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseKafka,
+  unknown
+> = z.pipe(
+  z.object({
+    auth: z.optional(z.nullable(z.lazy(() =>
+      ModelsEventDeliveryResponseKafkaAuth$inboundSchema
+    ))),
+    brokers: types.optional(z.array(types.string())),
+    consumer_group_id: types.optional(types.string()),
+    topic_name: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "consumer_group_id": "consumerGroupId",
+      "topic_name": "topicName",
+    });
+  }),
+);
+
+export function modelsEventDeliveryResponseKafkaFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseKafka, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsEventDeliveryResponseKafka$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseKafka' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseSqs$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseSqs,
+  unknown
+> = z.pipe(
+  z.object({
+    access_key_id: types.optional(types.string()),
+    default_region: types.optional(types.string()),
+    endpoint: types.optional(types.string()),
+    queue_name: types.optional(types.string()),
+    secret_key: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "access_key_id": "accessKeyId",
+      "default_region": "defaultRegion",
+      "queue_name": "queueName",
+      "secret_key": "secretKey",
+    });
+  }),
+);
+
+export function modelsEventDeliveryResponseSqsFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseSqs, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsEventDeliveryResponseSqs$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseSqs' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponsePubSub$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponsePubSub,
+  unknown
+> = z.object({
+  amqp: z.optional(
+    z.nullable(z.lazy(() => ModelsEventDeliveryResponseAmqp$inboundSchema)),
+  ),
+  google: z.optional(
+    z.nullable(z.lazy(() => ModelsEventDeliveryResponseGoogle$inboundSchema)),
+  ),
+  kafka: z.optional(
+    z.nullable(z.lazy(() => ModelsEventDeliveryResponseKafka$inboundSchema)),
+  ),
+  sqs: z.optional(
+    z.nullable(z.lazy(() => ModelsEventDeliveryResponseSqs$inboundSchema)),
+  ),
+  type: types.optional(DatastorePubSubType$inboundSchema),
+  workers: types.optional(types.number()),
+});
+
+export function modelsEventDeliveryResponsePubSubFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponsePubSub, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsEventDeliveryResponsePubSub$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponsePubSub' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseSourceMetadataApiKey$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseSourceMetadataApiKey, unknown> = z
+    .pipe(
+      z.object({
+        header_name: types.optional(types.string()),
+        header_value: types.optional(types.string()),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          "header_name": "headerName",
+          "header_value": "headerValue",
+        });
+      }),
+    );
+
+export function modelsEventDeliveryResponseSourceMetadataApiKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseSourceMetadataApiKey,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseSourceMetadataApiKey$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseSourceMetadataApiKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseSourceMetadataBasicAuth$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseSourceMetadataBasicAuth, unknown> = z
+    .object({
+      password: types.optional(types.string()),
+      username: types.optional(types.string()),
+    });
+
+export function modelsEventDeliveryResponseSourceMetadataBasicAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseSourceMetadataBasicAuth,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseSourceMetadataBasicAuth$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseSourceMetadataBasicAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseHmac$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseHmac,
+  unknown
+> = z.object({
+  encoding: types.optional(DatastoreEncodingType$inboundSchema),
+  hash: types.optional(types.string()),
+  header: types.optional(types.string()),
+  secret: types.optional(types.string()),
+});
+
+export function modelsEventDeliveryResponseHmacFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseHmac, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsEventDeliveryResponseHmac$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseHmac' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseVerifier$inboundSchema: z.ZodMiniType<
+  ModelsEventDeliveryResponseVerifier,
+  unknown
+> = z.pipe(
+  z.object({
+    api_key: z.optional(z.nullable(z.lazy(() =>
+      ModelsEventDeliveryResponseSourceMetadataApiKey$inboundSchema
+    ))),
+    basic_auth: z.optional(z.nullable(z.lazy(() =>
+      ModelsEventDeliveryResponseSourceMetadataBasicAuth$inboundSchema
+    ))),
+    hmac: z.optional(z.nullable(z.lazy(() =>
+      ModelsEventDeliveryResponseHmac$inboundSchema
+    ))),
+    type: types.optional(DatastoreVerifierType$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "api_key": "apiKey",
+      "basic_auth": "basicAuth",
+    });
+  }),
+);
+
+export function modelsEventDeliveryResponseVerifierFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsEventDeliveryResponseVerifier, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseVerifier$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsEventDeliveryResponseVerifier' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsEventDeliveryResponseSourceMetadata$inboundSchema:
+  z.ZodMiniType<ModelsEventDeliveryResponseSourceMetadata, unknown> = z.pipe(
+    z.object({
+      body_function: z.optional(z.nullable(types.string())),
+      created_at: types.optional(types.string()),
+      custom_response: types.optional(DatastoreCustomResponse$inboundSchema),
+      deleted_at: z.optional(z.nullable(types.string())),
+      event_type_location: types.optional(types.string()),
+      forward_headers: types.optional(z.array(types.string())),
+      header_function: z.optional(z.nullable(types.string())),
+      idempotency_keys: types.optional(z.array(types.string())),
+      is_disabled: types.optional(types.boolean()),
+      mask_id: types.optional(types.string()),
+      name: types.optional(types.string()),
+      project_id: types.optional(types.string()),
+      provider: types.optional(DatastoreSourceProvider$inboundSchema),
+      provider_config: z.optional(z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseProviderConfig$inboundSchema
+      ))),
+      pub_sub: z.optional(z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponsePubSub$inboundSchema
+      ))),
+      type: types.optional(DatastoreSourceType$inboundSchema),
+      uid: types.optional(types.string()),
+      updated_at: types.optional(types.string()),
+      url: types.optional(types.string()),
+      verifier: z.optional(z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseVerifier$inboundSchema
+      ))),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "body_function": "bodyFunction",
+        "created_at": "createdAt",
+        "custom_response": "customResponse",
+        "deleted_at": "deletedAt",
+        "event_type_location": "eventTypeLocation",
+        "forward_headers": "forwardHeaders",
+        "header_function": "headerFunction",
+        "idempotency_keys": "idempotencyKeys",
+        "is_disabled": "isDisabled",
+        "mask_id": "maskId",
+        "project_id": "projectId",
+        "provider_config": "providerConfig",
+        "pub_sub": "pubSub",
+        "updated_at": "updatedAt",
+      });
+    }),
+  );
+
+export function modelsEventDeliveryResponseSourceMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ModelsEventDeliveryResponseSourceMetadata,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsEventDeliveryResponseSourceMetadata$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ModelsEventDeliveryResponseSourceMetadata' from JSON`,
+  );
+}
+
+/** @internal */
 export const ModelsEventDeliveryResponse$inboundSchema: z.ZodMiniType<
   ModelsEventDeliveryResponse,
   unknown
 > = z.pipe(
   z.object({
-    acknowledged_at: types.optional(types.string()),
-    cli_metadata: types.optional(DatastoreCLIMetadata$inboundSchema),
+    acknowledged_at: z.optional(z.nullable(types.string())),
+    cli_metadata: z.optional(
+      z.nullable(z.lazy(() => CliMetadata$inboundSchema)),
+    ),
     created_at: types.optional(types.string()),
-    deleted_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
     delivery_mode: types.optional(DatastoreDeliveryMode$inboundSchema),
     description: types.optional(types.string()),
     device_id: types.optional(types.string()),
-    device_metadata: types.optional(DatastoreDevice$inboundSchema),
+    device_metadata: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseDeviceMetadata$inboundSchema
+      )),
+    ),
     endpoint_id: types.optional(types.string()),
-    endpoint_metadata: types.optional(DatastoreEndpoint$inboundSchema),
+    endpoint_metadata: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseEndpointMetadata$inboundSchema
+      )),
+    ),
     event_id: types.optional(types.string()),
-    event_metadata: types.optional(DatastoreEvent$inboundSchema),
+    event_metadata: z.optional(
+      z.nullable(z.lazy(() => EventMetadata$inboundSchema)),
+    ),
     event_type: types.optional(types.string()),
-    headers: types.optional(z.record(z.string(), z.array(types.string()))),
+    headers: z.optional(
+      z.nullable(z.record(z.string(), z.array(types.string()))),
+    ),
     idempotency_key: types.optional(types.string()),
     latency: types.optional(types.string()),
     latency_seconds: types.optional(types.number()),
-    metadata: types.optional(DatastoreMetadata$inboundSchema),
+    metadata: z.optional(
+      z.nullable(
+        z.lazy(() => ModelsEventDeliveryResponseMetadata$inboundSchema),
+      ),
+    ),
     project_id: types.optional(types.string()),
-    source_metadata: types.optional(DatastoreSource$inboundSchema),
+    source_metadata: z.optional(
+      z.nullable(z.lazy(() =>
+        ModelsEventDeliveryResponseSourceMetadata$inboundSchema
+      )),
+    ),
     status: types.optional(DatastoreEventDeliveryStatus$inboundSchema),
     subscription_id: types.optional(types.string()),
     target_url: types.optional(types.string()),

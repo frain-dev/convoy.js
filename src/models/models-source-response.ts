@@ -13,13 +13,13 @@ import {
   DatastoreCustomResponse$inboundSchema,
 } from "./datastore-custom-response.js";
 import {
-  DatastoreProviderConfig,
-  DatastoreProviderConfig$inboundSchema,
-} from "./datastore-provider-config.js";
+  DatastoreEncodingType,
+  DatastoreEncodingType$inboundSchema,
+} from "./datastore-encoding-type.js";
 import {
-  DatastorePubSubConfig,
-  DatastorePubSubConfig$inboundSchema,
-} from "./datastore-pub-sub-config.js";
+  DatastorePubSubType,
+  DatastorePubSubType$inboundSchema,
+} from "./datastore-pub-sub-type.js";
 import {
   DatastoreSourceProvider,
   DatastoreSourceProvider$inboundSchema,
@@ -29,33 +29,466 @@ import {
   DatastoreSourceType$inboundSchema,
 } from "./datastore-source-type.js";
 import {
-  DatastoreVerifierConfig,
-  DatastoreVerifierConfig$inboundSchema,
-} from "./datastore-verifier-config.js";
+  DatastoreVerifierType,
+  DatastoreVerifierType$inboundSchema,
+} from "./datastore-verifier-type.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+export type ModelsSourceResponseTwitter = {
+  crcVerifiedAt?: string | null | undefined;
+};
+
+export type ModelsSourceResponseProviderConfig = {
+  twitter?: ModelsSourceResponseTwitter | null | undefined;
+};
+
+export type ModelsSourceResponseAmqpAuth = {
+  password?: string | undefined;
+  user?: string | undefined;
+};
+
+export type ModelsSourceResponseAmqp = {
+  host?: string | undefined;
+  auth?: ModelsSourceResponseAmqpAuth | null | undefined;
+  bindedExchange?: string | null | undefined;
+  deadLetterExchange?: string | null | undefined;
+  port?: string | undefined;
+  queue?: string | undefined;
+  routingKey?: string | undefined;
+  schema?: string | undefined;
+  vhost?: string | null | undefined;
+};
+
+export type ModelsSourceResponseGoogle = {
+  projectId?: string | undefined;
+  /**
+   * encoding/json marshals []byte as a base64 string on the wire.
+   */
+  serviceAccount?: string | undefined;
+  subscriptionId?: string | undefined;
+};
+
+export type ModelsSourceResponseKafkaAuth = {
+  hash?: string | undefined;
+  password?: string | undefined;
+  tls?: boolean | undefined;
+  type?: string | undefined;
+  username?: string | undefined;
+};
+
+export type ModelsSourceResponseKafka = {
+  auth?: ModelsSourceResponseKafkaAuth | null | undefined;
+  brokers?: Array<string> | undefined;
+  consumerGroupId?: string | undefined;
+  topicName?: string | undefined;
+};
+
+export type ModelsSourceResponseSqs = {
+  accessKeyId?: string | undefined;
+  defaultRegion?: string | undefined;
+  /**
+   * Optional: for LocalStack testing
+   */
+  endpoint?: string | undefined;
+  queueName?: string | undefined;
+  secretKey?: string | undefined;
+};
+
+export type ModelsSourceResponsePubSub = {
+  amqp?: ModelsSourceResponseAmqp | null | undefined;
+  google?: ModelsSourceResponseGoogle | null | undefined;
+  kafka?: ModelsSourceResponseKafka | null | undefined;
+  sqs?: ModelsSourceResponseSqs | null | undefined;
+  type?: DatastorePubSubType | undefined;
+  workers?: number | undefined;
+};
+
+export type ModelsSourceResponseApiKey = {
+  headerName?: string | undefined;
+  headerValue?: string | undefined;
+};
+
+export type ModelsSourceResponseBasicAuth = {
+  password?: string | undefined;
+  username?: string | undefined;
+};
+
+export type ModelsSourceResponseHmac = {
+  encoding?: DatastoreEncodingType | undefined;
+  hash?: string | undefined;
+  header?: string | undefined;
+  secret?: string | undefined;
+};
+
+export type ModelsSourceResponseVerifier = {
+  apiKey?: ModelsSourceResponseApiKey | null | undefined;
+  basicAuth?: ModelsSourceResponseBasicAuth | null | undefined;
+  hmac?: ModelsSourceResponseHmac | null | undefined;
+  type?: DatastoreVerifierType | undefined;
+};
+
 export type ModelsSourceResponse = {
-  bodyFunction?: string | undefined;
+  bodyFunction?: string | null | undefined;
   createdAt?: string | undefined;
   customResponse?: DatastoreCustomResponse | undefined;
-  deletedAt?: string | undefined;
+  deletedAt?: string | null | undefined;
   eventTypeLocation?: string | undefined;
   forwardHeaders?: Array<string> | undefined;
-  headerFunction?: string | undefined;
+  headerFunction?: string | null | undefined;
   idempotencyKeys?: Array<string> | undefined;
   isDisabled?: boolean | undefined;
   maskId?: string | undefined;
   name?: string | undefined;
   projectId?: string | undefined;
   provider?: DatastoreSourceProvider | undefined;
-  providerConfig?: DatastoreProviderConfig | undefined;
-  pubSub?: DatastorePubSubConfig | undefined;
+  providerConfig?: ModelsSourceResponseProviderConfig | null | undefined;
+  pubSub?: ModelsSourceResponsePubSub | null | undefined;
   type?: DatastoreSourceType | undefined;
   uid?: string | undefined;
   updatedAt?: string | undefined;
   url?: string | undefined;
-  verifier?: DatastoreVerifierConfig | undefined;
+  verifier?: ModelsSourceResponseVerifier | null | undefined;
 };
+
+/** @internal */
+export const ModelsSourceResponseTwitter$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseTwitter,
+  unknown
+> = z.pipe(
+  z.object({
+    crc_verified_at: z.optional(z.nullable(types.string())),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "crc_verified_at": "crcVerifiedAt",
+    });
+  }),
+);
+
+export function modelsSourceResponseTwitterFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseTwitter, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseTwitter$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseTwitter' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseProviderConfig$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseProviderConfig,
+  unknown
+> = z.object({
+  twitter: z.optional(
+    z.nullable(z.lazy(() => ModelsSourceResponseTwitter$inboundSchema)),
+  ),
+});
+
+export function modelsSourceResponseProviderConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseProviderConfig, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsSourceResponseProviderConfig$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseProviderConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseAmqpAuth$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseAmqpAuth,
+  unknown
+> = z.object({
+  password: types.optional(types.string()),
+  user: types.optional(types.string()),
+});
+
+export function modelsSourceResponseAmqpAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseAmqpAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseAmqpAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseAmqpAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseAmqp$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseAmqp,
+  unknown
+> = z.object({
+  host: types.optional(types.string()),
+  auth: z.optional(
+    z.nullable(z.lazy(() => ModelsSourceResponseAmqpAuth$inboundSchema)),
+  ),
+  bindedExchange: z.optional(z.nullable(types.string())),
+  deadLetterExchange: z.optional(z.nullable(types.string())),
+  port: types.optional(types.string()),
+  queue: types.optional(types.string()),
+  routingKey: types.optional(types.string()),
+  schema: types.optional(types.string()),
+  vhost: z.optional(z.nullable(types.string())),
+});
+
+export function modelsSourceResponseAmqpFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseAmqp, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseAmqp$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseAmqp' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseGoogle$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseGoogle,
+  unknown
+> = z.pipe(
+  z.object({
+    project_id: types.optional(types.string()),
+    service_account: types.optional(types.string()),
+    subscription_id: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "project_id": "projectId",
+      "service_account": "serviceAccount",
+      "subscription_id": "subscriptionId",
+    });
+  }),
+);
+
+export function modelsSourceResponseGoogleFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseGoogle, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseGoogle$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseGoogle' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseKafkaAuth$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseKafkaAuth,
+  unknown
+> = z.object({
+  hash: types.optional(types.string()),
+  password: types.optional(types.string()),
+  tls: types.optional(types.boolean()),
+  type: types.optional(types.string()),
+  username: types.optional(types.string()),
+});
+
+export function modelsSourceResponseKafkaAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseKafkaAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseKafkaAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseKafkaAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseKafka$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseKafka,
+  unknown
+> = z.pipe(
+  z.object({
+    auth: z.optional(
+      z.nullable(z.lazy(() => ModelsSourceResponseKafkaAuth$inboundSchema)),
+    ),
+    brokers: types.optional(z.array(types.string())),
+    consumer_group_id: types.optional(types.string()),
+    topic_name: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "consumer_group_id": "consumerGroupId",
+      "topic_name": "topicName",
+    });
+  }),
+);
+
+export function modelsSourceResponseKafkaFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseKafka, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseKafka$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseKafka' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseSqs$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseSqs,
+  unknown
+> = z.pipe(
+  z.object({
+    access_key_id: types.optional(types.string()),
+    default_region: types.optional(types.string()),
+    endpoint: types.optional(types.string()),
+    queue_name: types.optional(types.string()),
+    secret_key: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "access_key_id": "accessKeyId",
+      "default_region": "defaultRegion",
+      "queue_name": "queueName",
+      "secret_key": "secretKey",
+    });
+  }),
+);
+
+export function modelsSourceResponseSqsFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseSqs, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseSqs$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseSqs' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponsePubSub$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponsePubSub,
+  unknown
+> = z.object({
+  amqp: z.optional(
+    z.nullable(z.lazy(() => ModelsSourceResponseAmqp$inboundSchema)),
+  ),
+  google: z.optional(
+    z.nullable(z.lazy(() => ModelsSourceResponseGoogle$inboundSchema)),
+  ),
+  kafka: z.optional(
+    z.nullable(z.lazy(() => ModelsSourceResponseKafka$inboundSchema)),
+  ),
+  sqs: z.optional(
+    z.nullable(z.lazy(() => ModelsSourceResponseSqs$inboundSchema)),
+  ),
+  type: types.optional(DatastorePubSubType$inboundSchema),
+  workers: types.optional(types.number()),
+});
+
+export function modelsSourceResponsePubSubFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponsePubSub, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponsePubSub$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponsePubSub' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseApiKey$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseApiKey,
+  unknown
+> = z.pipe(
+  z.object({
+    header_name: types.optional(types.string()),
+    header_value: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "header_name": "headerName",
+      "header_value": "headerValue",
+    });
+  }),
+);
+
+export function modelsSourceResponseApiKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseApiKey, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseApiKey$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseApiKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseBasicAuth$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseBasicAuth,
+  unknown
+> = z.object({
+  password: types.optional(types.string()),
+  username: types.optional(types.string()),
+});
+
+export function modelsSourceResponseBasicAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseBasicAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseBasicAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseBasicAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseHmac$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseHmac,
+  unknown
+> = z.object({
+  encoding: types.optional(DatastoreEncodingType$inboundSchema),
+  hash: types.optional(types.string()),
+  header: types.optional(types.string()),
+  secret: types.optional(types.string()),
+});
+
+export function modelsSourceResponseHmacFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseHmac, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseHmac$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseHmac' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsSourceResponseVerifier$inboundSchema: z.ZodMiniType<
+  ModelsSourceResponseVerifier,
+  unknown
+> = z.pipe(
+  z.object({
+    api_key: z.optional(
+      z.nullable(z.lazy(() => ModelsSourceResponseApiKey$inboundSchema)),
+    ),
+    basic_auth: z.optional(
+      z.nullable(z.lazy(() => ModelsSourceResponseBasicAuth$inboundSchema)),
+    ),
+    hmac: z.optional(
+      z.nullable(z.lazy(() => ModelsSourceResponseHmac$inboundSchema)),
+    ),
+    type: types.optional(DatastoreVerifierType$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "api_key": "apiKey",
+      "basic_auth": "basicAuth",
+    });
+  }),
+);
+
+export function modelsSourceResponseVerifierFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsSourceResponseVerifier, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsSourceResponseVerifier$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsSourceResponseVerifier' from JSON`,
+  );
+}
 
 /** @internal */
 export const ModelsSourceResponse$inboundSchema: z.ZodMiniType<
@@ -63,26 +496,34 @@ export const ModelsSourceResponse$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    body_function: types.optional(types.string()),
+    body_function: z.optional(z.nullable(types.string())),
     created_at: types.optional(types.string()),
     custom_response: types.optional(DatastoreCustomResponse$inboundSchema),
-    deleted_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
     event_type_location: types.optional(types.string()),
     forward_headers: types.optional(z.array(types.string())),
-    header_function: types.optional(types.string()),
+    header_function: z.optional(z.nullable(types.string())),
     idempotency_keys: types.optional(z.array(types.string())),
     is_disabled: types.optional(types.boolean()),
     mask_id: types.optional(types.string()),
     name: types.optional(types.string()),
     project_id: types.optional(types.string()),
     provider: types.optional(DatastoreSourceProvider$inboundSchema),
-    provider_config: types.optional(DatastoreProviderConfig$inboundSchema),
-    pub_sub: types.optional(DatastorePubSubConfig$inboundSchema),
+    provider_config: z.optional(
+      z.nullable(
+        z.lazy(() => ModelsSourceResponseProviderConfig$inboundSchema),
+      ),
+    ),
+    pub_sub: z.optional(
+      z.nullable(z.lazy(() => ModelsSourceResponsePubSub$inboundSchema)),
+    ),
     type: types.optional(DatastoreSourceType$inboundSchema),
     uid: types.optional(types.string()),
     updated_at: types.optional(types.string()),
     url: types.optional(types.string()),
-    verifier: types.optional(DatastoreVerifierConfig$inboundSchema),
+    verifier: z.optional(
+      z.nullable(z.lazy(() => ModelsSourceResponseVerifier$inboundSchema)),
+    ),
   }),
   z.transform((v) => {
     return remap$(v, {

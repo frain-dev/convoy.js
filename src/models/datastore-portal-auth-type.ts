@@ -10,6 +10,7 @@ import { OpenEnum } from "../types/enums.js";
 export const DatastorePortalAuthType = {
   RefreshToken: "refresh_token",
   StaticToken: "static_token",
+  Unknown: "",
 } as const;
 export type DatastorePortalAuthType = OpenEnum<typeof DatastorePortalAuthType>;
 

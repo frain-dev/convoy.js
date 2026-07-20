@@ -5,7 +5,6 @@
 
 import * as z from "zod/v4-mini";
 import * as types from "../../types/primitives.js";
-import * as models from "../index.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
@@ -14,7 +13,7 @@ import { ConvoyError } from "./convoy-error.js";
 export type GetSourceNotFoundErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -22,7 +21,7 @@ export type GetSourceNotFoundErrorData = {
  */
 export class GetSourceNotFoundError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: GetSourceNotFoundErrorData;
@@ -47,7 +46,7 @@ export class GetSourceNotFoundError extends ConvoyError {
 export type GetSourceUnauthorizedErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -55,7 +54,7 @@ export type GetSourceUnauthorizedErrorData = {
  */
 export class GetSourceUnauthorizedError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: GetSourceUnauthorizedErrorData;
@@ -80,7 +79,7 @@ export class GetSourceUnauthorizedError extends ConvoyError {
 export type GetSourceBadRequestErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -88,7 +87,7 @@ export type GetSourceBadRequestErrorData = {
  */
 export class GetSourceBadRequestError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: GetSourceBadRequestErrorData;
@@ -115,7 +114,7 @@ export const GetSourceNotFoundError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),
@@ -137,7 +136,7 @@ export const GetSourceUnauthorizedError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),
@@ -159,7 +158,7 @@ export const GetSourceBadRequestError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),

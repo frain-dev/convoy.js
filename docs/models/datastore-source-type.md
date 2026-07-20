@@ -13,5 +13,5 @@ let value: DatastoreSourceType = "rest_api";
 ## Values
 
 ```typescript
-"http" | "rest_api" | "pub_sub" | "db_change_stream" | Unrecognized<string>
+"http" | "rest_api" | "pub_sub" | "db_change_stream" | "" | Unrecognized<string>
 ```

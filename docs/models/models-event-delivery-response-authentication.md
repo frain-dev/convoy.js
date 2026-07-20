@@ -1,0 +1,18 @@
+# ModelsEventDeliveryResponseAuthentication
+
+## Example Usage
+
+```typescript
+import { ModelsEventDeliveryResponseAuthentication } from "convoy.js/models";
+
+let value: ModelsEventDeliveryResponseAuthentication = {};
+```
+
+## Fields
+
+| Field                                                                                                                                   | Type                                                                                                                                    | Required                                                                                                                                | Description                                                                                                                             |
+| --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `apiKey`                                                                                                                                | [models.ModelsEventDeliveryResponseEndpointMetadataApiKey](../models/models-event-delivery-response-endpoint-metadata-api-key.md)       | :heavy_minus_sign:                                                                                                                      | N/A                                                                                                                                     |
+| `basicAuth`                                                                                                                             | [models.ModelsEventDeliveryResponseEndpointMetadataBasicAuth](../models/models-event-delivery-response-endpoint-metadata-basic-auth.md) | :heavy_minus_sign:                                                                                                                      | N/A                                                                                                                                     |
+| `oauth2`                                                                                                                                | [models.ModelsEventDeliveryResponseOauth2](../models/models-event-delivery-response-oauth2.md)                                          | :heavy_minus_sign:                                                                                                                      | N/A                                                                                                                                     |
+| `type`                                                                                                                                  | [models.DatastoreEndpointAuthenticationType](../models/datastore-endpoint-authentication-type.md)                                       | :heavy_minus_sign:                                                                                                                      | N/A                                                                                                                                     |

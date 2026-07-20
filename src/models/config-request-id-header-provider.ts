@@ -4,20 +4,24 @@
  */
 
 import * as z from "zod/v4-mini";
-import { ClosedEnum } from "../types/enums.js";
+import * as openEnums from "../types/enums.js";
+import { OpenEnum } from "../types/enums.js";
 
 export const ConfigRequestIDHeaderProvider = {
   XConvoyIdempotencyKey: "X-Convoy-Idempotency-Key",
+  Unknown: "",
 } as const;
-export type ConfigRequestIDHeaderProvider = ClosedEnum<
+export type ConfigRequestIDHeaderProvider = OpenEnum<
   typeof ConfigRequestIDHeaderProvider
 >;
 
 /** @internal */
-export const ConfigRequestIDHeaderProvider$inboundSchema: z.ZodMiniEnum<
-  typeof ConfigRequestIDHeaderProvider
-> = z.enum(ConfigRequestIDHeaderProvider);
+export const ConfigRequestIDHeaderProvider$inboundSchema: z.ZodMiniType<
+  ConfigRequestIDHeaderProvider,
+  unknown
+> = openEnums.inboundSchema(ConfigRequestIDHeaderProvider);
 /** @internal */
-export const ConfigRequestIDHeaderProvider$outboundSchema: z.ZodMiniEnum<
-  typeof ConfigRequestIDHeaderProvider
-> = ConfigRequestIDHeaderProvider$inboundSchema;
+export const ConfigRequestIDHeaderProvider$outboundSchema: z.ZodMiniType<
+  string,
+  ConfigRequestIDHeaderProvider
+> = openEnums.outboundSchema(ConfigRequestIDHeaderProvider);

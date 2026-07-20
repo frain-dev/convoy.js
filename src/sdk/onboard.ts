@@ -5,6 +5,7 @@
 
 import { onboardBulkOnboard } from "../funcs/onboard-bulk-onboard.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -18,12 +19,7 @@ export class Onboard extends ClientSDK {
   async bulkOnboard(
     projectID: string,
     dryRun?: boolean | undefined,
-    body?:
-      | ReadableStream<Uint8Array>
-      | Blob
-      | ArrayBuffer
-      | Uint8Array
-      | undefined,
+    body?: models.ModelsBulkOnboardRequest | undefined,
     options?: RequestOptions,
   ): Promise<operations.BulkOnboardResponse> {
     return unwrapAsync(onboardBulkOnboard(

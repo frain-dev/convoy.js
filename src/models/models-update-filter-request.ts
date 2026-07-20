@@ -15,7 +15,7 @@ export type ModelsUpdateFilterRequest = {
   /**
    * Body matching criteria (optional)
    */
-  body?: { [k: string]: any } | undefined;
+  body?: { [k: string]: any } | null | undefined;
   /**
    * Non-null when this filter is active.
    */
@@ -27,7 +27,7 @@ export type ModelsUpdateFilterRequest = {
   /**
    * Header matching criteria (optional)
    */
-  headers?: { [k: string]: any } | undefined;
+  headers?: { [k: string]: any } | null | undefined;
   /**
    * Whether the filter uses flattened JSON paths (optional)
    */
@@ -35,22 +35,22 @@ export type ModelsUpdateFilterRequest = {
   /**
    * Path matching criteria (optional)
    */
-  path?: { [k: string]: any } | undefined;
+  path?: { [k: string]: any } | null | undefined;
   /**
    * Query matching criteria (optional)
    */
-  query?: { [k: string]: any } | undefined;
+  query?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
 export type ModelsUpdateFilterRequest$Outbound = {
-  body?: { [k: string]: any } | undefined;
+  body?: { [k: string]: any } | null | undefined;
   enabled_at?: ModelsOptionalTime$Outbound | undefined;
   event_type?: string | undefined;
-  headers?: { [k: string]: any } | undefined;
+  headers?: { [k: string]: any } | null | undefined;
   is_flattened?: boolean | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
@@ -59,13 +59,13 @@ export const ModelsUpdateFilterRequest$outboundSchema: z.ZodMiniType<
   ModelsUpdateFilterRequest
 > = z.pipe(
   z.object({
-    body: z.optional(z.record(z.string(), z.any())),
+    body: z.optional(z.nullable(z.record(z.string(), z.any()))),
     enabledAt: z.optional(ModelsOptionalTime$outboundSchema),
     eventType: z.optional(z.string()),
-    headers: z.optional(z.record(z.string(), z.any())),
+    headers: z.optional(z.nullable(z.record(z.string(), z.any()))),
     isFlattened: z.optional(z.boolean()),
-    path: z.optional(z.record(z.string(), z.any())),
-    query: z.optional(z.record(z.string(), z.any())),
+    path: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    query: z.optional(z.nullable(z.record(z.string(), z.any()))),
   }),
   z.transform((v) => {
     return remap$(v, {

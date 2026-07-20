@@ -9,32 +9,617 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  DatastoreProjectConfig,
-  DatastoreProjectConfig$inboundSchema,
-} from "./datastore-project-config.js";
+  ConfigRequestIDHeaderProvider,
+  ConfigRequestIDHeaderProvider$inboundSchema,
+} from "./config-request-id-header-provider.js";
 import {
-  DatastoreProjectStatistics,
-  DatastoreProjectStatistics$inboundSchema,
-} from "./datastore-project-statistics.js";
+  ConfigSignatureHeaderProvider,
+  ConfigSignatureHeaderProvider$inboundSchema,
+} from "./config-signature-header-provider.js";
+import {
+  DatastoreMetaEventType,
+  DatastoreMetaEventType$inboundSchema,
+} from "./datastore-meta-event-type.js";
 import {
   DatastoreProjectType,
   DatastoreProjectType$inboundSchema,
 } from "./datastore-project-type.js";
+import {
+  DatastorePubSubType,
+  DatastorePubSubType$inboundSchema,
+} from "./datastore-pub-sub-type.js";
+import {
+  DatastoreSignatureVersion,
+  DatastoreSignatureVersion$inboundSchema,
+} from "./datastore-signature-version.js";
+import {
+  DatastoreStrategyProvider,
+  DatastoreStrategyProvider$inboundSchema,
+} from "./datastore-strategy-provider.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+export type ModelsProjectResponseCircuitBreaker = {
+  consecutiveFailureThreshold?: number | undefined;
+  errorTimeout?: number | undefined;
+  failureThreshold?: number | undefined;
+  minimumRequestCount?: number | undefined;
+  observabilityWindow?: number | undefined;
+  sampleRate?: number | undefined;
+  successThreshold?: number | undefined;
+};
+
+export type ModelsProjectResponseAmqpAuth = {
+  password?: string | undefined;
+  user?: string | undefined;
+};
+
+export type ModelsProjectResponseAmqp = {
+  host?: string | undefined;
+  auth?: ModelsProjectResponseAmqpAuth | null | undefined;
+  bindedExchange?: string | null | undefined;
+  deadLetterExchange?: string | null | undefined;
+  port?: string | undefined;
+  queue?: string | undefined;
+  routingKey?: string | undefined;
+  schema?: string | undefined;
+  vhost?: string | null | undefined;
+};
+
+export type ModelsProjectResponseGoogle = {
+  projectId?: string | undefined;
+  /**
+   * encoding/json marshals []byte as a base64 string on the wire.
+   */
+  serviceAccount?: string | undefined;
+  subscriptionId?: string | undefined;
+};
+
+export type ModelsProjectResponseKafkaAuth = {
+  hash?: string | undefined;
+  password?: string | undefined;
+  tls?: boolean | undefined;
+  type?: string | undefined;
+  username?: string | undefined;
+};
+
+export type ModelsProjectResponseKafka = {
+  auth?: ModelsProjectResponseKafkaAuth | null | undefined;
+  brokers?: Array<string> | undefined;
+  consumerGroupId?: string | undefined;
+  topicName?: string | undefined;
+};
+
+export type ModelsProjectResponseSqs = {
+  accessKeyId?: string | undefined;
+  defaultRegion?: string | undefined;
+  /**
+   * Optional: for LocalStack testing
+   */
+  endpoint?: string | undefined;
+  queueName?: string | undefined;
+  secretKey?: string | undefined;
+};
+
+export type ModelsProjectResponsePubSub = {
+  amqp?: ModelsProjectResponseAmqp | null | undefined;
+  google?: ModelsProjectResponseGoogle | null | undefined;
+  kafka?: ModelsProjectResponseKafka | null | undefined;
+  sqs?: ModelsProjectResponseSqs | null | undefined;
+  type?: DatastorePubSubType | undefined;
+  workers?: number | undefined;
+};
+
+export type ModelsProjectResponseMetaEvent = {
+  eventType?: Array<string> | undefined;
+  isEnabled?: boolean | undefined;
+  pubSub?: ModelsProjectResponsePubSub | null | undefined;
+  secret?: string | undefined;
+  type?: DatastoreMetaEventType | undefined;
+  url?: string | undefined;
+};
+
+export type ModelsProjectResponseRatelimit = {
+  count?: number | undefined;
+  duration?: number | undefined;
+};
+
+export type ModelsProjectResponseSignature = {
+  header?: ConfigSignatureHeaderProvider | undefined;
+  versions?: Array<DatastoreSignatureVersion> | undefined;
+};
+
+export type ModelsProjectResponseSsl = {
+  enforceSecureEndpoints?: boolean | undefined;
+};
+
+export type ModelsProjectResponseStrategy = {
+  duration?: number | undefined;
+  retryCount?: number | undefined;
+  type?: DatastoreStrategyProvider | undefined;
+};
+
+export type ModelsProjectResponseConfig = {
+  addEventIdTraceHeaders?: boolean | undefined;
+  circuitBreaker?: ModelsProjectResponseCircuitBreaker | null | undefined;
+  disableEndpoint?: boolean | undefined;
+  maxPayloadReadSize?: number | undefined;
+  metaEvent?: ModelsProjectResponseMetaEvent | null | undefined;
+  multipleEndpointSubscriptions?: boolean | undefined;
+  ratelimit?: ModelsProjectResponseRatelimit | null | undefined;
+  replayAttacksPreventionEnabled?: boolean | undefined;
+  requestIdHeader?: ConfigRequestIDHeaderProvider | undefined;
+  searchPolicy?: string | undefined;
+  signature?: ModelsProjectResponseSignature | null | undefined;
+  ssl?: ModelsProjectResponseSsl | null | undefined;
+  strategy?: ModelsProjectResponseStrategy | null | undefined;
+};
+
+export type ModelsProjectResponseStatistics = {
+  endpointsExist?: boolean | undefined;
+  eventsExist?: boolean | undefined;
+  sourcesExist?: boolean | undefined;
+  subscriptionsExist?: boolean | undefined;
+};
+
 export type ModelsProjectResponse = {
-  config?: DatastoreProjectConfig | undefined;
+  config?: ModelsProjectResponseConfig | null | undefined;
   createdAt?: string | undefined;
-  deletedAt?: string | undefined;
+  deletedAt?: string | null | undefined;
   logoUrl?: string | undefined;
   name?: string | undefined;
   organisationId?: string | undefined;
   retainedEvents?: number | undefined;
-  statistics?: DatastoreProjectStatistics | undefined;
+  statistics?: ModelsProjectResponseStatistics | null | undefined;
   type?: DatastoreProjectType | undefined;
   uid?: string | undefined;
   updatedAt?: string | undefined;
 };
+
+/** @internal */
+export const ModelsProjectResponseCircuitBreaker$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseCircuitBreaker,
+  unknown
+> = z.pipe(
+  z.object({
+    consecutive_failure_threshold: types.optional(types.number()),
+    error_timeout: types.optional(types.number()),
+    failure_threshold: types.optional(types.number()),
+    minimum_request_count: types.optional(types.number()),
+    observability_window: types.optional(types.number()),
+    sample_rate: types.optional(types.number()),
+    success_threshold: types.optional(types.number()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "consecutive_failure_threshold": "consecutiveFailureThreshold",
+      "error_timeout": "errorTimeout",
+      "failure_threshold": "failureThreshold",
+      "minimum_request_count": "minimumRequestCount",
+      "observability_window": "observabilityWindow",
+      "sample_rate": "sampleRate",
+      "success_threshold": "successThreshold",
+    });
+  }),
+);
+
+export function modelsProjectResponseCircuitBreakerFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseCircuitBreaker, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ModelsProjectResponseCircuitBreaker$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseCircuitBreaker' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseAmqpAuth$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseAmqpAuth,
+  unknown
+> = z.object({
+  password: types.optional(types.string()),
+  user: types.optional(types.string()),
+});
+
+export function modelsProjectResponseAmqpAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseAmqpAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseAmqpAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseAmqpAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseAmqp$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseAmqp,
+  unknown
+> = z.object({
+  host: types.optional(types.string()),
+  auth: z.optional(
+    z.nullable(z.lazy(() => ModelsProjectResponseAmqpAuth$inboundSchema)),
+  ),
+  bindedExchange: z.optional(z.nullable(types.string())),
+  deadLetterExchange: z.optional(z.nullable(types.string())),
+  port: types.optional(types.string()),
+  queue: types.optional(types.string()),
+  routingKey: types.optional(types.string()),
+  schema: types.optional(types.string()),
+  vhost: z.optional(z.nullable(types.string())),
+});
+
+export function modelsProjectResponseAmqpFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseAmqp, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseAmqp$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseAmqp' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseGoogle$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseGoogle,
+  unknown
+> = z.pipe(
+  z.object({
+    project_id: types.optional(types.string()),
+    service_account: types.optional(types.string()),
+    subscription_id: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "project_id": "projectId",
+      "service_account": "serviceAccount",
+      "subscription_id": "subscriptionId",
+    });
+  }),
+);
+
+export function modelsProjectResponseGoogleFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseGoogle, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseGoogle$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseGoogle' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseKafkaAuth$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseKafkaAuth,
+  unknown
+> = z.object({
+  hash: types.optional(types.string()),
+  password: types.optional(types.string()),
+  tls: types.optional(types.boolean()),
+  type: types.optional(types.string()),
+  username: types.optional(types.string()),
+});
+
+export function modelsProjectResponseKafkaAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseKafkaAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseKafkaAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseKafkaAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseKafka$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseKafka,
+  unknown
+> = z.pipe(
+  z.object({
+    auth: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponseKafkaAuth$inboundSchema)),
+    ),
+    brokers: types.optional(z.array(types.string())),
+    consumer_group_id: types.optional(types.string()),
+    topic_name: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "consumer_group_id": "consumerGroupId",
+      "topic_name": "topicName",
+    });
+  }),
+);
+
+export function modelsProjectResponseKafkaFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseKafka, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseKafka$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseKafka' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseSqs$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseSqs,
+  unknown
+> = z.pipe(
+  z.object({
+    access_key_id: types.optional(types.string()),
+    default_region: types.optional(types.string()),
+    endpoint: types.optional(types.string()),
+    queue_name: types.optional(types.string()),
+    secret_key: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "access_key_id": "accessKeyId",
+      "default_region": "defaultRegion",
+      "queue_name": "queueName",
+      "secret_key": "secretKey",
+    });
+  }),
+);
+
+export function modelsProjectResponseSqsFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseSqs, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseSqs$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseSqs' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponsePubSub$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponsePubSub,
+  unknown
+> = z.object({
+  amqp: z.optional(
+    z.nullable(z.lazy(() => ModelsProjectResponseAmqp$inboundSchema)),
+  ),
+  google: z.optional(
+    z.nullable(z.lazy(() => ModelsProjectResponseGoogle$inboundSchema)),
+  ),
+  kafka: z.optional(
+    z.nullable(z.lazy(() => ModelsProjectResponseKafka$inboundSchema)),
+  ),
+  sqs: z.optional(
+    z.nullable(z.lazy(() => ModelsProjectResponseSqs$inboundSchema)),
+  ),
+  type: types.optional(DatastorePubSubType$inboundSchema),
+  workers: types.optional(types.number()),
+});
+
+export function modelsProjectResponsePubSubFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponsePubSub, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponsePubSub$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponsePubSub' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseMetaEvent$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseMetaEvent,
+  unknown
+> = z.pipe(
+  z.object({
+    event_type: types.optional(z.array(types.string())),
+    is_enabled: types.optional(types.boolean()),
+    pub_sub: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponsePubSub$inboundSchema)),
+    ),
+    secret: types.optional(types.string()),
+    type: types.optional(DatastoreMetaEventType$inboundSchema),
+    url: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "event_type": "eventType",
+      "is_enabled": "isEnabled",
+      "pub_sub": "pubSub",
+    });
+  }),
+);
+
+export function modelsProjectResponseMetaEventFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseMetaEvent, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseMetaEvent$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseMetaEvent' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseRatelimit$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseRatelimit,
+  unknown
+> = z.object({
+  count: types.optional(types.number()),
+  duration: types.optional(types.number()),
+});
+
+export function modelsProjectResponseRatelimitFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseRatelimit, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseRatelimit$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseRatelimit' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseSignature$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseSignature,
+  unknown
+> = z.object({
+  header: types.optional(ConfigSignatureHeaderProvider$inboundSchema),
+  versions: types.optional(z.array(DatastoreSignatureVersion$inboundSchema)),
+});
+
+export function modelsProjectResponseSignatureFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseSignature, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseSignature$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseSignature' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseSsl$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseSsl,
+  unknown
+> = z.pipe(
+  z.object({
+    enforce_secure_endpoints: types.optional(types.boolean()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "enforce_secure_endpoints": "enforceSecureEndpoints",
+    });
+  }),
+);
+
+export function modelsProjectResponseSslFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseSsl, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseSsl$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseSsl' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseStrategy$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseStrategy,
+  unknown
+> = z.pipe(
+  z.object({
+    duration: types.optional(types.number()),
+    retry_count: types.optional(types.number()),
+    type: types.optional(DatastoreStrategyProvider$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "retry_count": "retryCount",
+    });
+  }),
+);
+
+export function modelsProjectResponseStrategyFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseStrategy, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseStrategy$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseStrategy' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseConfig$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseConfig,
+  unknown
+> = z.pipe(
+  z.object({
+    add_event_id_trace_headers: types.optional(types.boolean()),
+    circuit_breaker: z.optional(
+      z.nullable(
+        z.lazy(() => ModelsProjectResponseCircuitBreaker$inboundSchema),
+      ),
+    ),
+    disable_endpoint: types.optional(types.boolean()),
+    max_payload_read_size: types.optional(types.number()),
+    meta_event: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponseMetaEvent$inboundSchema)),
+    ),
+    multiple_endpoint_subscriptions: types.optional(types.boolean()),
+    ratelimit: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponseRatelimit$inboundSchema)),
+    ),
+    replay_attacks_prevention_enabled: types.optional(types.boolean()),
+    request_id_header: types.optional(
+      ConfigRequestIDHeaderProvider$inboundSchema,
+    ),
+    search_policy: types.optional(types.string()),
+    signature: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponseSignature$inboundSchema)),
+    ),
+    ssl: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponseSsl$inboundSchema)),
+    ),
+    strategy: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponseStrategy$inboundSchema)),
+    ),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "add_event_id_trace_headers": "addEventIdTraceHeaders",
+      "circuit_breaker": "circuitBreaker",
+      "disable_endpoint": "disableEndpoint",
+      "max_payload_read_size": "maxPayloadReadSize",
+      "meta_event": "metaEvent",
+      "multiple_endpoint_subscriptions": "multipleEndpointSubscriptions",
+      "replay_attacks_prevention_enabled": "replayAttacksPreventionEnabled",
+      "request_id_header": "requestIdHeader",
+      "search_policy": "searchPolicy",
+    });
+  }),
+);
+
+export function modelsProjectResponseConfigFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseConfig, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseConfig$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseConfig' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsProjectResponseStatistics$inboundSchema: z.ZodMiniType<
+  ModelsProjectResponseStatistics,
+  unknown
+> = z.pipe(
+  z.object({
+    endpoints_exist: types.optional(types.boolean()),
+    events_exist: types.optional(types.boolean()),
+    sources_exist: types.optional(types.boolean()),
+    subscriptions_exist: types.optional(types.boolean()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "endpoints_exist": "endpointsExist",
+      "events_exist": "eventsExist",
+      "sources_exist": "sourcesExist",
+      "subscriptions_exist": "subscriptionsExist",
+    });
+  }),
+);
+
+export function modelsProjectResponseStatisticsFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsProjectResponseStatistics, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsProjectResponseStatistics$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsProjectResponseStatistics' from JSON`,
+  );
+}
 
 /** @internal */
 export const ModelsProjectResponse$inboundSchema: z.ZodMiniType<
@@ -42,14 +627,18 @@ export const ModelsProjectResponse$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    config: types.optional(DatastoreProjectConfig$inboundSchema),
+    config: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponseConfig$inboundSchema)),
+    ),
     created_at: types.optional(types.string()),
-    deleted_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
     logo_url: types.optional(types.string()),
     name: types.optional(types.string()),
     organisation_id: types.optional(types.string()),
     retained_events: types.optional(types.number()),
-    statistics: types.optional(DatastoreProjectStatistics$inboundSchema),
+    statistics: z.optional(
+      z.nullable(z.lazy(() => ModelsProjectResponseStatistics$inboundSchema)),
+    ),
     type: types.optional(DatastoreProjectType$inboundSchema),
     uid: types.optional(types.string()),
     updated_at: types.optional(types.string()),

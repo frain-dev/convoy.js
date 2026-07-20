@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { ConvoyCore } from "../core.js";
-import { encodeFormQuery, encodeSimple } from "../lib/encodings.js";
+import { encodeFormQuery, encodeJSON, encodeSimple } from "../lib/encodings.js";
 import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
@@ -24,6 +24,7 @@ import {
 import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/response-validation-error.js";
 import { SDKValidationError } from "../models/errors/sdk-validation-error.js";
+import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
@@ -38,12 +39,7 @@ export function onboardBulkOnboard(
   client: ConvoyCore,
   projectID: string,
   dryRun?: boolean | undefined,
-  body?:
-    | ReadableStream<Uint8Array>
-    | Blob
-    | ArrayBuffer
-    | Uint8Array
-    | undefined,
+  body?: models.ModelsBulkOnboardRequest | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
@@ -74,12 +70,7 @@ async function $do(
   client: ConvoyCore,
   projectID: string,
   dryRun?: boolean | undefined,
-  body?:
-    | ReadableStream<Uint8Array>
-    | Blob
-    | ArrayBuffer
-    | Uint8Array
-    | undefined,
+  body?: models.ModelsBulkOnboardRequest | undefined,
   options?: RequestOptions,
 ): Promise<
   [
@@ -115,9 +106,7 @@ async function $do(
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body$ = payload.body instanceof Uint8Array
-    ? new Uint8Array(payload.body).buffer
-    : payload.body;
+  const body$ = encodeJSON("body", payload.body, { explode: true });
 
   const pathParams = {
     projectID: encodeSimple("projectID", payload.projectID, {
@@ -132,7 +121,7 @@ async function $do(
   });
 
   const headers = new Headers(compactMap({
-    "Content-Type": "application/octet-stream",
+    "Content-Type": "application/json",
     Accept: "application/json",
   }));
 

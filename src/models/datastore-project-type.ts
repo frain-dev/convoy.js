@@ -10,6 +10,7 @@ import { OpenEnum } from "../types/enums.js";
 export const DatastoreProjectType = {
   Outgoing: "outgoing",
   Incoming: "incoming",
+  Unknown: "",
 } as const;
 export type DatastoreProjectType = OpenEnum<typeof DatastoreProjectType>;
 

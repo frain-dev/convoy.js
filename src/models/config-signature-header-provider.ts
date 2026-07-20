@@ -4,20 +4,24 @@
  */
 
 import * as z from "zod/v4-mini";
-import { ClosedEnum } from "../types/enums.js";
+import * as openEnums from "../types/enums.js";
+import { OpenEnum } from "../types/enums.js";
 
 export const ConfigSignatureHeaderProvider = {
   XConvoySignature: "X-Convoy-Signature",
+  Unknown: "",
 } as const;
-export type ConfigSignatureHeaderProvider = ClosedEnum<
+export type ConfigSignatureHeaderProvider = OpenEnum<
   typeof ConfigSignatureHeaderProvider
 >;
 
 /** @internal */
-export const ConfigSignatureHeaderProvider$inboundSchema: z.ZodMiniEnum<
-  typeof ConfigSignatureHeaderProvider
-> = z.enum(ConfigSignatureHeaderProvider);
+export const ConfigSignatureHeaderProvider$inboundSchema: z.ZodMiniType<
+  ConfigSignatureHeaderProvider,
+  unknown
+> = openEnums.inboundSchema(ConfigSignatureHeaderProvider);
 /** @internal */
-export const ConfigSignatureHeaderProvider$outboundSchema: z.ZodMiniEnum<
-  typeof ConfigSignatureHeaderProvider
-> = ConfigSignatureHeaderProvider$inboundSchema;
+export const ConfigSignatureHeaderProvider$outboundSchema: z.ZodMiniType<
+  string,
+  ConfigSignatureHeaderProvider
+> = openEnums.outboundSchema(ConfigSignatureHeaderProvider);

@@ -5,7 +5,7 @@
 ```typescript
 import { DatastoreOAuth2ExpiryTimeUnit } from "convoy.js/models";
 
-let value: DatastoreOAuth2ExpiryTimeUnit = "minutes";
+let value: DatastoreOAuth2ExpiryTimeUnit = "hours";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: DatastoreOAuth2ExpiryTimeUnit = "minutes";
 ## Values
 
 ```typescript
-"seconds" | "milliseconds" | "minutes" | "hours" | Unrecognized<string>
+"seconds" | "milliseconds" | "minutes" | "hours" | "" | Unrecognized<string>
 ```

@@ -23,7 +23,7 @@ This endpoint retrieves all event deliveries paginated.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -54,7 +54,7 @@ import { eventDeliveriesGetEventDeliveriesPaged } from "convoy.js/funcs/event-de
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -111,7 +111,7 @@ This endpoint batch retries multiple event deliveries at once.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -142,7 +142,7 @@ import { eventDeliveriesBatchRetryEventDelivery } from "convoy.js/funcs/event-de
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -199,7 +199,7 @@ This endpoint enables you retry a previously successful event delivery
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -222,7 +222,7 @@ import { eventDeliveriesForceResendEventDeliveries } from "convoy.js/funcs/event
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -272,7 +272,7 @@ This endpoint fetches an event delivery.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -295,7 +295,7 @@ import { eventDeliveriesGetEventDelivery } from "convoy.js/funcs/event-deliverie
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -345,7 +345,7 @@ This endpoint retries an event delivery.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -368,7 +368,7 @@ import { eventDeliveriesResendEventDelivery } from "convoy.js/funcs/event-delive
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {

@@ -5,11 +5,13 @@
 ```typescript
 import { ConfigRequestIDHeaderProvider } from "convoy.js/models";
 
-let value: ConfigRequestIDHeaderProvider = "X-Convoy-Idempotency-Key";
+let value: ConfigRequestIDHeaderProvider = "";
+
+// Open enum: unrecognized values are captured as Unrecognized<string>
 ```
 
 ## Values
 
 ```typescript
-"X-Convoy-Idempotency-Key"
+"X-Convoy-Idempotency-Key" | "" | Unrecognized<string>
 ```

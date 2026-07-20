@@ -11,6 +11,7 @@ export const DatastoreEndpointAuthenticationType = {
   ApiKey: "api_key",
   Oauth2: "oauth2",
   BasicAuth: "basic_auth",
+  Unknown: "",
 } as const;
 export type DatastoreEndpointAuthenticationType = OpenEnum<
   typeof DatastoreEndpointAuthenticationType

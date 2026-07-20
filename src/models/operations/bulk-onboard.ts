@@ -24,12 +24,7 @@ export type BulkOnboardRequest = {
   /**
    * Onboard Details (JSON)
    */
-  body?:
-    | ReadableStream<Uint8Array>
-    | Blob
-    | ArrayBuffer
-    | Uint8Array
-    | undefined;
+  body?: models.ModelsBulkOnboardRequest | undefined;
 };
 
 /**
@@ -58,12 +53,7 @@ export type BulkOnboardResponse =
 export type BulkOnboardRequest$Outbound = {
   projectID: string;
   dry_run?: boolean | undefined;
-  body?:
-    | ReadableStream<Uint8Array>
-    | Blob
-    | ArrayBuffer
-    | Uint8Array
-    | undefined;
+  body?: models.ModelsBulkOnboardRequest$Outbound | undefined;
 };
 
 /** @internal */
@@ -74,12 +64,7 @@ export const BulkOnboardRequest$outboundSchema: z.ZodMiniType<
   z.object({
     projectID: z.string(),
     dryRun: z.optional(z.boolean()),
-    body: z.optional(z.union([
-      z.custom<ReadableStream<Uint8Array>>(x => x instanceof ReadableStream),
-      z.custom<Blob>(x => x instanceof Blob),
-      z.custom<ArrayBuffer>(x => x instanceof ArrayBuffer),
-      z.custom<Uint8Array>(x => x instanceof Uint8Array),
-    ])),
+    body: z.optional(models.ModelsBulkOnboardRequest$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

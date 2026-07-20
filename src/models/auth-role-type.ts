@@ -14,6 +14,7 @@ export const AuthRoleType = {
   ProjectAdmin: "project_admin",
   ProjectViewer: "project_viewer",
   Api: "api",
+  Unknown: "",
 } as const;
 export type AuthRoleType = OpenEnum<typeof AuthRoleType>;
 

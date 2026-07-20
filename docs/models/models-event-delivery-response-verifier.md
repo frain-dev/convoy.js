@@ -1,0 +1,18 @@
+# ModelsEventDeliveryResponseVerifier
+
+## Example Usage
+
+```typescript
+import { ModelsEventDeliveryResponseVerifier } from "convoy.js/models";
+
+let value: ModelsEventDeliveryResponseVerifier = {};
+```
+
+## Fields
+
+| Field                                                                                                                               | Type                                                                                                                                | Required                                                                                                                            | Description                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `apiKey`                                                                                                                            | [models.ModelsEventDeliveryResponseSourceMetadataApiKey](../models/models-event-delivery-response-source-metadata-api-key.md)       | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
+| `basicAuth`                                                                                                                         | [models.ModelsEventDeliveryResponseSourceMetadataBasicAuth](../models/models-event-delivery-response-source-metadata-basic-auth.md) | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
+| `hmac`                                                                                                                              | [models.ModelsEventDeliveryResponseHmac](../models/models-event-delivery-response-hmac.md)                                          | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
+| `type`                                                                                                                              | [models.DatastoreVerifierType](../models/datastore-verifier-type.md)                                                                | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |

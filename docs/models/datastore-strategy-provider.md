@@ -13,5 +13,5 @@ let value: DatastoreStrategyProvider = "exponential";
 ## Values
 
 ```typescript
-"linear" | "exponential" | Unrecognized<string>
+"linear" | "exponential" | "" | Unrecognized<string>
 ```

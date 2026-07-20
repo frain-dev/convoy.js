@@ -11,16 +11,16 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ModelsFilterResponse = {
-  body?: { [k: string]: any } | undefined;
-  enabledAt?: string | undefined;
+  body?: { [k: string]: any } | null | undefined;
+  enabledAt?: string | null | undefined;
   eventType?: string | undefined;
-  headers?: { [k: string]: any } | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
-  rawBody?: { [k: string]: any } | undefined;
-  rawHeaders?: { [k: string]: any } | undefined;
-  rawPath?: { [k: string]: any } | undefined;
-  rawQuery?: { [k: string]: any } | undefined;
+  headers?: { [k: string]: any } | null | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
+  rawBody?: { [k: string]: any } | null | undefined;
+  rawHeaders?: { [k: string]: any } | null | undefined;
+  rawPath?: { [k: string]: any } | null | undefined;
+  rawQuery?: { [k: string]: any } | null | undefined;
   subscriptionId?: string | undefined;
   uid?: string | undefined;
 };
@@ -31,16 +31,16 @@ export const ModelsFilterResponse$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    body: types.optional(z.record(z.string(), z.any())),
-    enabled_at: types.optional(types.string()),
+    body: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    enabled_at: z.optional(z.nullable(types.string())),
     event_type: types.optional(types.string()),
-    headers: types.optional(z.record(z.string(), z.any())),
-    path: types.optional(z.record(z.string(), z.any())),
-    query: types.optional(z.record(z.string(), z.any())),
-    raw_body: types.optional(z.record(z.string(), z.any())),
-    raw_headers: types.optional(z.record(z.string(), z.any())),
-    raw_path: types.optional(z.record(z.string(), z.any())),
-    raw_query: types.optional(z.record(z.string(), z.any())),
+    headers: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    path: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    query: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    raw_body: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    raw_headers: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    raw_path: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    raw_query: z.optional(z.nullable(z.record(z.string(), z.any()))),
     subscription_id: types.optional(types.string()),
     uid: types.optional(types.string()),
   }),

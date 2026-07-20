@@ -5,7 +5,6 @@
 
 import * as z from "zod/v4-mini";
 import * as types from "../../types/primitives.js";
-import * as models from "../index.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
@@ -14,7 +13,7 @@ import { ConvoyError } from "./convoy-error.js";
 export type CreateEndpointFanoutEventNotFoundErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -22,7 +21,7 @@ export type CreateEndpointFanoutEventNotFoundErrorData = {
  */
 export class CreateEndpointFanoutEventNotFoundError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: CreateEndpointFanoutEventNotFoundErrorData;
@@ -47,7 +46,7 @@ export class CreateEndpointFanoutEventNotFoundError extends ConvoyError {
 export type CreateEndpointFanoutEventUnauthorizedErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -55,7 +54,7 @@ export type CreateEndpointFanoutEventUnauthorizedErrorData = {
  */
 export class CreateEndpointFanoutEventUnauthorizedError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: CreateEndpointFanoutEventUnauthorizedErrorData;
@@ -80,7 +79,7 @@ export class CreateEndpointFanoutEventUnauthorizedError extends ConvoyError {
 export type CreateEndpointFanoutEventBadRequestErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -88,7 +87,7 @@ export type CreateEndpointFanoutEventBadRequestErrorData = {
  */
 export class CreateEndpointFanoutEventBadRequestError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: CreateEndpointFanoutEventBadRequestErrorData;
@@ -113,7 +112,7 @@ export const CreateEndpointFanoutEventNotFoundError$inboundSchema:
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),
@@ -133,7 +132,7 @@ export const CreateEndpointFanoutEventUnauthorizedError$inboundSchema:
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),
@@ -153,7 +152,7 @@ export const CreateEndpointFanoutEventBadRequestError$inboundSchema:
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),

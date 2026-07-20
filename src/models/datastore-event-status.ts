@@ -13,6 +13,7 @@ export const DatastoreEventStatus = {
   Success: "Success",
   Retry: "Retry",
   Pending: "Pending",
+  Unknown: "",
 } as const;
 export type DatastoreEventStatus = OpenEnum<typeof DatastoreEventStatus>;
 

@@ -5,7 +5,7 @@
 ```typescript
 import { DatastorePubSubType } from "convoy.js/models";
 
-let value: DatastorePubSubType = "kafka";
+let value: DatastorePubSubType = "amqp";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: DatastorePubSubType = "kafka";
 ## Values
 
 ```typescript
-"sqs" | "google" | "kafka" | "amqp" | Unrecognized<string>
+"sqs" | "google" | "kafka" | "amqp" | "" | Unrecognized<string>
 ```

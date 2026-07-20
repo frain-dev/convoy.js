@@ -13,5 +13,5 @@ let value: DatastoreEndpointAuthenticationType = "api_key";
 ## Values
 
 ```typescript
-"api_key" | "oauth2" | "basic_auth" | Unrecognized<string>
+"api_key" | "oauth2" | "basic_auth" | "" | Unrecognized<string>
 ```

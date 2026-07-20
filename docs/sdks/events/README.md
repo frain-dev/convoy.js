@@ -27,7 +27,7 @@ This endpoint fetches app events with pagination
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -58,7 +58,7 @@ import { eventsGetEventsPaged } from "convoy.js/funcs/events-get-events-paged.js
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -115,7 +115,7 @@ This endpoint creates an endpoint event
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -138,7 +138,7 @@ import { eventsCreateEndpointEvent } from "convoy.js/funcs/events-create-endpoin
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -188,7 +188,7 @@ This endpoint replays multiple events at once.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -219,7 +219,7 @@ import { eventsBatchReplayEvents } from "convoy.js/funcs/events-batch-replay-eve
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -276,7 +276,7 @@ This endpoint creates a event that is broadcast to every endpoint whose subscrip
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -299,7 +299,7 @@ import { eventsCreateBroadcastEvent } from "convoy.js/funcs/events-create-broadc
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -349,7 +349,7 @@ This endpoint returns how many events would be affected by a batch replay with t
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -380,7 +380,7 @@ import { eventsCountAffectedEvents } from "convoy.js/funcs/events-count-affected
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -437,7 +437,7 @@ This endpoint does not require creating endpoint and subscriptions ahead of time
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -460,7 +460,7 @@ import { eventsCreateDynamicEvent } from "convoy.js/funcs/events-create-dynamic-
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -510,7 +510,7 @@ This endpoint uses the owner_id to fan out an event to multiple endpoints.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -533,7 +533,7 @@ import { eventsCreateEndpointFanoutEvent } from "convoy.js/funcs/events-create-e
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -583,7 +583,7 @@ This endpoint retrieves an event
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -606,7 +606,7 @@ import { eventsGetEndpointEvent } from "convoy.js/funcs/events-get-endpoint-even
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -656,7 +656,7 @@ This endpoint replays an event afresh assuming it is a new event.
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -679,7 +679,7 @@ import { eventsReplayEndpointEvent } from "convoy.js/funcs/events-replay-endpoin
 // Use `ConvoyCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const convoy = new ConvoyCore({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
