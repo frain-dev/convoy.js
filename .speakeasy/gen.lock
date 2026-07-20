@@ -5,14 +5,14 @@ management:
   docVersion: 26.3.5
   speakeasyVersion: 1.790.2
   generationVersion: 2.918.3
-  releaseVersion: 2.0.2
-  configChecksum: b07447c4a0b85fc0bc898b568f4fe9d5
+  releaseVersion: 2.0.3
+  configChecksum: 14e539032228ded658a325f233ccafc4
   repoURL: https://github.com/frain-dev/convoy.js.git
   installationURL: https://github.com/frain-dev/convoy.js
 persistentEdits:
-  generation_id: 2da38dc1-f8d9-4362-a98f-c86ba1679090
-  pristine_commit_hash: abaf24a3871c9adc2bec8c4c64b52082b8811822
-  pristine_tree_hash: 03a3a5fed42a09a8924e0ba24e281aff680e5a88
+  generation_id: 01eddf94-9086-49cd-b291-dfb98263c30f
+  pristine_commit_hash: f95c4743e7a3545b37206bdb1bb8d3d0e3deecaa
+  pristine_tree_hash: d6d49621d72e5dadde109a2523a1cbbe8a56dbb0
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -2162,12 +2162,12 @@ trackedFiles:
     pristine_git_object: 8aebcee364c87e6c642247a8df7ee51a86f46fbc
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:ed8f0baa3c943cceb30f9fd7ee747189cc5c330b
-    pristine_git_object: 4c464e6435429c3a08aab439cfc2738256d31076
+    last_write_checksum: sha1:6c15976c447097fc8b3fbae326774b5c3fa536e0
+    pristine_git_object: 4a9aae058a66818e646d63cf8099f26339e2323d
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:e717d051b68b81b21517df6c1ec9c9d1fa6b28e0
-    pristine_git_object: 90bf17fa7502be97e43b0cdafc22d9e4b7b8f4c4
+    last_write_checksum: sha1:a8ec592fd4b4a94a13e9d0a584c9a64b9442c007
+    pristine_git_object: 380b345434ff522483fc6d1b217b6762e2568da3
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:cd83f57bf86f572739a193e44e313c43ca8e5b53
@@ -2462,8 +2462,8 @@ trackedFiles:
     pristine_git_object: 0b2543a00780f8844dcd1fbdcbc51a91262d91bc
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:7e6b5367355688ad020119f49d97477b19f96625
-    pristine_git_object: e5681edf5ab3c3d76585b444a3bf29d93a73249d
+    last_write_checksum: sha1:c6acabccbcf5f09ec5e9ded06c68cfeb94198367
+    pristine_git_object: 27a4a7998904f785f7d738b2bc4ec52563921f58
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:e49f64fdecc307c8d2868f6f31b3dc7d36349c8b
