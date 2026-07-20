@@ -1,18 +1,18 @@
 lockVersion: ""
 id: ""
 management:
-  docChecksum: 2ba18bf713e39cec01a01eddabf2f7b4
+  docChecksum: 5d1b44d276085a64d6cd389fb1bb6634
   docVersion: 26.3.5
   speakeasyVersion: 1.790.2
   generationVersion: 2.918.3
-  releaseVersion: 2.1.0
-  configChecksum: f7681ea3a7b3d32301cd466d46907e1b
+  releaseVersion: 2.1.1
+  configChecksum: 36bc64bbf065e28f54e8b093cb574fd8
   repoURL: https://github.com/frain-dev/convoy.js.git
   installationURL: https://github.com/frain-dev/convoy.js
 persistentEdits:
-  generation_id: f7a4e199-7d6d-462e-88a4-f76f61df55af
-  pristine_commit_hash: 61a7cdbb9111c3b8be34b224461b9c55d908235c
-  pristine_tree_hash: 3f8023428c2b184fe73972c67295436f4b8eb97d
+  generation_id: 1bac549d-bc72-41ae-9286-577bd5a44efb
+  pristine_commit_hash: 4a0cfaf818b980b25baaa4e5120f0b2992d33cca
+  pristine_tree_hash: b48c1cb788a8af917f934db21925a5626220b597
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -1201,8 +1201,8 @@ trackedFiles:
     pristine_git_object: 09659567a8a0a386af6c837aaf1e904914339cdc
   docs/models/models-create-event.md:
     id: aadadd661804
-    last_write_checksum: sha1:88a67b1f046eff06c95b676fbbf8e21b1cdd6d73
-    pristine_git_object: 60988eebbd3399207abd2546359d82c8066cc57d
+    last_write_checksum: sha1:4ad59f6314ed59393655f85ea8daf5447dabc760
+    pristine_git_object: 4aa365de1c95c59a70a79306946b09ae9ae8db58
   docs/models/models-create-filter-request.md:
     id: 4156751ab58b
     last_write_checksum: sha1:416af3de3279a150f947379eb3e5fb3c4532584f
@@ -2621,12 +2621,12 @@ trackedFiles:
     pristine_git_object: 32a872bc7dd9e6e164106750b339a8daabd33ed3
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:4d8564755b70a6c1abbf368d2ff49c9106ee4789
-    pristine_git_object: 53a96ead67d254d6b35b328624f226e802efe0ea
+    last_write_checksum: sha1:a2a2435da2aba0d5d78139eb1b723a9cbeedcf0a
+    pristine_git_object: ae47a18045e4b9f632d9e5b3f7829ef25f1a354e
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:415bff428d547cf15473ddda96cf99bb661853d7
-    pristine_git_object: 9640e6b7b6576d61105886c18795bf7f3d5756fc
+    last_write_checksum: sha1:ad39e8162f4efa23d3f26ace12bde4ee1d6d5c0e
+    pristine_git_object: c8e4bde25cb9120e0798463b97027630806d3d03
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:cd83f57bf86f572739a193e44e313c43ca8e5b53
@@ -2921,8 +2921,8 @@ trackedFiles:
     pristine_git_object: 0b2543a00780f8844dcd1fbdcbc51a91262d91bc
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:ec88738d32d3ca434c7af228706164f601116320
-    pristine_git_object: 0c549d7371c64a1690f1e06403b44bbc5124eeb1
+    last_write_checksum: sha1:887a8e4df5b8826395f740c45e3ace9b518da26e
+    pristine_git_object: 9ea75fedc56e0e2a1e82818290995e9949b9558a
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:e49f64fdecc307c8d2868f6f31b3dc7d36349c8b
@@ -3449,8 +3449,8 @@ trackedFiles:
     pristine_git_object: 5a70cc876656a28426c71e9405eb209a02ef91c3
   src/models/models-create-event.ts:
     id: b612915baac4
-    last_write_checksum: sha1:0e7ba8df5b3b34f7041dfff1b5be16025bae7043
-    pristine_git_object: e9554191243a503538056f5ef129398105d5abd8
+    last_write_checksum: sha1:66a9ca35d7aacc9bcd1687abb05adbefd7bc5580
+    pristine_git_object: 92926deeeab5334c7852f97c43af5adc8e04d43e
   src/models/models-create-filter-request.ts:
     id: d7298ab598d2
     last_write_checksum: sha1:1b5b9b3348b80f97329fa89c3adacb6fe95a54ff
@@ -5197,4 +5197,3 @@ examples:
         "404":
           application/json: {}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `convoy.projects.getProjects()`: \n  *  `response.data[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.projects.createProject()`: \n  *  `request.body.config` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.projects.deleteProject()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.projects.getProject()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.projects.updateProject()`: \n  *  `request.body.config` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.getEndpoints()`: \n  *  `response.data.content[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.createEndpoint()`: \n  *  `request.body.authentication.type.enum()` **Added**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.testOAuth2Connection()`:  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.deleteEndpoint()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.getEndpoint()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.updateEndpoint()`: \n  *  `request.body.authentication.type.enum()` **Added**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.activateEndpoint()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.expireSecret()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.endpoints.pauseEndpoint()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.getEventTypes()`: \n  *  `response.data[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.createEventType()`: \n  *  `request.body.jsonSchema` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.importOpenApiSpec()`: \n  *  `response.data[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.updateEventType()`: \n  *  `request.body.jsonSchema` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventTypes.deprecateEventType()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventDeliveries.getEventDeliveriesPaged()`: \n  *  `response.data.content[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventDeliveries.batchRetryEventDelivery()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventDeliveries.forceResendEventDeliveries()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventDeliveries.getEventDelivery()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.eventDeliveries.resendEventDelivery()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.deliveryAttempts.getDeliveryAttempts()`: \n  *  `response.data[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.deliveryAttempts.getDeliveryAttempt()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.getEventsPaged()`: \n  *  `response.data.content[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.createEndpointEvent()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.batchReplayEvents()`:  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.createBroadcastEvent()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.countAffectedEvents()`:  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.createDynamicEvent()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.createEndpointFanoutEvent()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.getEndpointEvent()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.events.replayEndpointEvent()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.metaEvents.getMetaEventsPaged()`: \n  *  `response.data.content[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.metaEvents.getMetaEvent()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.metaEvents.resendMetaEvent()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.onboard.bulkOnboard()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.portalLinks.loadPortalLinksPaged()`: \n  *  `response.data.content[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.portalLinks.createPortalLink()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.portalLinks.getPortalLink()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.portalLinks.updatePortalLink()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.portalLinks.refreshPortalLinkAuthToken()`:  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.portalLinks.revokePortalLink()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.sources.loadSourcesPaged()`: \n  *  `response.data.content[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.sources.createSource()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.sources.deleteSource()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.sources.getSource()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.sources.updateSource()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.post/v1/projects/{projectId}/sources/testFunction()`: \n  *  `request.body.payload` **Changed**\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.getSubscriptions()`: \n  *  `response.data.content[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.createSubscription()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.testSubscriptionFilter()`:  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.testSubscriptionFunction()`: \n  *  `request.body.payload` **Changed**\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.deleteSubscription()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.getSubscription()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.updateSubscription()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.subscriptions.toggleSubscriptionStatus()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.filters.getFilters()`: \n  *  `response.data[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.filters.createFilter()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.filters.bulkCreateFilters()`: \n  *  `request.body[]` **Changed**\n  *  `response.data[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.filters.bulkUpdateFilters()`: \n  *  `request.body[]` **Changed**\n  *  `response.data[]` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.filters.testFilter()`: \n  *  `request.body.request` **Changed**\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.filters.deleteFilter()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.filters.getFilter()`: \n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n* `convoy.filters.updateFilter()`: \n  *  `request.body` **Changed**\n  *  `response.data` **Changed** (Breaking ⚠️)\n  *  `error.data` **Changed** (Breaking ⚠️)\n"
