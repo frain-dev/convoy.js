@@ -14,7 +14,7 @@ export class Onboard extends ClientSDK {
    * Bulk onboard endpoints with subscriptions
    *
    * @remarks
-   * This endpoint accepts a CSV file or JSON body to bulk-create endpoints with subscriptions
+   * This endpoint bulk-creates endpoints with subscriptions from a JSON body. A CSV file upload is also accepted over raw HTTP as multipart/form-data with a "file" field; generated SDK clients only expose the JSON body.
    */
   async bulkOnboard(
     projectID: string,
