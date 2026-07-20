@@ -23,7 +23,10 @@ export type ModelsCreateEvent = {
    */
   data?: { [k: string]: any } | null | undefined;
   /**
-   * Specifies the endpoint to send this event to.
+   * Specifies the endpoint to send this event to. Required unless the
+   *
+   * @remarks
+   * deprecated app_id is provided.
    */
   endpointId?: string | undefined;
   /**
