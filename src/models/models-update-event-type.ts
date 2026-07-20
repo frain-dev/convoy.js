@@ -18,14 +18,14 @@ export type ModelsUpdateEventType = {
   /**
    * JSONSchema is the JSON structure of the event type
    */
-  jsonSchema?: { [k: string]: any } | undefined;
+  jsonSchema?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
 export type ModelsUpdateEventType$Outbound = {
   category?: string | undefined;
   description?: string | undefined;
-  json_schema?: { [k: string]: any } | undefined;
+  json_schema?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
@@ -36,7 +36,7 @@ export const ModelsUpdateEventType$outboundSchema: z.ZodMiniType<
   z.object({
     category: z.optional(z.string()),
     description: z.optional(z.string()),
-    jsonSchema: z.optional(z.record(z.string(), z.any())),
+    jsonSchema: z.optional(z.nullable(z.record(z.string(), z.any()))),
   }),
   z.transform((v) => {
     return remap$(v, {

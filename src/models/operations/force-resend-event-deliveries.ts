@@ -27,7 +27,7 @@ export type ForceResendEventDeliveriesRequest = {
 export type ForceResendEventDeliveriesResponse = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
@@ -62,7 +62,7 @@ export const ForceResendEventDeliveriesResponse$inboundSchema: z.ZodMiniType<
 > = z.object({
   message: types.optional(types.string()),
   status: types.optional(types.boolean()),
-  data: types.optional(models.HandlersStub$inboundSchema),
+  data: z.optional(z.nullable(z.record(z.string(), z.any()))),
 });
 
 export function forceResendEventDeliveriesResponseFromJSON(

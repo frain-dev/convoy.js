@@ -10,6 +10,7 @@ import { OpenEnum } from "../types/enums.js";
 export const DatastoreMetaEventType = {
   Http: "http",
   PubSub: "pub_sub",
+  Unknown: "",
 } as const;
 export type DatastoreMetaEventType = OpenEnum<typeof DatastoreMetaEventType>;
 

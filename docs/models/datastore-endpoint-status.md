@@ -5,7 +5,7 @@
 ```typescript
 import { DatastoreEndpointStatus } from "convoy.js/models";
 
-let value: DatastoreEndpointStatus = "active";
+let value: DatastoreEndpointStatus = "inactive";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: DatastoreEndpointStatus = "active";
 ## Values
 
 ```typescript
-"active" | "inactive" | "paused" | Unrecognized<string>
+"active" | "inactive" | "paused" | "" | Unrecognized<string>
 ```

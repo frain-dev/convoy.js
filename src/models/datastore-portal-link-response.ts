@@ -9,24 +9,229 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  DatastoreEndpoint,
-  DatastoreEndpoint$inboundSchema,
-} from "./datastore-endpoint.js";
+  DatastoreEndpointAuthenticationType,
+  DatastoreEndpointAuthenticationType$inboundSchema,
+} from "./datastore-endpoint-authentication-type.js";
+import {
+  DatastoreEndpointStatus,
+  DatastoreEndpointStatus$inboundSchema,
+} from "./datastore-endpoint-status.js";
+import {
+  DatastoreOAuth2AuthenticationType,
+  DatastoreOAuth2AuthenticationType$inboundSchema,
+} from "./datastore-o-auth2-authentication-type.js";
+import {
+  DatastoreOAuth2ExpiryTimeUnit,
+  DatastoreOAuth2ExpiryTimeUnit$inboundSchema,
+} from "./datastore-o-auth2-expiry-time-unit.js";
 import {
   DatastorePortalAuthType,
   DatastorePortalAuthType$inboundSchema,
 } from "./datastore-portal-auth-type.js";
+import {
+  DatastoreSecret,
+  DatastoreSecret$inboundSchema,
+} from "./datastore-secret.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+
+export type DatastorePortalLinkResponseApiKey = {
+  headerName?: string | undefined;
+  headerValue?: string | undefined;
+};
+
+export type DatastorePortalLinkResponseBasicAuth = {
+  password?: string | undefined;
+  username?: string | undefined;
+};
+
+/**
+ * Field mapping for flexible token response parsing
+ */
+export type DatastorePortalLinkResponseFieldMapping = {
+  /**
+   * Field name for access token (e.g., "accessToken", "access_token", "token")
+   */
+  accessToken?: string | undefined;
+  /**
+   * Field name for expiry time (e.g., "expiresIn", "expires_in", "expiresAt")
+   */
+  expiresIn?: string | undefined;
+  /**
+   * Field name for token type (e.g., "tokenType", "token_type")
+   */
+  tokenType?: string | undefined;
+};
+
+/**
+ * Encrypted at rest
+ */
+export type DatastorePortalLinkResponseSigningKey = {
+  /**
+   * EC (Elliptic Curve) key fields
+   */
+  crv?: string | undefined;
+  /**
+   * Private key (EC only)
+   */
+  d?: string | undefined;
+  /**
+   * RSA first factor CRT exponent (RSA private key only)
+   */
+  dp?: string | undefined;
+  /**
+   * RSA second factor CRT exponent (RSA private key only)
+   */
+  dq?: string | undefined;
+  /**
+   * RSA public exponent (RSA only)
+   */
+  e?: string | undefined;
+  /**
+   * Key ID
+   */
+  kid?: string | undefined;
+  /**
+   * Key type: "EC" or "RSA"
+   */
+  kty?: string | undefined;
+  /**
+   * RSA key fields
+   */
+  n?: string | undefined;
+  /**
+   * RSA first prime factor (RSA private key only)
+   */
+  p?: string | undefined;
+  /**
+   * RSA second prime factor (RSA private key only)
+   */
+  q?: string | undefined;
+  /**
+   * RSA first CRT coefficient (RSA private key only)
+   */
+  qi?: string | undefined;
+  /**
+   * X coordinate (EC only)
+   */
+  x?: string | undefined;
+  /**
+   * Y coordinate (EC only)
+   */
+  y?: string | undefined;
+};
+
+export type DatastorePortalLinkResponseOauth2 = {
+  audience?: string | undefined;
+  authenticationType?: DatastoreOAuth2AuthenticationType | undefined;
+  clientId?: string | undefined;
+  /**
+   * Encrypted at rest
+   */
+  clientSecret?: string | undefined;
+  /**
+   * Expiry time unit (seconds, milliseconds, minutes, hours)
+   */
+  expiryTimeUnit?: DatastoreOAuth2ExpiryTimeUnit | undefined;
+  /**
+   * Field mapping for flexible token response parsing
+   */
+  fieldMapping?: DatastorePortalLinkResponseFieldMapping | null | undefined;
+  grantType?: string | undefined;
+  issuer?: string | undefined;
+  scope?: string | undefined;
+  signingAlgorithm?: string | undefined;
+  /**
+   * Encrypted at rest
+   */
+  signingKey?: DatastorePortalLinkResponseSigningKey | null | undefined;
+  subject?: string | undefined;
+  url?: string | undefined;
+};
+
+export type DatastorePortalLinkResponseAuthentication = {
+  apiKey?: DatastorePortalLinkResponseApiKey | null | undefined;
+  basicAuth?: DatastorePortalLinkResponseBasicAuth | null | undefined;
+  oauth2?: DatastorePortalLinkResponseOauth2 | null | undefined;
+  type?: DatastoreEndpointAuthenticationType | undefined;
+};
+
+/**
+ * mTLS client certificate configuration
+ */
+export type DatastorePortalLinkResponseMtlsClientCert = {
+  /**
+   * ClientCert is the client certificate PEM string
+   */
+  clientCert?: string | undefined;
+  /**
+   * ClientKey is the client private key PEM string
+   */
+  clientKey?: string | undefined;
+};
+
+export type EndpointsMetadatum = {
+  advancedSignatures?: boolean | undefined;
+  authentication?: DatastorePortalLinkResponseAuthentication | null | undefined;
+  /**
+   * CBState is the circuit breaker state ("open", "half-open", "closed") so the UI
+   *
+   * @remarks
+   * can reflect a tripped breaker on the endpoint status. Nil when CB is
+   * off/unlicensed or has no sample for this endpoint.
+   */
+  cbState?: string | null | undefined;
+  contentType?: string | undefined;
+  createdAt?: string | undefined;
+  deletedAt?: string | null | undefined;
+  description?: string | undefined;
+  events?: number | undefined;
+  failureCount?: number | null | undefined;
+  /**
+   * FailureRate is the circuit breaker's rolling failure rate for this endpoint.
+   *
+   * @remarks
+   * It is a pointer so the API can return null when no rate was computed (circuit
+   * breaker feature off, or sampler not running), distinct from a genuine 0%.
+   */
+  failureRate?: number | null | undefined;
+  httpTimeout?: number | undefined;
+  /**
+   * mTLS client certificate configuration
+   */
+  mtlsClientCert?: DatastorePortalLinkResponseMtlsClientCert | null | undefined;
+  name?: string | undefined;
+  ownerId?: string | undefined;
+  /**
+   * PeriodFailureRate is the period failure rate from event_deliveries,
+   *
+   * @remarks
+   * (Failure+Retry)/(Success+Failure+Retry). Retry counts as failed-so-far.
+   * Nil when the range has no counted deliveries; sibling counts are transient.
+   */
+  periodFailureRate?: number | null | undefined;
+  projectId?: string | undefined;
+  rateLimit?: number | undefined;
+  rateLimitDuration?: number | undefined;
+  retryCount?: number | null | undefined;
+  secrets?: Array<DatastoreSecret> | undefined;
+  slackWebhookUrl?: string | undefined;
+  status?: DatastoreEndpointStatus | undefined;
+  successCount?: number | null | undefined;
+  supportEmail?: string | undefined;
+  uid?: string | undefined;
+  updatedAt?: string | undefined;
+  url?: string | undefined;
+};
 
 export type DatastorePortalLinkResponse = {
   authKey?: string | undefined;
   authType?: DatastorePortalAuthType | undefined;
   canManageEndpoint?: boolean | undefined;
   createdAt?: string | undefined;
-  deletedAt?: string | undefined;
+  deletedAt?: string | null | undefined;
   endpointCount?: number | undefined;
   endpoints?: Array<string> | undefined;
-  endpointsMetadata?: Array<DatastoreEndpoint> | undefined;
+  endpointsMetadata?: Array<EndpointsMetadatum | null> | undefined;
   name?: string | undefined;
   ownerId?: string | undefined;
   projectId?: string | undefined;
@@ -35,6 +240,316 @@ export type DatastorePortalLinkResponse = {
   updatedAt?: string | undefined;
   url?: string | undefined;
 };
+
+/** @internal */
+export const DatastorePortalLinkResponseApiKey$inboundSchema: z.ZodMiniType<
+  DatastorePortalLinkResponseApiKey,
+  unknown
+> = z.pipe(
+  z.object({
+    header_name: types.optional(types.string()),
+    header_value: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "header_name": "headerName",
+      "header_value": "headerValue",
+    });
+  }),
+);
+
+export function datastorePortalLinkResponseApiKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<DatastorePortalLinkResponseApiKey, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DatastorePortalLinkResponseApiKey$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DatastorePortalLinkResponseApiKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const DatastorePortalLinkResponseBasicAuth$inboundSchema: z.ZodMiniType<
+  DatastorePortalLinkResponseBasicAuth,
+  unknown
+> = z.object({
+  password: types.optional(types.string()),
+  username: types.optional(types.string()),
+});
+
+export function datastorePortalLinkResponseBasicAuthFromJSON(
+  jsonString: string,
+): SafeParseResult<DatastorePortalLinkResponseBasicAuth, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      DatastorePortalLinkResponseBasicAuth$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DatastorePortalLinkResponseBasicAuth' from JSON`,
+  );
+}
+
+/** @internal */
+export const DatastorePortalLinkResponseFieldMapping$inboundSchema:
+  z.ZodMiniType<DatastorePortalLinkResponseFieldMapping, unknown> = z.pipe(
+    z.object({
+      access_token: types.optional(types.string()),
+      expires_in: types.optional(types.string()),
+      token_type: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "access_token": "accessToken",
+        "expires_in": "expiresIn",
+        "token_type": "tokenType",
+      });
+    }),
+  );
+
+export function datastorePortalLinkResponseFieldMappingFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  DatastorePortalLinkResponseFieldMapping,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      DatastorePortalLinkResponseFieldMapping$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'DatastorePortalLinkResponseFieldMapping' from JSON`,
+  );
+}
+
+/** @internal */
+export const DatastorePortalLinkResponseSigningKey$inboundSchema: z.ZodMiniType<
+  DatastorePortalLinkResponseSigningKey,
+  unknown
+> = z.object({
+  crv: types.optional(types.string()),
+  d: types.optional(types.string()),
+  dp: types.optional(types.string()),
+  dq: types.optional(types.string()),
+  e: types.optional(types.string()),
+  kid: types.optional(types.string()),
+  kty: types.optional(types.string()),
+  n: types.optional(types.string()),
+  p: types.optional(types.string()),
+  q: types.optional(types.string()),
+  qi: types.optional(types.string()),
+  x: types.optional(types.string()),
+  y: types.optional(types.string()),
+});
+
+export function datastorePortalLinkResponseSigningKeyFromJSON(
+  jsonString: string,
+): SafeParseResult<DatastorePortalLinkResponseSigningKey, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      DatastorePortalLinkResponseSigningKey$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DatastorePortalLinkResponseSigningKey' from JSON`,
+  );
+}
+
+/** @internal */
+export const DatastorePortalLinkResponseOauth2$inboundSchema: z.ZodMiniType<
+  DatastorePortalLinkResponseOauth2,
+  unknown
+> = z.pipe(
+  z.object({
+    audience: types.optional(types.string()),
+    authentication_type: types.optional(
+      DatastoreOAuth2AuthenticationType$inboundSchema,
+    ),
+    client_id: types.optional(types.string()),
+    client_secret: types.optional(types.string()),
+    expiry_time_unit: types.optional(
+      DatastoreOAuth2ExpiryTimeUnit$inboundSchema,
+    ),
+    field_mapping: z.optional(
+      z.nullable(z.lazy(() =>
+        DatastorePortalLinkResponseFieldMapping$inboundSchema
+      )),
+    ),
+    grant_type: types.optional(types.string()),
+    issuer: types.optional(types.string()),
+    scope: types.optional(types.string()),
+    signing_algorithm: types.optional(types.string()),
+    signing_key: z.optional(
+      z.nullable(z.lazy(() =>
+        DatastorePortalLinkResponseSigningKey$inboundSchema
+      )),
+    ),
+    subject: types.optional(types.string()),
+    url: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "authentication_type": "authenticationType",
+      "client_id": "clientId",
+      "client_secret": "clientSecret",
+      "expiry_time_unit": "expiryTimeUnit",
+      "field_mapping": "fieldMapping",
+      "grant_type": "grantType",
+      "signing_algorithm": "signingAlgorithm",
+      "signing_key": "signingKey",
+    });
+  }),
+);
+
+export function datastorePortalLinkResponseOauth2FromJSON(
+  jsonString: string,
+): SafeParseResult<DatastorePortalLinkResponseOauth2, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DatastorePortalLinkResponseOauth2$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DatastorePortalLinkResponseOauth2' from JSON`,
+  );
+}
+
+/** @internal */
+export const DatastorePortalLinkResponseAuthentication$inboundSchema:
+  z.ZodMiniType<DatastorePortalLinkResponseAuthentication, unknown> = z.pipe(
+    z.object({
+      api_key: z.optional(z.nullable(z.lazy(() =>
+        DatastorePortalLinkResponseApiKey$inboundSchema
+      ))),
+      basic_auth: z.optional(z.nullable(z.lazy(() =>
+        DatastorePortalLinkResponseBasicAuth$inboundSchema
+      ))),
+      oauth2: z.optional(z.nullable(z.lazy(() =>
+        DatastorePortalLinkResponseOauth2$inboundSchema
+      ))),
+      type: types.optional(DatastoreEndpointAuthenticationType$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "api_key": "apiKey",
+        "basic_auth": "basicAuth",
+      });
+    }),
+  );
+
+export function datastorePortalLinkResponseAuthenticationFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  DatastorePortalLinkResponseAuthentication,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      DatastorePortalLinkResponseAuthentication$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'DatastorePortalLinkResponseAuthentication' from JSON`,
+  );
+}
+
+/** @internal */
+export const DatastorePortalLinkResponseMtlsClientCert$inboundSchema:
+  z.ZodMiniType<DatastorePortalLinkResponseMtlsClientCert, unknown> = z.pipe(
+    z.object({
+      client_cert: types.optional(types.string()),
+      client_key: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "client_cert": "clientCert",
+        "client_key": "clientKey",
+      });
+    }),
+  );
+
+export function datastorePortalLinkResponseMtlsClientCertFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  DatastorePortalLinkResponseMtlsClientCert,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      DatastorePortalLinkResponseMtlsClientCert$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'DatastorePortalLinkResponseMtlsClientCert' from JSON`,
+  );
+}
+
+/** @internal */
+export const EndpointsMetadatum$inboundSchema: z.ZodMiniType<
+  EndpointsMetadatum,
+  unknown
+> = z.pipe(
+  z.object({
+    advanced_signatures: types.optional(types.boolean()),
+    authentication: z.optional(z.nullable(z.lazy(() =>
+      DatastorePortalLinkResponseAuthentication$inboundSchema
+    ))),
+    cb_state: z.optional(z.nullable(types.string())),
+    content_type: types.optional(types.string()),
+    created_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
+    description: types.optional(types.string()),
+    events: types.optional(types.number()),
+    failure_count: z.optional(z.nullable(types.number())),
+    failure_rate: z.optional(z.nullable(types.number())),
+    http_timeout: types.optional(types.number()),
+    mtls_client_cert: z.optional(z.nullable(z.lazy(() =>
+      DatastorePortalLinkResponseMtlsClientCert$inboundSchema
+    ))),
+    name: types.optional(types.string()),
+    owner_id: types.optional(types.string()),
+    period_failure_rate: z.optional(z.nullable(types.number())),
+    project_id: types.optional(types.string()),
+    rate_limit: types.optional(types.number()),
+    rate_limit_duration: types.optional(types.number()),
+    retry_count: z.optional(z.nullable(types.number())),
+    secrets: types.optional(z.array(DatastoreSecret$inboundSchema)),
+    slack_webhook_url: types.optional(types.string()),
+    status: types.optional(DatastoreEndpointStatus$inboundSchema),
+    success_count: z.optional(z.nullable(types.number())),
+    support_email: types.optional(types.string()),
+    uid: types.optional(types.string()),
+    updated_at: types.optional(types.string()),
+    url: types.optional(types.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "advanced_signatures": "advancedSignatures",
+      "cb_state": "cbState",
+      "content_type": "contentType",
+      "created_at": "createdAt",
+      "deleted_at": "deletedAt",
+      "failure_count": "failureCount",
+      "failure_rate": "failureRate",
+      "http_timeout": "httpTimeout",
+      "mtls_client_cert": "mtlsClientCert",
+      "owner_id": "ownerId",
+      "period_failure_rate": "periodFailureRate",
+      "project_id": "projectId",
+      "rate_limit": "rateLimit",
+      "rate_limit_duration": "rateLimitDuration",
+      "retry_count": "retryCount",
+      "slack_webhook_url": "slackWebhookUrl",
+      "success_count": "successCount",
+      "support_email": "supportEmail",
+      "updated_at": "updatedAt",
+    });
+  }),
+);
+
+export function endpointsMetadatumFromJSON(
+  jsonString: string,
+): SafeParseResult<EndpointsMetadatum, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EndpointsMetadatum$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EndpointsMetadatum' from JSON`,
+  );
+}
 
 /** @internal */
 export const DatastorePortalLinkResponse$inboundSchema: z.ZodMiniType<
@@ -46,11 +561,11 @@ export const DatastorePortalLinkResponse$inboundSchema: z.ZodMiniType<
     auth_type: types.optional(DatastorePortalAuthType$inboundSchema),
     can_manage_endpoint: types.optional(types.boolean()),
     created_at: types.optional(types.string()),
-    deleted_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
     endpoint_count: types.optional(types.number()),
     endpoints: types.optional(z.array(types.string())),
     endpoints_metadata: types.optional(
-      z.array(DatastoreEndpoint$inboundSchema),
+      z.array(types.nullable(z.lazy(() => EndpointsMetadatum$inboundSchema))),
     ),
     name: types.optional(types.string()),
     owner_id: types.optional(types.string()),

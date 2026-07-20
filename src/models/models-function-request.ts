@@ -7,14 +7,14 @@ import * as z from "zod/v4-mini";
 
 export type ModelsFunctionRequest = {
   function?: string | undefined;
-  payload?: { [k: string]: any } | undefined;
+  payload?: { [k: string]: any } | null | undefined;
   type?: string | undefined;
 };
 
 /** @internal */
 export type ModelsFunctionRequest$Outbound = {
   function?: string | undefined;
-  payload?: { [k: string]: any } | undefined;
+  payload?: { [k: string]: any } | null | undefined;
   type?: string | undefined;
 };
 
@@ -24,7 +24,7 @@ export const ModelsFunctionRequest$outboundSchema: z.ZodMiniType<
   ModelsFunctionRequest
 > = z.object({
   function: z.optional(z.string()),
-  payload: z.optional(z.record(z.string(), z.any())),
+  payload: z.optional(z.nullable(z.record(z.string(), z.any()))),
   type: z.optional(z.string()),
 });
 

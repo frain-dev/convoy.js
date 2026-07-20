@@ -5,7 +5,7 @@
 ```typescript
 import { DatastoreDeviceStatus } from "convoy.js/models";
 
-let value: DatastoreDeviceStatus = "disabled";
+let value: DatastoreDeviceStatus = "";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: DatastoreDeviceStatus = "disabled";
 ## Values
 
 ```typescript
-"offline" | "online" | "disabled" | Unrecognized<string>
+"offline" | "online" | "disabled" | "" | Unrecognized<string>
 ```

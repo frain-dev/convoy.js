@@ -13,5 +13,5 @@ let value: AuthRoleType = "billing_admin";
 ## Values
 
 ```typescript
-"instance_admin" | "organisation_admin" | "billing_admin" | "project_admin" | "project_viewer" | "api" | Unrecognized<string>
+"instance_admin" | "organisation_admin" | "billing_admin" | "project_admin" | "project_viewer" | "api" | "" | Unrecognized<string>
 ```

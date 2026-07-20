@@ -13,21 +13,43 @@ import {
   DatastoreEventDeliveryStatus$inboundSchema,
 } from "./datastore-event-delivery-status.js";
 import {
-  DatastoreMetaEventAttempt,
-  DatastoreMetaEventAttempt$inboundSchema,
-} from "./datastore-meta-event-attempt.js";
-import {
-  DatastoreMetadata,
-  DatastoreMetadata$inboundSchema,
-} from "./datastore-metadata.js";
+  DatastoreStrategyProvider,
+  DatastoreStrategyProvider$inboundSchema,
+} from "./datastore-strategy-provider.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+export type Attempt = {
+  requestHttpHeader?: { [k: string]: string } | null | undefined;
+  responseData?: string | undefined;
+  responseHttpHeader?: { [k: string]: string } | null | undefined;
+};
+
+export type ModelsMetaEventResponseMetadata = {
+  /**
+   * Data to be sent to endpoint.
+   */
+  data?: { [k: string]: any } | null | undefined;
+  intervalSeconds?: number | undefined;
+  maxRetrySeconds?: number | undefined;
+  nextSendTime?: string | undefined;
+  /**
+   * NumTrials: number of times we have tried to deliver this Event to
+   *
+   * @remarks
+   * an application
+   */
+  numTrials?: number | undefined;
+  raw?: string | undefined;
+  retryLimit?: number | undefined;
+  strategy?: DatastoreStrategyProvider | undefined;
+};
+
 export type ModelsMetaEventResponse = {
-  attempt?: DatastoreMetaEventAttempt | undefined;
+  attempt?: Attempt | null | undefined;
   createdAt?: string | undefined;
-  deletedAt?: string | undefined;
+  deletedAt?: string | null | undefined;
   eventType?: string | undefined;
-  metadata?: DatastoreMetadata | undefined;
+  metadata?: ModelsMetaEventResponseMetadata | null | undefined;
   projectId?: string | undefined;
   status?: DatastoreEventDeliveryStatus | undefined;
   uid?: string | undefined;
@@ -35,16 +57,84 @@ export type ModelsMetaEventResponse = {
 };
 
 /** @internal */
+export const Attempt$inboundSchema: z.ZodMiniType<Attempt, unknown> = z.pipe(
+  z.object({
+    request_http_header: z.optional(
+      z.nullable(z.record(z.string(), types.string())),
+    ),
+    response_data: types.optional(types.string()),
+    response_http_header: z.optional(
+      z.nullable(z.record(z.string(), types.string())),
+    ),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "request_http_header": "requestHttpHeader",
+      "response_data": "responseData",
+      "response_http_header": "responseHttpHeader",
+    });
+  }),
+);
+
+export function attemptFromJSON(
+  jsonString: string,
+): SafeParseResult<Attempt, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Attempt$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Attempt' from JSON`,
+  );
+}
+
+/** @internal */
+export const ModelsMetaEventResponseMetadata$inboundSchema: z.ZodMiniType<
+  ModelsMetaEventResponseMetadata,
+  unknown
+> = z.pipe(
+  z.object({
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    interval_seconds: types.optional(types.number()),
+    max_retry_seconds: types.optional(types.number()),
+    next_send_time: types.optional(types.string()),
+    num_trials: types.optional(types.number()),
+    raw: types.optional(types.string()),
+    retry_limit: types.optional(types.number()),
+    strategy: types.optional(DatastoreStrategyProvider$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "interval_seconds": "intervalSeconds",
+      "max_retry_seconds": "maxRetrySeconds",
+      "next_send_time": "nextSendTime",
+      "num_trials": "numTrials",
+      "retry_limit": "retryLimit",
+    });
+  }),
+);
+
+export function modelsMetaEventResponseMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<ModelsMetaEventResponseMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ModelsMetaEventResponseMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ModelsMetaEventResponseMetadata' from JSON`,
+  );
+}
+
+/** @internal */
 export const ModelsMetaEventResponse$inboundSchema: z.ZodMiniType<
   ModelsMetaEventResponse,
   unknown
 > = z.pipe(
   z.object({
-    attempt: types.optional(DatastoreMetaEventAttempt$inboundSchema),
+    attempt: z.optional(z.nullable(z.lazy(() => Attempt$inboundSchema))),
     created_at: types.optional(types.string()),
-    deleted_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
     event_type: types.optional(types.string()),
-    metadata: types.optional(DatastoreMetadata$inboundSchema),
+    metadata: z.optional(
+      z.nullable(z.lazy(() => ModelsMetaEventResponseMetadata$inboundSchema)),
+    ),
     project_id: types.optional(types.string()),
     status: types.optional(DatastoreEventDeliveryStatus$inboundSchema),
     uid: types.optional(types.string()),

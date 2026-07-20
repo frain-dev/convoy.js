@@ -12,6 +12,7 @@ export const DatastoreOAuth2ExpiryTimeUnit = {
   Milliseconds: "milliseconds",
   Minutes: "minutes",
   Hours: "hours",
+  Unknown: "",
 } as const;
 export type DatastoreOAuth2ExpiryTimeUnit = OpenEnum<
   typeof DatastoreOAuth2ExpiryTimeUnit

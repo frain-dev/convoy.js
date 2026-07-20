@@ -13,5 +13,5 @@ let value: DatastoreProjectType = "outgoing";
 ## Values
 
 ```typescript
-"outgoing" | "incoming" | Unrecognized<string>
+"outgoing" | "incoming" | "" | Unrecognized<string>
 ```

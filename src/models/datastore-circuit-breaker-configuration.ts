@@ -5,10 +5,6 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
-import { Result as SafeParseResult } from "../types/fp.js";
-import * as types from "../types/primitives.js";
-import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type DatastoreCircuitBreakerConfiguration = {
   consecutiveFailureThreshold?: number | undefined;
@@ -20,32 +16,6 @@ export type DatastoreCircuitBreakerConfiguration = {
   successThreshold?: number | undefined;
 };
 
-/** @internal */
-export const DatastoreCircuitBreakerConfiguration$inboundSchema: z.ZodMiniType<
-  DatastoreCircuitBreakerConfiguration,
-  unknown
-> = z.pipe(
-  z.object({
-    consecutive_failure_threshold: types.optional(types.number()),
-    error_timeout: types.optional(types.number()),
-    failure_threshold: types.optional(types.number()),
-    minimum_request_count: types.optional(types.number()),
-    observability_window: types.optional(types.number()),
-    sample_rate: types.optional(types.number()),
-    success_threshold: types.optional(types.number()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "consecutive_failure_threshold": "consecutiveFailureThreshold",
-      "error_timeout": "errorTimeout",
-      "failure_threshold": "failureThreshold",
-      "minimum_request_count": "minimumRequestCount",
-      "observability_window": "observabilityWindow",
-      "sample_rate": "sampleRate",
-      "success_threshold": "successThreshold",
-    });
-  }),
-);
 /** @internal */
 export type DatastoreCircuitBreakerConfiguration$Outbound = {
   consecutive_failure_threshold?: number | undefined;
@@ -91,15 +61,5 @@ export function datastoreCircuitBreakerConfigurationToJSON(
     DatastoreCircuitBreakerConfiguration$outboundSchema.parse(
       datastoreCircuitBreakerConfiguration,
     ),
-  );
-}
-export function datastoreCircuitBreakerConfigurationFromJSON(
-  jsonString: string,
-): SafeParseResult<DatastoreCircuitBreakerConfiguration, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      DatastoreCircuitBreakerConfiguration$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'DatastoreCircuitBreakerConfiguration' from JSON`,
   );
 }

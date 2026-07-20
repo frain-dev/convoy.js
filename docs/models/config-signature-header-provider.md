@@ -5,11 +5,13 @@
 ```typescript
 import { ConfigSignatureHeaderProvider } from "convoy.js/models";
 
-let value: ConfigSignatureHeaderProvider = "X-Convoy-Signature";
+let value: ConfigSignatureHeaderProvider = "";
+
+// Open enum: unrecognized values are captured as Unrecognized<string>
 ```
 
 ## Values
 
 ```typescript
-"X-Convoy-Signature"
+"X-Convoy-Signature" | "" | Unrecognized<string>
 ```

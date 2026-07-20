@@ -11,14 +11,14 @@ export type ModelsBroadcastEvent = {
   /**
    * Specifies custom headers you want convoy to add when the event is dispatched to your endpoint
    */
-  customHeaders?: { [k: string]: string } | undefined;
+  customHeaders?: { [k: string]: string } | null | undefined;
   /**
    * Data is an arbitrary JSON value that gets sent as the body of the
    *
    * @remarks
    * webhook to the endpoints
    */
-  data?: { [k: string]: any } | undefined;
+  data?: { [k: string]: any } | null | undefined;
   /**
    * Event Type is used for filtering and debugging e.g invoice.paid
    */
@@ -32,8 +32,8 @@ export type ModelsBroadcastEvent = {
 /** @internal */
 export type ModelsBroadcastEvent$Outbound = {
   acknowledged_at?: string | undefined;
-  custom_headers?: { [k: string]: string } | undefined;
-  data?: { [k: string]: any } | undefined;
+  custom_headers?: { [k: string]: string } | null | undefined;
+  data?: { [k: string]: any } | null | undefined;
   event_type?: string | undefined;
   idempotency_key?: string | undefined;
 };
@@ -45,8 +45,8 @@ export const ModelsBroadcastEvent$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     acknowledgedAt: z.optional(z.string()),
-    customHeaders: z.optional(z.record(z.string(), z.string())),
-    data: z.optional(z.record(z.string(), z.any())),
+    customHeaders: z.optional(z.nullable(z.record(z.string(), z.string()))),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     eventType: z.optional(z.string()),
     idempotencyKey: z.optional(z.string()),
   }),

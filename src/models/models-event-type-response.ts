@@ -12,9 +12,9 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ModelsEventTypeResponse = {
   category?: string | undefined;
-  deprecatedAt?: string | undefined;
+  deprecatedAt?: string | null | undefined;
   description?: string | undefined;
-  jsonSchema?: { [k: string]: any } | undefined;
+  jsonSchema?: { [k: string]: any } | null | undefined;
   name?: string | undefined;
   uid?: string | undefined;
 };
@@ -26,9 +26,9 @@ export const ModelsEventTypeResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     category: types.optional(types.string()),
-    deprecated_at: types.optional(types.string()),
+    deprecated_at: z.optional(z.nullable(types.string())),
     description: types.optional(types.string()),
-    json_schema: types.optional(z.record(z.string(), z.any())),
+    json_schema: z.optional(z.nullable(z.record(z.string(), z.any()))),
     name: types.optional(types.string()),
     uid: types.optional(types.string()),
   }),
