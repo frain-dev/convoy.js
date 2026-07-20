@@ -10,6 +10,7 @@ import { OpenEnum } from "../types/enums.js";
 export const DatastoreSubscriptionType = {
   Cli: "cli",
   Api: "api",
+  Unknown: "",
 } as const;
 export type DatastoreSubscriptionType = OpenEnum<
   typeof DatastoreSubscriptionType

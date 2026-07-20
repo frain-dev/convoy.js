@@ -7,22 +7,22 @@ import * as z from "zod/v4-mini";
 
 export type ModelsTestFilterRequestScopes = {
   body?: any | undefined;
-  header?: { [k: string]: any } | undefined;
+  header?: { [k: string]: any } | null | undefined;
   /**
    * Headers accepts either "headers" or "header" for compatibility with the subscription filter tester.
    */
-  headers?: { [k: string]: any } | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
+  headers?: { [k: string]: any } | null | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
 export type ModelsTestFilterRequestScopes$Outbound = {
   body?: any | undefined;
-  header?: { [k: string]: any } | undefined;
-  headers?: { [k: string]: any } | undefined;
-  path?: { [k: string]: any } | undefined;
-  query?: { [k: string]: any } | undefined;
+  header?: { [k: string]: any } | null | undefined;
+  headers?: { [k: string]: any } | null | undefined;
+  path?: { [k: string]: any } | null | undefined;
+  query?: { [k: string]: any } | null | undefined;
 };
 
 /** @internal */
@@ -31,10 +31,10 @@ export const ModelsTestFilterRequestScopes$outboundSchema: z.ZodMiniType<
   ModelsTestFilterRequestScopes
 > = z.object({
   body: z.optional(z.any()),
-  header: z.optional(z.record(z.string(), z.any())),
-  headers: z.optional(z.record(z.string(), z.any())),
-  path: z.optional(z.record(z.string(), z.any())),
-  query: z.optional(z.record(z.string(), z.any())),
+  header: z.optional(z.nullable(z.record(z.string(), z.any()))),
+  headers: z.optional(z.nullable(z.record(z.string(), z.any()))),
+  path: z.optional(z.nullable(z.record(z.string(), z.any()))),
+  query: z.optional(z.nullable(z.record(z.string(), z.any()))),
 });
 
 export function modelsTestFilterRequestScopesToJSON(

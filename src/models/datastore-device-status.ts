@@ -11,6 +11,7 @@ export const DatastoreDeviceStatus = {
   Offline: "offline",
   Online: "online",
   Disabled: "disabled",
+  Unknown: "",
 } as const;
 export type DatastoreDeviceStatus = OpenEnum<typeof DatastoreDeviceStatus>;
 

@@ -13,7 +13,7 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type DatastoreDeliveryAttempt = {
   apiVersion?: string | undefined;
   createdAt?: string | undefined;
-  deletedAt?: string | undefined;
+  deletedAt?: string | null | undefined;
   endpointId?: string | undefined;
   error?: string | undefined;
   httpStatus?: string | undefined;
@@ -21,11 +21,11 @@ export type DatastoreDeliveryAttempt = {
   method?: string | undefined;
   msgId?: string | undefined;
   projectId?: string | undefined;
-  requestHttpHeader?: { [k: string]: string } | undefined;
-  requestedAt?: string | undefined;
-  respondedAt?: string | undefined;
+  requestHttpHeader?: { [k: string]: string } | null | undefined;
+  requestedAt?: string | null | undefined;
+  respondedAt?: string | null | undefined;
   responseData?: string | undefined;
-  responseHttpHeader?: { [k: string]: string } | undefined;
+  responseHttpHeader?: { [k: string]: string } | null | undefined;
   status?: boolean | undefined;
   uid?: string | undefined;
   updatedAt?: string | undefined;
@@ -40,7 +40,7 @@ export const DatastoreDeliveryAttempt$inboundSchema: z.ZodMiniType<
   z.object({
     api_version: types.optional(types.string()),
     created_at: types.optional(types.string()),
-    deleted_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
     endpoint_id: types.optional(types.string()),
     error: types.optional(types.string()),
     http_status: types.optional(types.string()),
@@ -48,11 +48,15 @@ export const DatastoreDeliveryAttempt$inboundSchema: z.ZodMiniType<
     method: types.optional(types.string()),
     msg_id: types.optional(types.string()),
     project_id: types.optional(types.string()),
-    request_http_header: types.optional(z.record(z.string(), types.string())),
-    requested_at: types.optional(types.string()),
-    responded_at: types.optional(types.string()),
+    request_http_header: z.optional(
+      z.nullable(z.record(z.string(), types.string())),
+    ),
+    requested_at: z.optional(z.nullable(types.string())),
+    responded_at: z.optional(z.nullable(types.string())),
     response_data: types.optional(types.string()),
-    response_http_header: types.optional(z.record(z.string(), types.string())),
+    response_http_header: z.optional(
+      z.nullable(z.record(z.string(), types.string())),
+    ),
     status: types.optional(types.boolean()),
     uid: types.optional(types.string()),
     updated_at: types.optional(types.string()),

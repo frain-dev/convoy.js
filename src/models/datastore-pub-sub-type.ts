@@ -12,6 +12,7 @@ export const DatastorePubSubType = {
   Google: "google",
   Kafka: "kafka",
   Amqp: "amqp",
+  Unknown: "",
 } as const;
 export type DatastorePubSubType = OpenEnum<typeof DatastorePubSubType>;
 

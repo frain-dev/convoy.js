@@ -1,0 +1,18 @@
+# ModelsSubscriptionResponseAuthentication
+
+## Example Usage
+
+```typescript
+import { ModelsSubscriptionResponseAuthentication } from "convoy.js/models";
+
+let value: ModelsSubscriptionResponseAuthentication = {};
+```
+
+## Fields
+
+| Field                                                                                                                                | Type                                                                                                                                 | Required                                                                                                                             | Description                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `apiKey`                                                                                                                             | [models.ModelsSubscriptionResponseEndpointMetadataApiKey](../models/models-subscription-response-endpoint-metadata-api-key.md)       | :heavy_minus_sign:                                                                                                                   | N/A                                                                                                                                  |
+| `basicAuth`                                                                                                                          | [models.ModelsSubscriptionResponseEndpointMetadataBasicAuth](../models/models-subscription-response-endpoint-metadata-basic-auth.md) | :heavy_minus_sign:                                                                                                                   | N/A                                                                                                                                  |
+| `oauth2`                                                                                                                             | [models.ModelsSubscriptionResponseOauth2](../models/models-subscription-response-oauth2.md)                                          | :heavy_minus_sign:                                                                                                                   | N/A                                                                                                                                  |
+| `type`                                                                                                                               | [models.DatastoreEndpointAuthenticationType](../models/datastore-endpoint-authentication-type.md)                                    | :heavy_minus_sign:                                                                                                                   | N/A                                                                                                                                  |

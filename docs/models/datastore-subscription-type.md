@@ -13,5 +13,5 @@ let value: DatastoreSubscriptionType = "api";
 ## Values
 
 ```typescript
-"cli" | "api" | Unrecognized<string>
+"cli" | "api" | "" | Unrecognized<string>
 ```

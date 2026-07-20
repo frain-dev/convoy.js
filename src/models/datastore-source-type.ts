@@ -12,6 +12,7 @@ export const DatastoreSourceType = {
   RestApi: "rest_api",
   PubSub: "pub_sub",
   DbChangeStream: "db_change_stream",
+  Unknown: "",
 } as const;
 export type DatastoreSourceType = OpenEnum<typeof DatastoreSourceType>;
 

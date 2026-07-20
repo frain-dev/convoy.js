@@ -291,7 +291,7 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -312,16 +312,16 @@ run();
 
 This SDK supports the following security scheme globally:
 
-| Name         | Type   | Scheme  |
-| ------------ | ------ | ------- |
-| `apiKeyAuth` | apiKey | API key |
+| Name         | Type | Scheme      |
+| ------------ | ---- | ----------- |
+| `apiKeyAuth` | http | HTTP Bearer |
 
 To authenticate with the API the `apiKeyAuth` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -533,38 +533,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
 
-<!-- Start File uploads [file-upload] -->
-## File uploads
-
-Certain SDK methods accept files as part of a multi-part request. It is possible and typically recommended to upload files as a stream rather than reading the entire contents into memory. This avoids excessive memory consumption and potentially crashing with out-of-memory errors when working with very large files. The following example demonstrates how to attach a file stream to a request.
-
-> [!TIP]
->
-> Depending on your JavaScript runtime, there are convenient utilities that return a handle to a file without reading the entire contents into memory:
->
-> - **Node.js v20+:** Since v20, Node.js comes with a native `openAsBlob` function in [`node:fs`](https://nodejs.org/docs/latest-v20.x/api/fs.html#fsopenasblobpath-options).
-> - **Bun:** The native [`Bun.file`](https://bun.sh/docs/api/file-io#reading-files-bun-file) function produces a file handle that can be used for streaming file uploads.
-> - **Browsers:** All supported browsers return an instance to a [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) when reading the value from an `<input type="file">` element.
-> - **Node.js v18:** A file stream can be created using the `fileFrom` helper from [`fetch-blob/from.js`](https://www.npmjs.com/package/fetch-blob).
-
-```typescript
-import { Convoy } from "convoy.js";
-
-const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
-});
-
-async function run() {
-  const result = await convoy.onboard.bulkOnboard("<id>");
-
-  console.log(result);
-}
-
-run();
-
-```
-<!-- End File uploads [file-upload] -->
-
 <!-- Start Retries [retries] -->
 ## Retries
 
@@ -575,7 +543,7 @@ To change the default retry strategy for a single API call, simply provide a ret
 import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -614,7 +582,7 @@ const convoy = new Convoy({
     },
     retryConnectionErrors: false,
   },
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -648,7 +616,7 @@ import { Convoy } from "convoy.js";
 import * as errors from "convoy.js/models/errors";
 
 const convoy = new Convoy({
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -668,7 +636,7 @@ async function run() {
       if (error instanceof errors.GetProjectsBadRequestError) {
         console.log(error.data$.message); // string
         console.log(error.data$.status); // boolean
-        console.log(error.data$.data); // models.HandlersStub
+        console.log(error.data$.data); // { [k: string]: any }
       }
     }
   }
@@ -926,7 +894,7 @@ import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
   serverIdx: 0,
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
@@ -947,7 +915,7 @@ import { Convoy } from "convoy.js";
 
 const convoy = new Convoy({
   serverURL: "https://eu.getconvoy.cloud/api",
-  apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {

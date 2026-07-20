@@ -5,7 +5,6 @@
 
 import * as z from "zod/v4-mini";
 import * as types from "../../types/primitives.js";
-import * as models from "../index.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
@@ -14,7 +13,7 @@ import { ConvoyError } from "./convoy-error.js";
 export type ForceResendEventDeliveriesNotFoundErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -22,7 +21,7 @@ export type ForceResendEventDeliveriesNotFoundErrorData = {
  */
 export class ForceResendEventDeliveriesNotFoundError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: ForceResendEventDeliveriesNotFoundErrorData;
@@ -47,7 +46,7 @@ export class ForceResendEventDeliveriesNotFoundError extends ConvoyError {
 export type ForceResendEventDeliveriesUnauthorizedErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -55,7 +54,7 @@ export type ForceResendEventDeliveriesUnauthorizedErrorData = {
  */
 export class ForceResendEventDeliveriesUnauthorizedError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: ForceResendEventDeliveriesUnauthorizedErrorData;
@@ -80,7 +79,7 @@ export class ForceResendEventDeliveriesUnauthorizedError extends ConvoyError {
 export type ForceResendEventDeliveriesBadRequestErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -88,7 +87,7 @@ export type ForceResendEventDeliveriesBadRequestErrorData = {
  */
 export class ForceResendEventDeliveriesBadRequestError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: ForceResendEventDeliveriesBadRequestErrorData;
@@ -113,7 +112,7 @@ export const ForceResendEventDeliveriesNotFoundError$inboundSchema:
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),
@@ -133,7 +132,7 @@ export const ForceResendEventDeliveriesUnauthorizedError$inboundSchema:
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),
@@ -153,7 +152,7 @@ export const ForceResendEventDeliveriesBadRequestError$inboundSchema:
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),

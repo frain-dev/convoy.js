@@ -12,8 +12,8 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type DatastoreSecret = {
   createdAt?: string | undefined;
-  deletedAt?: string | undefined;
-  expiresAt?: string | undefined;
+  deletedAt?: string | null | undefined;
+  expiresAt?: string | null | undefined;
   uid?: string | undefined;
   updatedAt?: string | undefined;
   value?: string | undefined;
@@ -26,8 +26,8 @@ export const DatastoreSecret$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     created_at: types.optional(types.string()),
-    deleted_at: types.optional(types.string()),
-    expires_at: types.optional(types.string()),
+    deleted_at: z.optional(z.nullable(types.string())),
+    expires_at: z.optional(z.nullable(types.string())),
     uid: types.optional(types.string()),
     updated_at: types.optional(types.string()),
     value: types.optional(types.string()),

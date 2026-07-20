@@ -5,7 +5,6 @@
 
 import * as z from "zod/v4-mini";
 import * as types from "../../types/primitives.js";
-import * as models from "../index.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
@@ -14,7 +13,7 @@ import { ConvoyError } from "./convoy-error.js";
 export type TestSubscriptionFilterNotFoundErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -22,7 +21,7 @@ export type TestSubscriptionFilterNotFoundErrorData = {
  */
 export class TestSubscriptionFilterNotFoundError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: TestSubscriptionFilterNotFoundErrorData;
@@ -47,7 +46,7 @@ export class TestSubscriptionFilterNotFoundError extends ConvoyError {
 export type TestSubscriptionFilterUnauthorizedErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -55,7 +54,7 @@ export type TestSubscriptionFilterUnauthorizedErrorData = {
  */
 export class TestSubscriptionFilterUnauthorizedError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: TestSubscriptionFilterUnauthorizedErrorData;
@@ -80,7 +79,7 @@ export class TestSubscriptionFilterUnauthorizedError extends ConvoyError {
 export type TestSubscriptionFilterBadRequestErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -88,7 +87,7 @@ export type TestSubscriptionFilterBadRequestErrorData = {
  */
 export class TestSubscriptionFilterBadRequestError extends ConvoyError {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: TestSubscriptionFilterBadRequestErrorData;
@@ -115,7 +114,7 @@ export const TestSubscriptionFilterNotFoundError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),
@@ -135,7 +134,7 @@ export const TestSubscriptionFilterUnauthorizedError$inboundSchema:
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),
@@ -157,7 +156,7 @@ export const TestSubscriptionFilterBadRequestError$inboundSchema: z.ZodMiniType<
   z.object({
     message: types.optional(types.string()),
     status: types.optional(types.boolean()),
-    data: types.optional(models.HandlersStub$inboundSchema),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
     request$: z.custom<Request>(x => x instanceof Request),
     response$: z.custom<Response>(x => x instanceof Response),
     body$: z.string(),

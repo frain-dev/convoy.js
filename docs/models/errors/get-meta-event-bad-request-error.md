@@ -12,8 +12,8 @@ import { GetMetaEventBadRequestError } from "convoy.js/models/errors";
 
 ## Fields
 
-| Field                                                | Type                                                 | Required                                             | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `message`                                            | *string*                                             | :heavy_minus_sign:                                   | N/A                                                  |
-| `status`                                             | *boolean*                                            | :heavy_minus_sign:                                   | N/A                                                  |
-| `data`                                               | [models.HandlersStub](../../models/handlers-stub.md) | :heavy_minus_sign:                                   | N/A                                                  |
+| Field                 | Type                  | Required              | Description           |
+| --------------------- | --------------------- | --------------------- | --------------------- |
+| `message`             | *string*              | :heavy_minus_sign:    | N/A                   |
+| `status`              | *boolean*             | :heavy_minus_sign:    | N/A                   |
+| `data`                | Record<string, *any*> | :heavy_minus_sign:    | N/A                   |

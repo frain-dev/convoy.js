@@ -5,7 +5,6 @@
 
 import * as z from "zod/v4-mini";
 import * as types from "../../types/primitives.js";
-import * as models from "../index.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
@@ -14,7 +13,7 @@ import { ConvoyError } from "./convoy-error.js";
 export type PostV1ProjectsProjectIDSourcesTestFunctionNotFoundErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -24,7 +23,7 @@ export class PostV1ProjectsProjectIDSourcesTestFunctionNotFoundError
   extends ConvoyError
 {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: PostV1ProjectsProjectIDSourcesTestFunctionNotFoundErrorData;
@@ -49,7 +48,7 @@ export class PostV1ProjectsProjectIDSourcesTestFunctionNotFoundError
 export type PostV1ProjectsProjectIDSourcesTestFunctionUnauthorizedErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -59,7 +58,7 @@ export class PostV1ProjectsProjectIDSourcesTestFunctionUnauthorizedError
   extends ConvoyError
 {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: PostV1ProjectsProjectIDSourcesTestFunctionUnauthorizedErrorData;
@@ -84,7 +83,7 @@ export class PostV1ProjectsProjectIDSourcesTestFunctionUnauthorizedError
 export type PostV1ProjectsProjectIDSourcesTestFunctionBadRequestErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 };
 
 /**
@@ -94,7 +93,7 @@ export class PostV1ProjectsProjectIDSourcesTestFunctionBadRequestError
   extends ConvoyError
 {
   status?: boolean | undefined;
-  data?: models.HandlersStub | undefined;
+  data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
   data$: PostV1ProjectsProjectIDSourcesTestFunctionBadRequestErrorData;
@@ -122,7 +121,7 @@ export const PostV1ProjectsProjectIDSourcesTestFunctionNotFoundError$inboundSche
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),
@@ -145,7 +144,7 @@ export const PostV1ProjectsProjectIDSourcesTestFunctionUnauthorizedError$inbound
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),
@@ -167,7 +166,7 @@ export const PostV1ProjectsProjectIDSourcesTestFunctionBadRequestError$inboundSc
     z.object({
       message: types.optional(types.string()),
       status: types.optional(types.boolean()),
-      data: types.optional(models.HandlersStub$inboundSchema),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
       request$: z.custom<Request>(x => x instanceof Request),
       response$: z.custom<Response>(x => x instanceof Response),
       body$: z.string(),

@@ -5,7 +5,7 @@
 ```typescript
 import { DatastoreVerifierType } from "convoy.js/models";
 
-let value: DatastoreVerifierType = "hmac";
+let value: DatastoreVerifierType = "basic_auth";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: DatastoreVerifierType = "hmac";
 ## Values
 
 ```typescript
-"noop" | "hmac" | "basic_auth" | "api_key" | Unrecognized<string>
+"noop" | "hmac" | "basic_auth" | "api_key" | "" | Unrecognized<string>
 ```

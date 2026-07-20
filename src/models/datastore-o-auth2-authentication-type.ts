@@ -10,6 +10,7 @@ import { OpenEnum } from "../types/enums.js";
 export const DatastoreOAuth2AuthenticationType = {
   SharedSecret: "shared_secret",
   ClientAssertion: "client_assertion",
+  Unknown: "",
 } as const;
 export type DatastoreOAuth2AuthenticationType = OpenEnum<
   typeof DatastoreOAuth2AuthenticationType
