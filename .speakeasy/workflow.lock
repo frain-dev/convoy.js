@@ -2,8 +2,8 @@ speakeasyVersion: 1.790.2
 sources:
     convoy:
         sourceNamespace: convoy
-        sourceRevisionDigest: sha256:957379833625d5658c543d80b0a8eff914d86cce7880cdb8e58ab6701f2208a7
-        sourceBlobDigest: sha256:85947efb5ba4f72281a722159814cc749809e2c3b66032e09479beb889262b84
+        sourceRevisionDigest: sha256:3b12d2c31b9238d24f9cc53adf1e40feb1ab94e09b980b1b1f6ea8d7edf47899
+        sourceBlobDigest: sha256:4dc28163cfb16dbd3515a10fbacc4ca9e3baadba71a175af730da757bb1525b5
         tags:
             - latest
             - 26.3.5
@@ -11,8 +11,8 @@ targets:
     typescript:
         source: convoy
         sourceNamespace: convoy
-        sourceRevisionDigest: sha256:957379833625d5658c543d80b0a8eff914d86cce7880cdb8e58ab6701f2208a7
-        sourceBlobDigest: sha256:85947efb5ba4f72281a722159814cc749809e2c3b66032e09479beb889262b84
+        sourceRevisionDigest: sha256:3b12d2c31b9238d24f9cc53adf1e40feb1ab94e09b980b1b1f6ea8d7edf47899
+        sourceBlobDigest: sha256:4dc28163cfb16dbd3515a10fbacc4ca9e3baadba71a175af730da757bb1525b5
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.790.2

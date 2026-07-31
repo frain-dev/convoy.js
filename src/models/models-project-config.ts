@@ -99,6 +99,13 @@ export type ModelsProjectConfig = {
    * Strategy is used to configure the project's retry strategies for failing events.
    */
   strategy?: ModelsStrategyConfiguration | undefined;
+  /**
+   * SyncDynamicEventAck waits for dynamic endpoint/subscription resolve before
+   *
+   * @remarks
+   * acknowledging POST /events/dynamic. When false, the handler returns 201 after enqueue.
+   */
+  syncDynamicEventAck?: boolean | undefined;
 };
 
 /** @internal */
@@ -116,6 +123,7 @@ export type ModelsProjectConfig$Outbound = {
   signature?: ModelsSignatureConfiguration$Outbound | undefined;
   ssl?: ModelsSSLConfiguration$Outbound | undefined;
   strategy?: ModelsStrategyConfiguration$Outbound | undefined;
+  sync_dynamic_event_ack?: boolean | undefined;
 };
 
 /** @internal */
@@ -139,6 +147,7 @@ export const ModelsProjectConfig$outboundSchema: z.ZodMiniType<
     signature: z.optional(ModelsSignatureConfiguration$outboundSchema),
     ssl: z.optional(ModelsSSLConfiguration$outboundSchema),
     strategy: z.optional(ModelsStrategyConfiguration$outboundSchema),
+    syncDynamicEventAck: z.optional(z.boolean()),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -151,6 +160,7 @@ export const ModelsProjectConfig$outboundSchema: z.ZodMiniType<
       replayAttacksPreventionEnabled: "replay_attacks_prevention_enabled",
       requestIdHeader: "request_id_header",
       searchPolicy: "search_policy",
+      syncDynamicEventAck: "sync_dynamic_event_ack",
     });
   }),
 );
