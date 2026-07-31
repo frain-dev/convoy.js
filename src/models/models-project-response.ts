@@ -152,6 +152,13 @@ export type ModelsProjectResponseConfig = {
   signature?: ModelsProjectResponseSignature | null | undefined;
   ssl?: ModelsProjectResponseSsl | null | undefined;
   strategy?: ModelsProjectResponseStrategy | null | undefined;
+  /**
+   * SyncDynamicEventAck waits for endpoint/subscription resolve before
+   *
+   * @remarks
+   * returning 2xx from POST /events/dynamic. Default false keeps 201-on-queue.
+   */
+  syncDynamicEventAck?: boolean | undefined;
 };
 
 export type ModelsProjectResponseStatistics = {
@@ -564,6 +571,7 @@ export const ModelsProjectResponseConfig$inboundSchema: z.ZodMiniType<
     strategy: z.optional(
       z.nullable(z.lazy(() => ModelsProjectResponseStrategy$inboundSchema)),
     ),
+    sync_dynamic_event_ack: types.optional(types.boolean()),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -576,6 +584,7 @@ export const ModelsProjectResponseConfig$inboundSchema: z.ZodMiniType<
       "replay_attacks_prevention_enabled": "replayAttacksPreventionEnabled",
       "request_id_header": "requestIdHeader",
       "search_policy": "searchPolicy",
+      "sync_dynamic_event_ack": "syncDynamicEventAck",
     });
   }),
 );
