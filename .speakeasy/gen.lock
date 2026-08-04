@@ -1,18 +1,18 @@
 lockVersion: ""
 id: ""
 management:
-  docChecksum: 22ac180f38232d4b91f0db61c330da6d
+  docChecksum: fff43c02c8d6fceaf01908232e5caafe
   docVersion: 26.3.5
   speakeasyVersion: 1.790.2
   generationVersion: 2.918.3
-  releaseVersion: 2.1.4
-  configChecksum: 6003e10d0700aaeccf9f3bbaa90219a0
+  releaseVersion: 2.1.5
+  configChecksum: c4d59119c7ffa6e69bb59f23826cdd1b
   repoURL: https://github.com/frain-dev/convoy.js.git
   installationURL: https://github.com/frain-dev/convoy.js
 persistentEdits:
-  generation_id: 9710b3fb-e601-4725-80a3-3d38db471146
-  pristine_commit_hash: 32aded5ac989068fa4e3c68122eb7da6acb9b186
-  pristine_tree_hash: 572ab645518bbea2c7f8210f5358077328856b77
+  generation_id: cf6b19ba-35fc-4379-958c-d948d79bffdc
+  pristine_commit_hash: a873d609255ac77253246d8b94a7551415fc517c
+  pristine_tree_hash: f6e935af3bf6af26aefcabaf184909be8888abc4
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -1137,8 +1137,8 @@ trackedFiles:
     pristine_git_object: 99d5f33f03a300091dfd446d5430db10519ab5b6
   docs/models/event-metadata.md:
     id: 2d7cee808e1d
-    last_write_checksum: sha1:64ccf7d8b735e0ec6763e9bb67eeaf0df65c28e5
-    pristine_git_object: 26f7afc34bb72842579503992bf30693cae0c4a3
+    last_write_checksum: sha1:1ef577213544d1ccd73206169bbebe79132bfcb9
+    pristine_git_object: d4b333d6e6cdab6240dafed66cb0ed2c482c0554
   docs/models/filter-config.md:
     id: a69b86e7068e
     last_write_checksum: sha1:66289ea0a593c6a2b4aee22e78dc711828e80bc0
@@ -1489,8 +1489,8 @@ trackedFiles:
     pristine_git_object: 08686e780ea888f6762a4c2173eeeb7b385127b3
   docs/models/models-event-response.md:
     id: 42c98d2c6177
-    last_write_checksum: sha1:ab23c55f64d876338d23cad9debf98fa30ecffdb
-    pristine_git_object: fc3e085b67055a4be0f2d32ac20d498af0e2af28
+    last_write_checksum: sha1:8ae9f6ac0e64eaca97b4cd578a4fb67e4b972c8e
+    pristine_git_object: a4d15dad002de9dbe482171b625649c2f4200497
   docs/models/models-event-type-response.md:
     id: 219797ea79db
     last_write_checksum: sha1:c5ecedf10ba3772560a9f1b2b56b5ed3d9647a53
@@ -2621,12 +2621,12 @@ trackedFiles:
     pristine_git_object: 32a872bc7dd9e6e164106750b339a8daabd33ed3
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:31e6225ce9eb7715959fa4fa3b0cba79755ec4fc
-    pristine_git_object: 86acd9aa2d77a4b076dac9415756ee08f7136146
+    last_write_checksum: sha1:84fb4b98da0fe2abfe5a343a221970168fbb31bc
+    pristine_git_object: b10aac83e2672704e3d50135da39ac3dfe728712
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:7e9e65396cd23bdd1b65dc2e84c431612eb1df55
-    pristine_git_object: 817e51011f74d17ffcefdb2b5432c98227b8ae55
+    last_write_checksum: sha1:3d84f7c791a26096164c0c82f225ee99d7c3dd58
+    pristine_git_object: 66de4839f2467ee652ab585d691673e683b96fa6
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:cd83f57bf86f572739a193e44e313c43ca8e5b53
@@ -2921,8 +2921,8 @@ trackedFiles:
     pristine_git_object: 0b2543a00780f8844dcd1fbdcbc51a91262d91bc
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:4fa98eba4f64860dd334a22d749da5448425f9a5
-    pristine_git_object: 86ce96bb3fcf4cb825d449543480ae484f6ee3d7
+    last_write_checksum: sha1:d9e07d1e46f8823594e95985967c1a6469c577d1
+    pristine_git_object: 6f58e12add753877c48ca949b02772537e9e473f
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:e49f64fdecc307c8d2868f6f31b3dc7d36349c8b
@@ -3489,12 +3489,12 @@ trackedFiles:
     pristine_git_object: fcb7f65e7299945eda16e94400519c43f265bcdc
   src/models/models-event-delivery-response.ts:
     id: 34249725cdea
-    last_write_checksum: sha1:32740dca3aa64d7a7cb4e9491609ccb1095b628f
-    pristine_git_object: 711cc4f0079a523b05b0dcb289f827d22ce1b082
+    last_write_checksum: sha1:22e8f488bccfa9e66cc0f5f39063eb071b3dc389
+    pristine_git_object: 13e900dd5cc636d92340885f87efb958db9059c1
   src/models/models-event-response.ts:
     id: 4e122a83e9c8
-    last_write_checksum: sha1:20522b85f0bad31e92c37e742b624056cb04279d
-    pristine_git_object: 81d4b4ca453a56018ad3486a9ac9c97aca86998c
+    last_write_checksum: sha1:36dedf339692d84901e8cbe39173d630c980a877
+    pristine_git_object: bc0b26c3bddb8a761ffc105f54bbfa288098f934
   src/models/models-event-type-response.ts:
     id: 4cb269c4aaf8
     last_write_checksum: sha1:91272c4a8d68e05c4da9b6c59640d30c18c3bed8
