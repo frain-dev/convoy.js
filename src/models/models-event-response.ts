@@ -176,10 +176,17 @@ export type ModelsEventResponse = {
   endpointMetadata?: Array<DatastoreEndpoint> | undefined;
   endpoints?: Array<string> | undefined;
   eventType?: string | undefined;
+  /**
+   * FailureReason explains a Failure status to whoever is looking at the
+   *
+   * @remarks
+   * dashboard. It carries operator facing text only, never endpoint
+   * credentials, headers, or payload content.
+   */
+  failureReason?: string | undefined;
   headers?: { [k: string]: Array<string> } | null | undefined;
   idempotencyKey?: string | undefined;
   isDuplicateEvent?: boolean | undefined;
-  metadata?: string | undefined;
   projectId?: string | undefined;
   raw?: string | undefined;
   sourceId?: string | undefined;
@@ -607,12 +614,12 @@ export const ModelsEventResponse$inboundSchema: z.ZodMiniType<
     endpoint_metadata: types.optional(z.array(DatastoreEndpoint$inboundSchema)),
     endpoints: types.optional(z.array(types.string())),
     event_type: types.optional(types.string()),
+    failure_reason: types.optional(types.string()),
     headers: z.optional(
       z.nullable(z.record(z.string(), z.array(types.string()))),
     ),
     idempotency_key: types.optional(types.string()),
     is_duplicate_event: types.optional(types.boolean()),
-    metadata: types.optional(types.string()),
     project_id: types.optional(types.string()),
     raw: types.optional(types.string()),
     source_id: types.optional(types.string()),
@@ -633,6 +640,7 @@ export const ModelsEventResponse$inboundSchema: z.ZodMiniType<
       "deleted_at": "deletedAt",
       "endpoint_metadata": "endpointMetadata",
       "event_type": "eventType",
+      "failure_reason": "failureReason",
       "idempotency_key": "idempotencyKey",
       "is_duplicate_event": "isDuplicateEvent",
       "project_id": "projectId",
