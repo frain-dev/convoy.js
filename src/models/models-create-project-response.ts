@@ -155,6 +155,14 @@ export type ModelsCreateProjectResponseStrategy = {
 
 export type ModelsCreateProjectResponseConfig = {
   addEventIdTraceHeaders?: boolean | undefined;
+  /**
+   * AllowUnmatchedDynamicURLs lets a dynamic event URL that matches none of the
+   *
+   * @remarks
+   * project's endpoint URL templates auto-create an endpoint. Default false
+   * rejects unmatched URLs.
+   */
+  allowUnmatchedDynamicUrls?: boolean | undefined;
   circuitBreaker?: ModelsCreateProjectResponseCircuitBreaker | null | undefined;
   disableEndpoint?: boolean | undefined;
   maxPayloadReadSize?: number | undefined;
@@ -168,12 +176,12 @@ export type ModelsCreateProjectResponseConfig = {
   ssl?: ModelsCreateProjectResponseSsl | null | undefined;
   strategy?: ModelsCreateProjectResponseStrategy | null | undefined;
   /**
-   * SyncDynamicEventAck waits for endpoint/subscription resolve before
+   * VerifyDynamicEvents waits for endpoint/subscription resolve before
    *
    * @remarks
    * returning 2xx from POST /events/dynamic. Default false keeps 201-on-queue.
    */
-  syncDynamicEventAck?: boolean | undefined;
+  verifyDynamicEvents?: boolean | undefined;
 };
 
 export type ModelsCreateProjectResponseStatistics = {
@@ -607,6 +615,7 @@ export const ModelsCreateProjectResponseConfig$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     add_event_id_trace_headers: types.optional(types.boolean()),
+    allow_unmatched_dynamic_urls: types.optional(types.boolean()),
     circuit_breaker: z.optional(z.nullable(z.lazy(() =>
       ModelsCreateProjectResponseCircuitBreaker$inboundSchema
     ))),
@@ -633,11 +642,12 @@ export const ModelsCreateProjectResponseConfig$inboundSchema: z.ZodMiniType<
     strategy: z.optional(z.nullable(z.lazy(() =>
       ModelsCreateProjectResponseStrategy$inboundSchema
     ))),
-    sync_dynamic_event_ack: types.optional(types.boolean()),
+    verify_dynamic_events: types.optional(types.boolean()),
   }),
   z.transform((v) => {
     return remap$(v, {
       "add_event_id_trace_headers": "addEventIdTraceHeaders",
+      "allow_unmatched_dynamic_urls": "allowUnmatchedDynamicUrls",
       "circuit_breaker": "circuitBreaker",
       "disable_endpoint": "disableEndpoint",
       "max_payload_read_size": "maxPayloadReadSize",
@@ -646,7 +656,7 @@ export const ModelsCreateProjectResponseConfig$inboundSchema: z.ZodMiniType<
       "replay_attacks_prevention_enabled": "replayAttacksPreventionEnabled",
       "request_id_header": "requestIdHeader",
       "search_policy": "searchPolicy",
-      "sync_dynamic_event_ack": "syncDynamicEventAck",
+      "verify_dynamic_events": "verifyDynamicEvents",
     });
   }),
 );
