@@ -21,7 +21,7 @@ export type ModelsUpdateEndpoint = {
    * Convoy supports two [signature formats](https://getconvoy.io/docs/product-manual/signatures)
    *
    * @remarks
-   * -- simple or advanced. If left unspecified, we default to false.
+   * -- simple or advanced. Only applies to outgoing projects; omit it to keep the current value. Incoming projects always use advanced signatures.
    */
   advancedSignatures?: boolean | undefined;
   /**
