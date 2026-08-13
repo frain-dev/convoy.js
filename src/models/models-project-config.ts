@@ -46,6 +46,14 @@ export type ModelsProjectConfig = {
    */
   addEventIdTraceHeaders?: boolean | undefined;
   /**
+   * AllowUnmatchedDynamicURLs lets a dynamic event URL that matches none of the project's
+   *
+   * @remarks
+   * endpoint URL templates auto-create an endpoint instead of failing. When false (the
+   * default), a project with templates configured rejects unmatched URLs.
+   */
+  allowUnmatchedDynamicUrls?: boolean | undefined;
+  /**
    * CircuitBreaker is used to configure the project's circuit breaker settings
    */
   circuitBreaker?: DatastoreCircuitBreakerConfiguration | undefined;
@@ -100,17 +108,18 @@ export type ModelsProjectConfig = {
    */
   strategy?: ModelsStrategyConfiguration | undefined;
   /**
-   * SyncDynamicEventAck waits for dynamic endpoint/subscription resolve before
+   * VerifyDynamicEvents waits for dynamic endpoint/subscription resolve before
    *
    * @remarks
    * acknowledging POST /events/dynamic. When false, the handler returns 201 after enqueue.
    */
-  syncDynamicEventAck?: boolean | undefined;
+  verifyDynamicEvents?: boolean | undefined;
 };
 
 /** @internal */
 export type ModelsProjectConfig$Outbound = {
   add_event_id_trace_headers?: boolean | undefined;
+  allow_unmatched_dynamic_urls?: boolean | undefined;
   circuit_breaker?: DatastoreCircuitBreakerConfiguration$Outbound | undefined;
   disable_endpoint?: boolean | undefined;
   max_payload_read_size?: number | undefined;
@@ -123,7 +132,7 @@ export type ModelsProjectConfig$Outbound = {
   signature?: ModelsSignatureConfiguration$Outbound | undefined;
   ssl?: ModelsSSLConfiguration$Outbound | undefined;
   strategy?: ModelsStrategyConfiguration$Outbound | undefined;
-  sync_dynamic_event_ack?: boolean | undefined;
+  verify_dynamic_events?: boolean | undefined;
 };
 
 /** @internal */
@@ -133,6 +142,7 @@ export const ModelsProjectConfig$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     addEventIdTraceHeaders: z.optional(z.boolean()),
+    allowUnmatchedDynamicUrls: z.optional(z.boolean()),
     circuitBreaker: z.optional(
       DatastoreCircuitBreakerConfiguration$outboundSchema,
     ),
@@ -147,11 +157,12 @@ export const ModelsProjectConfig$outboundSchema: z.ZodMiniType<
     signature: z.optional(ModelsSignatureConfiguration$outboundSchema),
     ssl: z.optional(ModelsSSLConfiguration$outboundSchema),
     strategy: z.optional(ModelsStrategyConfiguration$outboundSchema),
-    syncDynamicEventAck: z.optional(z.boolean()),
+    verifyDynamicEvents: z.optional(z.boolean()),
   }),
   z.transform((v) => {
     return remap$(v, {
       addEventIdTraceHeaders: "add_event_id_trace_headers",
+      allowUnmatchedDynamicUrls: "allow_unmatched_dynamic_urls",
       circuitBreaker: "circuit_breaker",
       disableEndpoint: "disable_endpoint",
       maxPayloadReadSize: "max_payload_read_size",
@@ -160,7 +171,7 @@ export const ModelsProjectConfig$outboundSchema: z.ZodMiniType<
       replayAttacksPreventionEnabled: "replay_attacks_prevention_enabled",
       requestIdHeader: "request_id_header",
       searchPolicy: "search_policy",
-      syncDynamicEventAck: "sync_dynamic_event_ack",
+      verifyDynamicEvents: "verify_dynamic_events",
     });
   }),
 );

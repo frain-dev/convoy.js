@@ -58,6 +58,7 @@ export * from "./models-create-subscription.js";
 export * from "./models-custom-response.js";
 export * from "./models-dynamic-event.js";
 export * from "./models-endpoint-authentication.js";
+export * from "./models-endpoint-period-failure-rate.js";
 export * from "./models-endpoint-response.js";
 export * from "./models-event-delivery-response.js";
 export * from "./models-event-response.js";

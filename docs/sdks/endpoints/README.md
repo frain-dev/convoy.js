@@ -9,6 +9,7 @@ Endpoint related APIs
 * [getEndpoints](#getendpoints) - List all endpoints
 * [createEndpoint](#createendpoint) - Create an endpoint
 * [testOAuth2Connection](#testoauth2connection) - Test OAuth2 connection
+* [getEndpointPeriodFailureRates](#getendpointperiodfailurerates) - Endpoint period failure rates
 * [deleteEndpoint](#deleteendpoint) - Delete endpoint
 * [getEndpoint](#getendpoint) - Retrieve endpoint
 * [updateEndpoint](#updateendpoint) - Update an endpoint
@@ -249,6 +250,81 @@ run();
 | errors.TestOAuth2ConnectionUnauthorizedError | 401                                          | application/json                             |
 | errors.TestOAuth2ConnectionNotFoundError     | 404                                          | application/json                             |
 | errors.ConvoyDefaultError                    | 4XX, 5XX                                     | \*/\*                                        |
+
+## getEndpointPeriodFailureRates
+
+Display-only delivery rates for the given endpoint ids over a date range (default last 7 days). Independent of the list so a slow COUNT cannot delay the table.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="GetEndpointPeriodFailureRates" method="get" path="/v1/projects/{projectID}/endpoints/period-failure-rates" -->
+```typescript
+import { Convoy } from "convoy.js";
+
+const convoy = new Convoy({
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const result = await convoy.endpoints.getEndpointPeriodFailureRates("<id>");
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { ConvoyCore } from "convoy.js/core.js";
+import { endpointsGetEndpointPeriodFailureRates } from "convoy.js/funcs/endpoints-get-endpoint-period-failure-rates.js";
+
+// Use `ConvoyCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const convoy = new ConvoyCore({
+  apiKeyAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const res = await endpointsGetEndpointPeriodFailureRates(convoy, "<id>");
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("endpointsGetEndpointPeriodFailureRates failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `projectID`                                                                                                                                                                    | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | Project ID                                                                                                                                                                     |
+| `endpointId`                                                                                                                                                                   | *string*[]                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                             | Endpoint IDs                                                                                                                                                                   |
+| `startDate`                                                                                                                                                                    | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Start date                                                                                                                                                                     |
+| `endDate`                                                                                                                                                                      | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | End date                                                                                                                                                                       |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.GetEndpointPeriodFailureRatesResponse](../../models/operations/get-endpoint-period-failure-rates-response.md)\>**
+
+### Errors
+
+| Error Type                                            | Status Code                                           | Content Type                                          |
+| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
+| errors.GetEndpointPeriodFailureRatesBadRequestError   | 400                                                   | application/json                                      |
+| errors.GetEndpointPeriodFailureRatesUnauthorizedError | 401                                                   | application/json                                      |
+| errors.GetEndpointPeriodFailureRatesNotFoundError     | 404                                                   | application/json                                      |
+| errors.ConvoyDefaultError                             | 4XX, 5XX                                              | \*/\*                                                 |
 
 ## deleteEndpoint
 
