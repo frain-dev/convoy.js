@@ -7,6 +7,7 @@ import { endpointsActivateEndpoint } from "../funcs/endpoints-activate-endpoint.
 import { endpointsCreateEndpoint } from "../funcs/endpoints-create-endpoint.js";
 import { endpointsDeleteEndpoint } from "../funcs/endpoints-delete-endpoint.js";
 import { endpointsExpireSecret } from "../funcs/endpoints-expire-secret.js";
+import { endpointsGetEndpointPeriodFailureRates } from "../funcs/endpoints-get-endpoint-period-failure-rates.js";
 import { endpointsGetEndpoint } from "../funcs/endpoints-get-endpoint.js";
 import { endpointsGetEndpoints } from "../funcs/endpoints-get-endpoints.js";
 import { endpointsPauseEndpoint } from "../funcs/endpoints-pause-endpoint.js";
@@ -69,6 +70,29 @@ export class Endpoints extends ClientSDK {
       this,
       projectID,
       body,
+      options,
+    ));
+  }
+
+  /**
+   * Endpoint period failure rates
+   *
+   * @remarks
+   * Display-only delivery rates for the given endpoint ids over a date range (default last 7 days). Independent of the list so a slow COUNT cannot delay the table.
+   */
+  async getEndpointPeriodFailureRates(
+    projectID: string,
+    endpointId?: Array<string> | undefined,
+    startDate?: string | undefined,
+    endDate?: string | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.GetEndpointPeriodFailureRatesResponse> {
+    return unwrapAsync(endpointsGetEndpointPeriodFailureRates(
+      this,
+      projectID,
+      endpointId,
+      startDate,
+      endDate,
       options,
     ));
   }

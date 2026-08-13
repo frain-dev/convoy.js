@@ -34,6 +34,7 @@ export * from "./force-resend-event-deliveries.js";
 export * from "./get-delivery-attempt.js";
 export * from "./get-delivery-attempts.js";
 export * from "./get-endpoint-event.js";
+export * from "./get-endpoint-period-failure-rates.js";
 export * from "./get-endpoint.js";
 export * from "./get-endpoints.js";
 export * from "./get-event-deliveries-paged.js";

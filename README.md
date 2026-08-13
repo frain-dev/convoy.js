@@ -351,6 +351,7 @@ run();
 * [getEndpoints](docs/sdks/endpoints/README.md#getendpoints) - List all endpoints
 * [createEndpoint](docs/sdks/endpoints/README.md#createendpoint) - Create an endpoint
 * [testOAuth2Connection](docs/sdks/endpoints/README.md#testoauth2connection) - Test OAuth2 connection
+* [getEndpointPeriodFailureRates](docs/sdks/endpoints/README.md#getendpointperiodfailurerates) - Endpoint period failure rates
 * [deleteEndpoint](docs/sdks/endpoints/README.md#deleteendpoint) - Delete endpoint
 * [getEndpoint](docs/sdks/endpoints/README.md#getendpoint) - Retrieve endpoint
 * [updateEndpoint](docs/sdks/endpoints/README.md#updateendpoint) - Update an endpoint
@@ -469,6 +470,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`endpointsDeleteEndpoint`](docs/sdks/endpoints/README.md#deleteendpoint) - Delete endpoint
 - [`endpointsExpireSecret`](docs/sdks/endpoints/README.md#expiresecret) - Roll endpoint secret
 - [`endpointsGetEndpoint`](docs/sdks/endpoints/README.md#getendpoint) - Retrieve endpoint
+- [`endpointsGetEndpointPeriodFailureRates`](docs/sdks/endpoints/README.md#getendpointperiodfailurerates) - Endpoint period failure rates
 - [`endpointsGetEndpoints`](docs/sdks/endpoints/README.md#getendpoints) - List all endpoints
 - [`endpointsPauseEndpoint`](docs/sdks/endpoints/README.md#pauseendpoint) - Pause endpoint
 - [`endpointsTestOAuth2Connection`](docs/sdks/endpoints/README.md#testoauth2connection) - Test OAuth2 connection
@@ -650,7 +652,7 @@ run();
 **Primary error:**
 * [`ConvoyError`](./src/models/errors/convoy-error.ts): The base class for HTTP error responses.
 
-<details><summary>Less common errors (211)</summary>
+<details><summary>Less common errors (214)</summary>
 
 <br />
 
@@ -663,211 +665,214 @@ run();
 
 
 **Inherit from [`ConvoyError`](./src/models/errors/convoy-error.ts)**:
-* [`GetProjectsBadRequestError`](./src/models/errors/get-projects-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateProjectBadRequestError`](./src/models/errors/create-project-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`DeleteProjectBadRequestError`](./src/models/errors/delete-project-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetProjectBadRequestError`](./src/models/errors/get-project-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`UpdateProjectBadRequestError`](./src/models/errors/update-project-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetEndpointsBadRequestError`](./src/models/errors/get-endpoints-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointBadRequestError`](./src/models/errors/create-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`TestOAuth2ConnectionBadRequestError`](./src/models/errors/test-o-auth2-connection-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`DeleteEndpointBadRequestError`](./src/models/errors/delete-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetEndpointBadRequestError`](./src/models/errors/get-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`UpdateEndpointBadRequestError`](./src/models/errors/update-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`ActivateEndpointBadRequestError`](./src/models/errors/activate-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`ExpireSecretBadRequestError`](./src/models/errors/expire-secret-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`PauseEndpointBadRequestError`](./src/models/errors/pause-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetEventTypesBadRequestError`](./src/models/errors/get-event-types-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateEventTypeBadRequestError`](./src/models/errors/create-event-type-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`ImportOpenApiSpecBadRequestError`](./src/models/errors/import-open-api-spec-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`UpdateEventTypeBadRequestError`](./src/models/errors/update-event-type-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`DeprecateEventTypeBadRequestError`](./src/models/errors/deprecate-event-type-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetEventDeliveriesPagedBadRequestError`](./src/models/errors/get-event-deliveries-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`BatchRetryEventDeliveryBadRequestError`](./src/models/errors/batch-retry-event-delivery-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`ForceResendEventDeliveriesBadRequestError`](./src/models/errors/force-resend-event-deliveries-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetEventDeliveryBadRequestError`](./src/models/errors/get-event-delivery-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`ResendEventDeliveryBadRequestError`](./src/models/errors/resend-event-delivery-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetDeliveryAttemptsBadRequestError`](./src/models/errors/get-delivery-attempts-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetDeliveryAttemptBadRequestError`](./src/models/errors/get-delivery-attempt-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetEventsPagedBadRequestError`](./src/models/errors/get-events-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointEventBadRequestError`](./src/models/errors/create-endpoint-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`BatchReplayEventsBadRequestError`](./src/models/errors/batch-replay-events-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateBroadcastEventBadRequestError`](./src/models/errors/create-broadcast-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CountAffectedEventsBadRequestError`](./src/models/errors/count-affected-events-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateDynamicEventBadRequestError`](./src/models/errors/create-dynamic-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointFanoutEventBadRequestError`](./src/models/errors/create-endpoint-fanout-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetEndpointEventBadRequestError`](./src/models/errors/get-endpoint-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`ReplayEndpointEventBadRequestError`](./src/models/errors/replay-endpoint-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetMetaEventsPagedBadRequestError`](./src/models/errors/get-meta-events-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetMetaEventBadRequestError`](./src/models/errors/get-meta-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`ResendMetaEventBadRequestError`](./src/models/errors/resend-meta-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`BulkOnboardBadRequestError`](./src/models/errors/bulk-onboard-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`LoadPortalLinksPagedBadRequestError`](./src/models/errors/load-portal-links-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreatePortalLinkBadRequestError`](./src/models/errors/create-portal-link-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetPortalLinkBadRequestError`](./src/models/errors/get-portal-link-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`UpdatePortalLinkBadRequestError`](./src/models/errors/update-portal-link-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`RefreshPortalLinkAuthTokenBadRequestError`](./src/models/errors/refresh-portal-link-auth-token-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`RevokePortalLinkBadRequestError`](./src/models/errors/revoke-portal-link-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`LoadSourcesPagedBadRequestError`](./src/models/errors/load-sources-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateSourceBadRequestError`](./src/models/errors/create-source-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`DeleteSourceBadRequestError`](./src/models/errors/delete-source-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetSourceBadRequestError`](./src/models/errors/get-source-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`UpdateSourceBadRequestError`](./src/models/errors/update-source-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`PostV1ProjectsProjectIDSourcesTestFunctionBadRequestError`](./src/models/errors/post-v1-projects-project-id-sources-test-function-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetSubscriptionsBadRequestError`](./src/models/errors/get-subscriptions-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateSubscriptionBadRequestError`](./src/models/errors/create-subscription-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`TestSubscriptionFilterBadRequestError`](./src/models/errors/test-subscription-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`TestSubscriptionFunctionBadRequestError`](./src/models/errors/test-subscription-function-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`DeleteSubscriptionBadRequestError`](./src/models/errors/delete-subscription-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetSubscriptionBadRequestError`](./src/models/errors/get-subscription-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`UpdateSubscriptionBadRequestError`](./src/models/errors/update-subscription-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`ToggleSubscriptionStatusBadRequestError`](./src/models/errors/toggle-subscription-status-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetFiltersBadRequestError`](./src/models/errors/get-filters-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`CreateFilterBadRequestError`](./src/models/errors/create-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`BulkCreateFiltersBadRequestError`](./src/models/errors/bulk-create-filters-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`BulkUpdateFiltersBadRequestError`](./src/models/errors/bulk-update-filters-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`TestFilterBadRequestError`](./src/models/errors/test-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`DeleteFilterBadRequestError`](./src/models/errors/delete-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetFilterBadRequestError`](./src/models/errors/get-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`UpdateFilterBadRequestError`](./src/models/errors/update-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 67 methods.*
-* [`GetProjectsUnauthorizedError`](./src/models/errors/get-projects-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateProjectUnauthorizedError`](./src/models/errors/create-project-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`DeleteProjectUnauthorizedError`](./src/models/errors/delete-project-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetProjectUnauthorizedError`](./src/models/errors/get-project-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`UpdateProjectUnauthorizedError`](./src/models/errors/update-project-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetEndpointsUnauthorizedError`](./src/models/errors/get-endpoints-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointUnauthorizedError`](./src/models/errors/create-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`TestOAuth2ConnectionUnauthorizedError`](./src/models/errors/test-o-auth2-connection-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`DeleteEndpointUnauthorizedError`](./src/models/errors/delete-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetEndpointUnauthorizedError`](./src/models/errors/get-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`UpdateEndpointUnauthorizedError`](./src/models/errors/update-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`ActivateEndpointUnauthorizedError`](./src/models/errors/activate-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`ExpireSecretUnauthorizedError`](./src/models/errors/expire-secret-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`PauseEndpointUnauthorizedError`](./src/models/errors/pause-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetEventTypesUnauthorizedError`](./src/models/errors/get-event-types-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateEventTypeUnauthorizedError`](./src/models/errors/create-event-type-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`ImportOpenApiSpecUnauthorizedError`](./src/models/errors/import-open-api-spec-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`UpdateEventTypeUnauthorizedError`](./src/models/errors/update-event-type-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`DeprecateEventTypeUnauthorizedError`](./src/models/errors/deprecate-event-type-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetEventDeliveriesPagedUnauthorizedError`](./src/models/errors/get-event-deliveries-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`BatchRetryEventDeliveryUnauthorizedError`](./src/models/errors/batch-retry-event-delivery-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`ForceResendEventDeliveriesUnauthorizedError`](./src/models/errors/force-resend-event-deliveries-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetEventDeliveryUnauthorizedError`](./src/models/errors/get-event-delivery-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`ResendEventDeliveryUnauthorizedError`](./src/models/errors/resend-event-delivery-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetDeliveryAttemptsUnauthorizedError`](./src/models/errors/get-delivery-attempts-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetDeliveryAttemptUnauthorizedError`](./src/models/errors/get-delivery-attempt-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetEventsPagedUnauthorizedError`](./src/models/errors/get-events-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointEventUnauthorizedError`](./src/models/errors/create-endpoint-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`BatchReplayEventsUnauthorizedError`](./src/models/errors/batch-replay-events-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateBroadcastEventUnauthorizedError`](./src/models/errors/create-broadcast-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CountAffectedEventsUnauthorizedError`](./src/models/errors/count-affected-events-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateDynamicEventUnauthorizedError`](./src/models/errors/create-dynamic-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointFanoutEventUnauthorizedError`](./src/models/errors/create-endpoint-fanout-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetEndpointEventUnauthorizedError`](./src/models/errors/get-endpoint-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`ReplayEndpointEventUnauthorizedError`](./src/models/errors/replay-endpoint-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetMetaEventsPagedUnauthorizedError`](./src/models/errors/get-meta-events-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetMetaEventUnauthorizedError`](./src/models/errors/get-meta-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`ResendMetaEventUnauthorizedError`](./src/models/errors/resend-meta-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`BulkOnboardUnauthorizedError`](./src/models/errors/bulk-onboard-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`LoadPortalLinksPagedUnauthorizedError`](./src/models/errors/load-portal-links-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreatePortalLinkUnauthorizedError`](./src/models/errors/create-portal-link-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetPortalLinkUnauthorizedError`](./src/models/errors/get-portal-link-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`UpdatePortalLinkUnauthorizedError`](./src/models/errors/update-portal-link-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`RefreshPortalLinkAuthTokenUnauthorizedError`](./src/models/errors/refresh-portal-link-auth-token-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`RevokePortalLinkUnauthorizedError`](./src/models/errors/revoke-portal-link-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`LoadSourcesPagedUnauthorizedError`](./src/models/errors/load-sources-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateSourceUnauthorizedError`](./src/models/errors/create-source-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`DeleteSourceUnauthorizedError`](./src/models/errors/delete-source-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetSourceUnauthorizedError`](./src/models/errors/get-source-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`UpdateSourceUnauthorizedError`](./src/models/errors/update-source-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`PostV1ProjectsProjectIDSourcesTestFunctionUnauthorizedError`](./src/models/errors/post-v1-projects-project-id-sources-test-function-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetSubscriptionsUnauthorizedError`](./src/models/errors/get-subscriptions-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateSubscriptionUnauthorizedError`](./src/models/errors/create-subscription-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`TestSubscriptionFilterUnauthorizedError`](./src/models/errors/test-subscription-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`TestSubscriptionFunctionUnauthorizedError`](./src/models/errors/test-subscription-function-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`DeleteSubscriptionUnauthorizedError`](./src/models/errors/delete-subscription-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetSubscriptionUnauthorizedError`](./src/models/errors/get-subscription-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`UpdateSubscriptionUnauthorizedError`](./src/models/errors/update-subscription-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`ToggleSubscriptionStatusUnauthorizedError`](./src/models/errors/toggle-subscription-status-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetFiltersUnauthorizedError`](./src/models/errors/get-filters-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`CreateFilterUnauthorizedError`](./src/models/errors/create-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`BulkCreateFiltersUnauthorizedError`](./src/models/errors/bulk-create-filters-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`BulkUpdateFiltersUnauthorizedError`](./src/models/errors/bulk-update-filters-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`TestFilterUnauthorizedError`](./src/models/errors/test-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`DeleteFilterUnauthorizedError`](./src/models/errors/delete-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`GetFilterUnauthorizedError`](./src/models/errors/get-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`UpdateFilterUnauthorizedError`](./src/models/errors/update-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 67 methods.*
-* [`PaymentRequiredError`](./src/models/errors/payment-required-error.ts): Payment Required. Status code `402`. Applicable to 1 of 67 methods.*
-* [`CreateProjectForbiddenError`](./src/models/errors/create-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 67 methods.*
-* [`DeleteProjectForbiddenError`](./src/models/errors/delete-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 67 methods.*
-* [`UpdateProjectForbiddenError`](./src/models/errors/update-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 67 methods.*
-* [`GetProjectsNotFoundError`](./src/models/errors/get-projects-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateProjectNotFoundError`](./src/models/errors/create-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`DeleteProjectNotFoundError`](./src/models/errors/delete-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetProjectNotFoundError`](./src/models/errors/get-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`UpdateProjectNotFoundError`](./src/models/errors/update-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetEndpointsNotFoundError`](./src/models/errors/get-endpoints-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointNotFoundError`](./src/models/errors/create-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`TestOAuth2ConnectionNotFoundError`](./src/models/errors/test-o-auth2-connection-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`DeleteEndpointNotFoundError`](./src/models/errors/delete-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetEndpointNotFoundError`](./src/models/errors/get-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`UpdateEndpointNotFoundError`](./src/models/errors/update-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`ActivateEndpointNotFoundError`](./src/models/errors/activate-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`ExpireSecretNotFoundError`](./src/models/errors/expire-secret-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`PauseEndpointNotFoundError`](./src/models/errors/pause-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetEventTypesNotFoundError`](./src/models/errors/get-event-types-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateEventTypeNotFoundError`](./src/models/errors/create-event-type-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`ImportOpenApiSpecNotFoundError`](./src/models/errors/import-open-api-spec-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`UpdateEventTypeNotFoundError`](./src/models/errors/update-event-type-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`DeprecateEventTypeNotFoundError`](./src/models/errors/deprecate-event-type-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetEventDeliveriesPagedNotFoundError`](./src/models/errors/get-event-deliveries-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`BatchRetryEventDeliveryNotFoundError`](./src/models/errors/batch-retry-event-delivery-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`ForceResendEventDeliveriesNotFoundError`](./src/models/errors/force-resend-event-deliveries-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetEventDeliveryNotFoundError`](./src/models/errors/get-event-delivery-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`ResendEventDeliveryNotFoundError`](./src/models/errors/resend-event-delivery-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetDeliveryAttemptsNotFoundError`](./src/models/errors/get-delivery-attempts-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetDeliveryAttemptNotFoundError`](./src/models/errors/get-delivery-attempt-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetEventsPagedNotFoundError`](./src/models/errors/get-events-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointEventNotFoundError`](./src/models/errors/create-endpoint-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`BatchReplayEventsNotFoundError`](./src/models/errors/batch-replay-events-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateBroadcastEventNotFoundError`](./src/models/errors/create-broadcast-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CountAffectedEventsNotFoundError`](./src/models/errors/count-affected-events-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateDynamicEventNotFoundError`](./src/models/errors/create-dynamic-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateEndpointFanoutEventNotFoundError`](./src/models/errors/create-endpoint-fanout-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetEndpointEventNotFoundError`](./src/models/errors/get-endpoint-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`ReplayEndpointEventNotFoundError`](./src/models/errors/replay-endpoint-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetMetaEventsPagedNotFoundError`](./src/models/errors/get-meta-events-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetMetaEventNotFoundError`](./src/models/errors/get-meta-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`ResendMetaEventNotFoundError`](./src/models/errors/resend-meta-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`BulkOnboardNotFoundError`](./src/models/errors/bulk-onboard-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`LoadPortalLinksPagedNotFoundError`](./src/models/errors/load-portal-links-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreatePortalLinkNotFoundError`](./src/models/errors/create-portal-link-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetPortalLinkNotFoundError`](./src/models/errors/get-portal-link-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`UpdatePortalLinkNotFoundError`](./src/models/errors/update-portal-link-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`RefreshPortalLinkAuthTokenNotFoundError`](./src/models/errors/refresh-portal-link-auth-token-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`RevokePortalLinkNotFoundError`](./src/models/errors/revoke-portal-link-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`LoadSourcesPagedNotFoundError`](./src/models/errors/load-sources-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateSourceNotFoundError`](./src/models/errors/create-source-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`DeleteSourceNotFoundError`](./src/models/errors/delete-source-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetSourceNotFoundError`](./src/models/errors/get-source-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`UpdateSourceNotFoundError`](./src/models/errors/update-source-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`PostV1ProjectsProjectIDSourcesTestFunctionNotFoundError`](./src/models/errors/post-v1-projects-project-id-sources-test-function-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetSubscriptionsNotFoundError`](./src/models/errors/get-subscriptions-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateSubscriptionNotFoundError`](./src/models/errors/create-subscription-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`TestSubscriptionFilterNotFoundError`](./src/models/errors/test-subscription-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`TestSubscriptionFunctionNotFoundError`](./src/models/errors/test-subscription-function-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`DeleteSubscriptionNotFoundError`](./src/models/errors/delete-subscription-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetSubscriptionNotFoundError`](./src/models/errors/get-subscription-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`UpdateSubscriptionNotFoundError`](./src/models/errors/update-subscription-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`ToggleSubscriptionStatusNotFoundError`](./src/models/errors/toggle-subscription-status-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetFiltersNotFoundError`](./src/models/errors/get-filters-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`CreateFilterNotFoundError`](./src/models/errors/create-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`BulkCreateFiltersNotFoundError`](./src/models/errors/bulk-create-filters-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`BulkUpdateFiltersNotFoundError`](./src/models/errors/bulk-update-filters-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`TestFilterNotFoundError`](./src/models/errors/test-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`DeleteFilterNotFoundError`](./src/models/errors/delete-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`GetFilterNotFoundError`](./src/models/errors/get-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
-* [`UpdateFilterNotFoundError`](./src/models/errors/update-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 67 methods.*
+* [`GetProjectsBadRequestError`](./src/models/errors/get-projects-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateProjectBadRequestError`](./src/models/errors/create-project-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`DeleteProjectBadRequestError`](./src/models/errors/delete-project-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetProjectBadRequestError`](./src/models/errors/get-project-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`UpdateProjectBadRequestError`](./src/models/errors/update-project-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetEndpointsBadRequestError`](./src/models/errors/get-endpoints-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointBadRequestError`](./src/models/errors/create-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`TestOAuth2ConnectionBadRequestError`](./src/models/errors/test-o-auth2-connection-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetEndpointPeriodFailureRatesBadRequestError`](./src/models/errors/get-endpoint-period-failure-rates-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`DeleteEndpointBadRequestError`](./src/models/errors/delete-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetEndpointBadRequestError`](./src/models/errors/get-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`UpdateEndpointBadRequestError`](./src/models/errors/update-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`ActivateEndpointBadRequestError`](./src/models/errors/activate-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`ExpireSecretBadRequestError`](./src/models/errors/expire-secret-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`PauseEndpointBadRequestError`](./src/models/errors/pause-endpoint-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetEventTypesBadRequestError`](./src/models/errors/get-event-types-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateEventTypeBadRequestError`](./src/models/errors/create-event-type-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`ImportOpenApiSpecBadRequestError`](./src/models/errors/import-open-api-spec-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`UpdateEventTypeBadRequestError`](./src/models/errors/update-event-type-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`DeprecateEventTypeBadRequestError`](./src/models/errors/deprecate-event-type-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetEventDeliveriesPagedBadRequestError`](./src/models/errors/get-event-deliveries-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`BatchRetryEventDeliveryBadRequestError`](./src/models/errors/batch-retry-event-delivery-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`ForceResendEventDeliveriesBadRequestError`](./src/models/errors/force-resend-event-deliveries-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetEventDeliveryBadRequestError`](./src/models/errors/get-event-delivery-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`ResendEventDeliveryBadRequestError`](./src/models/errors/resend-event-delivery-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetDeliveryAttemptsBadRequestError`](./src/models/errors/get-delivery-attempts-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetDeliveryAttemptBadRequestError`](./src/models/errors/get-delivery-attempt-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetEventsPagedBadRequestError`](./src/models/errors/get-events-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointEventBadRequestError`](./src/models/errors/create-endpoint-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`BatchReplayEventsBadRequestError`](./src/models/errors/batch-replay-events-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateBroadcastEventBadRequestError`](./src/models/errors/create-broadcast-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CountAffectedEventsBadRequestError`](./src/models/errors/count-affected-events-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateDynamicEventBadRequestError`](./src/models/errors/create-dynamic-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointFanoutEventBadRequestError`](./src/models/errors/create-endpoint-fanout-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetEndpointEventBadRequestError`](./src/models/errors/get-endpoint-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`ReplayEndpointEventBadRequestError`](./src/models/errors/replay-endpoint-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetMetaEventsPagedBadRequestError`](./src/models/errors/get-meta-events-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetMetaEventBadRequestError`](./src/models/errors/get-meta-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`ResendMetaEventBadRequestError`](./src/models/errors/resend-meta-event-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`BulkOnboardBadRequestError`](./src/models/errors/bulk-onboard-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`LoadPortalLinksPagedBadRequestError`](./src/models/errors/load-portal-links-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreatePortalLinkBadRequestError`](./src/models/errors/create-portal-link-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetPortalLinkBadRequestError`](./src/models/errors/get-portal-link-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`UpdatePortalLinkBadRequestError`](./src/models/errors/update-portal-link-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`RefreshPortalLinkAuthTokenBadRequestError`](./src/models/errors/refresh-portal-link-auth-token-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`RevokePortalLinkBadRequestError`](./src/models/errors/revoke-portal-link-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`LoadSourcesPagedBadRequestError`](./src/models/errors/load-sources-paged-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateSourceBadRequestError`](./src/models/errors/create-source-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`DeleteSourceBadRequestError`](./src/models/errors/delete-source-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetSourceBadRequestError`](./src/models/errors/get-source-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`UpdateSourceBadRequestError`](./src/models/errors/update-source-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`PostV1ProjectsProjectIDSourcesTestFunctionBadRequestError`](./src/models/errors/post-v1-projects-project-id-sources-test-function-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetSubscriptionsBadRequestError`](./src/models/errors/get-subscriptions-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateSubscriptionBadRequestError`](./src/models/errors/create-subscription-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`TestSubscriptionFilterBadRequestError`](./src/models/errors/test-subscription-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`TestSubscriptionFunctionBadRequestError`](./src/models/errors/test-subscription-function-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`DeleteSubscriptionBadRequestError`](./src/models/errors/delete-subscription-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetSubscriptionBadRequestError`](./src/models/errors/get-subscription-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`UpdateSubscriptionBadRequestError`](./src/models/errors/update-subscription-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`ToggleSubscriptionStatusBadRequestError`](./src/models/errors/toggle-subscription-status-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetFiltersBadRequestError`](./src/models/errors/get-filters-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`CreateFilterBadRequestError`](./src/models/errors/create-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`BulkCreateFiltersBadRequestError`](./src/models/errors/bulk-create-filters-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`BulkUpdateFiltersBadRequestError`](./src/models/errors/bulk-update-filters-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`TestFilterBadRequestError`](./src/models/errors/test-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`DeleteFilterBadRequestError`](./src/models/errors/delete-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetFilterBadRequestError`](./src/models/errors/get-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`UpdateFilterBadRequestError`](./src/models/errors/update-filter-bad-request-error.ts): Bad Request. Status code `400`. Applicable to 1 of 68 methods.*
+* [`GetProjectsUnauthorizedError`](./src/models/errors/get-projects-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateProjectUnauthorizedError`](./src/models/errors/create-project-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`DeleteProjectUnauthorizedError`](./src/models/errors/delete-project-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetProjectUnauthorizedError`](./src/models/errors/get-project-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`UpdateProjectUnauthorizedError`](./src/models/errors/update-project-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetEndpointsUnauthorizedError`](./src/models/errors/get-endpoints-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointUnauthorizedError`](./src/models/errors/create-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`TestOAuth2ConnectionUnauthorizedError`](./src/models/errors/test-o-auth2-connection-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetEndpointPeriodFailureRatesUnauthorizedError`](./src/models/errors/get-endpoint-period-failure-rates-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`DeleteEndpointUnauthorizedError`](./src/models/errors/delete-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetEndpointUnauthorizedError`](./src/models/errors/get-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`UpdateEndpointUnauthorizedError`](./src/models/errors/update-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`ActivateEndpointUnauthorizedError`](./src/models/errors/activate-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`ExpireSecretUnauthorizedError`](./src/models/errors/expire-secret-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`PauseEndpointUnauthorizedError`](./src/models/errors/pause-endpoint-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetEventTypesUnauthorizedError`](./src/models/errors/get-event-types-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateEventTypeUnauthorizedError`](./src/models/errors/create-event-type-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`ImportOpenApiSpecUnauthorizedError`](./src/models/errors/import-open-api-spec-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`UpdateEventTypeUnauthorizedError`](./src/models/errors/update-event-type-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`DeprecateEventTypeUnauthorizedError`](./src/models/errors/deprecate-event-type-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetEventDeliveriesPagedUnauthorizedError`](./src/models/errors/get-event-deliveries-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`BatchRetryEventDeliveryUnauthorizedError`](./src/models/errors/batch-retry-event-delivery-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`ForceResendEventDeliveriesUnauthorizedError`](./src/models/errors/force-resend-event-deliveries-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetEventDeliveryUnauthorizedError`](./src/models/errors/get-event-delivery-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`ResendEventDeliveryUnauthorizedError`](./src/models/errors/resend-event-delivery-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetDeliveryAttemptsUnauthorizedError`](./src/models/errors/get-delivery-attempts-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetDeliveryAttemptUnauthorizedError`](./src/models/errors/get-delivery-attempt-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetEventsPagedUnauthorizedError`](./src/models/errors/get-events-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointEventUnauthorizedError`](./src/models/errors/create-endpoint-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`BatchReplayEventsUnauthorizedError`](./src/models/errors/batch-replay-events-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateBroadcastEventUnauthorizedError`](./src/models/errors/create-broadcast-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CountAffectedEventsUnauthorizedError`](./src/models/errors/count-affected-events-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateDynamicEventUnauthorizedError`](./src/models/errors/create-dynamic-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointFanoutEventUnauthorizedError`](./src/models/errors/create-endpoint-fanout-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetEndpointEventUnauthorizedError`](./src/models/errors/get-endpoint-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`ReplayEndpointEventUnauthorizedError`](./src/models/errors/replay-endpoint-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetMetaEventsPagedUnauthorizedError`](./src/models/errors/get-meta-events-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetMetaEventUnauthorizedError`](./src/models/errors/get-meta-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`ResendMetaEventUnauthorizedError`](./src/models/errors/resend-meta-event-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`BulkOnboardUnauthorizedError`](./src/models/errors/bulk-onboard-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`LoadPortalLinksPagedUnauthorizedError`](./src/models/errors/load-portal-links-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreatePortalLinkUnauthorizedError`](./src/models/errors/create-portal-link-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetPortalLinkUnauthorizedError`](./src/models/errors/get-portal-link-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`UpdatePortalLinkUnauthorizedError`](./src/models/errors/update-portal-link-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`RefreshPortalLinkAuthTokenUnauthorizedError`](./src/models/errors/refresh-portal-link-auth-token-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`RevokePortalLinkUnauthorizedError`](./src/models/errors/revoke-portal-link-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`LoadSourcesPagedUnauthorizedError`](./src/models/errors/load-sources-paged-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateSourceUnauthorizedError`](./src/models/errors/create-source-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`DeleteSourceUnauthorizedError`](./src/models/errors/delete-source-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetSourceUnauthorizedError`](./src/models/errors/get-source-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`UpdateSourceUnauthorizedError`](./src/models/errors/update-source-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`PostV1ProjectsProjectIDSourcesTestFunctionUnauthorizedError`](./src/models/errors/post-v1-projects-project-id-sources-test-function-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetSubscriptionsUnauthorizedError`](./src/models/errors/get-subscriptions-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateSubscriptionUnauthorizedError`](./src/models/errors/create-subscription-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`TestSubscriptionFilterUnauthorizedError`](./src/models/errors/test-subscription-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`TestSubscriptionFunctionUnauthorizedError`](./src/models/errors/test-subscription-function-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`DeleteSubscriptionUnauthorizedError`](./src/models/errors/delete-subscription-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetSubscriptionUnauthorizedError`](./src/models/errors/get-subscription-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`UpdateSubscriptionUnauthorizedError`](./src/models/errors/update-subscription-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`ToggleSubscriptionStatusUnauthorizedError`](./src/models/errors/toggle-subscription-status-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetFiltersUnauthorizedError`](./src/models/errors/get-filters-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`CreateFilterUnauthorizedError`](./src/models/errors/create-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`BulkCreateFiltersUnauthorizedError`](./src/models/errors/bulk-create-filters-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`BulkUpdateFiltersUnauthorizedError`](./src/models/errors/bulk-update-filters-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`TestFilterUnauthorizedError`](./src/models/errors/test-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`DeleteFilterUnauthorizedError`](./src/models/errors/delete-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`GetFilterUnauthorizedError`](./src/models/errors/get-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`UpdateFilterUnauthorizedError`](./src/models/errors/update-filter-unauthorized-error.ts): Unauthorized. Status code `401`. Applicable to 1 of 68 methods.*
+* [`PaymentRequiredError`](./src/models/errors/payment-required-error.ts): Payment Required. Status code `402`. Applicable to 1 of 68 methods.*
+* [`CreateProjectForbiddenError`](./src/models/errors/create-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 68 methods.*
+* [`DeleteProjectForbiddenError`](./src/models/errors/delete-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 68 methods.*
+* [`UpdateProjectForbiddenError`](./src/models/errors/update-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 68 methods.*
+* [`GetProjectsNotFoundError`](./src/models/errors/get-projects-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateProjectNotFoundError`](./src/models/errors/create-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`DeleteProjectNotFoundError`](./src/models/errors/delete-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetProjectNotFoundError`](./src/models/errors/get-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`UpdateProjectNotFoundError`](./src/models/errors/update-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetEndpointsNotFoundError`](./src/models/errors/get-endpoints-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointNotFoundError`](./src/models/errors/create-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`TestOAuth2ConnectionNotFoundError`](./src/models/errors/test-o-auth2-connection-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetEndpointPeriodFailureRatesNotFoundError`](./src/models/errors/get-endpoint-period-failure-rates-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`DeleteEndpointNotFoundError`](./src/models/errors/delete-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetEndpointNotFoundError`](./src/models/errors/get-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`UpdateEndpointNotFoundError`](./src/models/errors/update-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`ActivateEndpointNotFoundError`](./src/models/errors/activate-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`ExpireSecretNotFoundError`](./src/models/errors/expire-secret-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`PauseEndpointNotFoundError`](./src/models/errors/pause-endpoint-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetEventTypesNotFoundError`](./src/models/errors/get-event-types-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateEventTypeNotFoundError`](./src/models/errors/create-event-type-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`ImportOpenApiSpecNotFoundError`](./src/models/errors/import-open-api-spec-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`UpdateEventTypeNotFoundError`](./src/models/errors/update-event-type-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`DeprecateEventTypeNotFoundError`](./src/models/errors/deprecate-event-type-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetEventDeliveriesPagedNotFoundError`](./src/models/errors/get-event-deliveries-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`BatchRetryEventDeliveryNotFoundError`](./src/models/errors/batch-retry-event-delivery-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`ForceResendEventDeliveriesNotFoundError`](./src/models/errors/force-resend-event-deliveries-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetEventDeliveryNotFoundError`](./src/models/errors/get-event-delivery-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`ResendEventDeliveryNotFoundError`](./src/models/errors/resend-event-delivery-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetDeliveryAttemptsNotFoundError`](./src/models/errors/get-delivery-attempts-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetDeliveryAttemptNotFoundError`](./src/models/errors/get-delivery-attempt-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetEventsPagedNotFoundError`](./src/models/errors/get-events-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointEventNotFoundError`](./src/models/errors/create-endpoint-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`BatchReplayEventsNotFoundError`](./src/models/errors/batch-replay-events-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateBroadcastEventNotFoundError`](./src/models/errors/create-broadcast-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CountAffectedEventsNotFoundError`](./src/models/errors/count-affected-events-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateDynamicEventNotFoundError`](./src/models/errors/create-dynamic-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateEndpointFanoutEventNotFoundError`](./src/models/errors/create-endpoint-fanout-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetEndpointEventNotFoundError`](./src/models/errors/get-endpoint-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`ReplayEndpointEventNotFoundError`](./src/models/errors/replay-endpoint-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetMetaEventsPagedNotFoundError`](./src/models/errors/get-meta-events-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetMetaEventNotFoundError`](./src/models/errors/get-meta-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`ResendMetaEventNotFoundError`](./src/models/errors/resend-meta-event-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`BulkOnboardNotFoundError`](./src/models/errors/bulk-onboard-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`LoadPortalLinksPagedNotFoundError`](./src/models/errors/load-portal-links-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreatePortalLinkNotFoundError`](./src/models/errors/create-portal-link-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetPortalLinkNotFoundError`](./src/models/errors/get-portal-link-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`UpdatePortalLinkNotFoundError`](./src/models/errors/update-portal-link-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`RefreshPortalLinkAuthTokenNotFoundError`](./src/models/errors/refresh-portal-link-auth-token-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`RevokePortalLinkNotFoundError`](./src/models/errors/revoke-portal-link-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`LoadSourcesPagedNotFoundError`](./src/models/errors/load-sources-paged-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateSourceNotFoundError`](./src/models/errors/create-source-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`DeleteSourceNotFoundError`](./src/models/errors/delete-source-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetSourceNotFoundError`](./src/models/errors/get-source-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`UpdateSourceNotFoundError`](./src/models/errors/update-source-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`PostV1ProjectsProjectIDSourcesTestFunctionNotFoundError`](./src/models/errors/post-v1-projects-project-id-sources-test-function-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetSubscriptionsNotFoundError`](./src/models/errors/get-subscriptions-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateSubscriptionNotFoundError`](./src/models/errors/create-subscription-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`TestSubscriptionFilterNotFoundError`](./src/models/errors/test-subscription-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`TestSubscriptionFunctionNotFoundError`](./src/models/errors/test-subscription-function-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`DeleteSubscriptionNotFoundError`](./src/models/errors/delete-subscription-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetSubscriptionNotFoundError`](./src/models/errors/get-subscription-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`UpdateSubscriptionNotFoundError`](./src/models/errors/update-subscription-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`ToggleSubscriptionStatusNotFoundError`](./src/models/errors/toggle-subscription-status-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetFiltersNotFoundError`](./src/models/errors/get-filters-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`CreateFilterNotFoundError`](./src/models/errors/create-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`BulkCreateFiltersNotFoundError`](./src/models/errors/bulk-create-filters-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`BulkUpdateFiltersNotFoundError`](./src/models/errors/bulk-update-filters-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`TestFilterNotFoundError`](./src/models/errors/test-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`DeleteFilterNotFoundError`](./src/models/errors/delete-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GetFilterNotFoundError`](./src/models/errors/get-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`UpdateFilterNotFoundError`](./src/models/errors/update-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
 * [`ResponseValidationError`](./src/models/errors/response-validation-error.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
 
 </details>
