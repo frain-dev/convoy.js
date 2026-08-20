@@ -45,7 +45,7 @@ export function eventsGetEventsPaged(
     | errors.GetEventsPagedUnauthorizedError
     | errors.GetEventsPagedForbiddenError
     | errors.GetEventsPagedNotFoundError
-    | errors.GatewayTimeoutError
+    | errors.GetEventsPagedGatewayTimeoutError
     | ConvoyError
     | ResponseValidationError
     | ConnectionError
@@ -75,7 +75,7 @@ async function $do(
       | errors.GetEventsPagedUnauthorizedError
       | errors.GetEventsPagedForbiddenError
       | errors.GetEventsPagedNotFoundError
-      | errors.GatewayTimeoutError
+      | errors.GetEventsPagedGatewayTimeoutError
       | ConvoyError
       | ResponseValidationError
       | ConnectionError
@@ -183,7 +183,7 @@ async function $do(
     | errors.GetEventsPagedUnauthorizedError
     | errors.GetEventsPagedForbiddenError
     | errors.GetEventsPagedNotFoundError
-    | errors.GatewayTimeoutError
+    | errors.GetEventsPagedGatewayTimeoutError
     | ConvoyError
     | ResponseValidationError
     | ConnectionError
@@ -198,7 +198,7 @@ async function $do(
     M.jsonErr(401, errors.GetEventsPagedUnauthorizedError$inboundSchema),
     M.jsonErr(403, errors.GetEventsPagedForbiddenError$inboundSchema),
     M.jsonErr(404, errors.GetEventsPagedNotFoundError$inboundSchema),
-    M.jsonErr(504, errors.GatewayTimeoutError$inboundSchema),
+    M.jsonErr(504, errors.GetEventsPagedGatewayTimeoutError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

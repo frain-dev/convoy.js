@@ -93,12 +93,13 @@ run();
 
 ### Errors
 
-| Error Type                                      | Status Code                                     | Content Type                                    |
-| ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
-| errors.GetEventDeliveriesPagedBadRequestError   | 400                                             | application/json                                |
-| errors.GetEventDeliveriesPagedUnauthorizedError | 401                                             | application/json                                |
-| errors.GetEventDeliveriesPagedNotFoundError     | 404                                             | application/json                                |
-| errors.ConvoyDefaultError                       | 4XX, 5XX                                        | \*/\*                                           |
+| Error Type                                        | Status Code                                       | Content Type                                      |
+| ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- |
+| errors.GetEventDeliveriesPagedBadRequestError     | 400                                               | application/json                                  |
+| errors.GetEventDeliveriesPagedUnauthorizedError   | 401                                               | application/json                                  |
+| errors.GetEventDeliveriesPagedNotFoundError       | 404                                               | application/json                                  |
+| errors.GetEventDeliveriesPagedGatewayTimeoutError | 504                                               | application/json                                  |
+| errors.ConvoyDefaultError                         | 4XX, 5XX                                          | \*/\*                                             |
 
 ## batchRetryEventDelivery
 

@@ -1,11 +1,11 @@
-# GatewayTimeoutError
+# GetEventDeliveriesPagedGatewayTimeoutError
 
 Gateway Timeout
 
 ## Example Usage
 
 ```typescript
-import { GatewayTimeoutError } from "convoy.js/models/errors";
+import { GetEventDeliveriesPagedGatewayTimeoutError } from "convoy.js/models/errors";
 
 // No examples available for this model
 ```

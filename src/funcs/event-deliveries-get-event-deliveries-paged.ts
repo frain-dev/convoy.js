@@ -44,6 +44,7 @@ export function eventDeliveriesGetEventDeliveriesPaged(
     | errors.GetEventDeliveriesPagedBadRequestError
     | errors.GetEventDeliveriesPagedUnauthorizedError
     | errors.GetEventDeliveriesPagedNotFoundError
+    | errors.GetEventDeliveriesPagedGatewayTimeoutError
     | ConvoyError
     | ResponseValidationError
     | ConnectionError
@@ -72,6 +73,7 @@ async function $do(
       | errors.GetEventDeliveriesPagedBadRequestError
       | errors.GetEventDeliveriesPagedUnauthorizedError
       | errors.GetEventDeliveriesPagedNotFoundError
+      | errors.GetEventDeliveriesPagedGatewayTimeoutError
       | ConvoyError
       | ResponseValidationError
       | ConnectionError
@@ -182,6 +184,7 @@ async function $do(
     | errors.GetEventDeliveriesPagedBadRequestError
     | errors.GetEventDeliveriesPagedUnauthorizedError
     | errors.GetEventDeliveriesPagedNotFoundError
+    | errors.GetEventDeliveriesPagedGatewayTimeoutError
     | ConvoyError
     | ResponseValidationError
     | ConnectionError
@@ -198,6 +201,10 @@ async function $do(
       errors.GetEventDeliveriesPagedUnauthorizedError$inboundSchema,
     ),
     M.jsonErr(404, errors.GetEventDeliveriesPagedNotFoundError$inboundSchema),
+    M.jsonErr(
+      504,
+      errors.GetEventDeliveriesPagedGatewayTimeoutError$inboundSchema,
+    ),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
