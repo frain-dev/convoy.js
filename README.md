@@ -652,7 +652,7 @@ run();
 **Primary error:**
 * [`ConvoyError`](./src/models/errors/convoy-error.ts): The base class for HTTP error responses.
 
-<details><summary>Less common errors (214)</summary>
+<details><summary>Less common errors (216)</summary>
 
 <br />
 
@@ -805,6 +805,7 @@ run();
 * [`CreateProjectForbiddenError`](./src/models/errors/create-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 68 methods.*
 * [`DeleteProjectForbiddenError`](./src/models/errors/delete-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 68 methods.*
 * [`UpdateProjectForbiddenError`](./src/models/errors/update-project-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 68 methods.*
+* [`GetEventsPagedForbiddenError`](./src/models/errors/get-events-paged-forbidden-error.ts): Forbidden. Status code `403`. Applicable to 1 of 68 methods.*
 * [`GetProjectsNotFoundError`](./src/models/errors/get-projects-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
 * [`CreateProjectNotFoundError`](./src/models/errors/create-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
 * [`DeleteProjectNotFoundError`](./src/models/errors/delete-project-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
@@ -873,6 +874,7 @@ run();
 * [`DeleteFilterNotFoundError`](./src/models/errors/delete-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
 * [`GetFilterNotFoundError`](./src/models/errors/get-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
 * [`UpdateFilterNotFoundError`](./src/models/errors/update-filter-not-found-error.ts): Not Found. Status code `404`. Applicable to 1 of 68 methods.*
+* [`GatewayTimeoutError`](./src/models/errors/gateway-timeout-error.ts): Gateway Timeout. Status code `504`. Applicable to 1 of 68 methods.*
 * [`ResponseValidationError`](./src/models/errors/response-validation-error.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
 
 </details>

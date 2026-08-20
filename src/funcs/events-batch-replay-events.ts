@@ -107,6 +107,7 @@ async function $do(
   );
 
   const query = encodeFormQuery({
+    "body": payload.body,
     "direction": payload.direction,
     "endDate": payload.endDate,
     "endpointId": payload.endpointId,
