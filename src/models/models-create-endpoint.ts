@@ -100,6 +100,14 @@ export type ModelsCreateEndpoint = {
    */
   supportEmail?: string | undefined;
   /**
+   * Microsoft Teams webhook URL is an alternative method to support email where endpoint
+   *
+   * @remarks
+   * developers can receive failure notifications in a Teams channel. Use a Workflows
+   * (Power Automate) webhook URL; retired Office 365 connector URLs no longer deliver.
+   */
+  teamsWebhookUrl?: string | undefined;
+  /**
    * URL is the endpoint's URL prefixed with https. non-https urls are currently
    *
    * @remarks
@@ -125,6 +133,7 @@ export type ModelsCreateEndpoint$Outbound = {
   secret?: string | undefined;
   slack_webhook_url?: string | undefined;
   support_email?: string | undefined;
+  teams_webhook_url?: string | undefined;
   url?: string | undefined;
 };
 
@@ -149,6 +158,7 @@ export const ModelsCreateEndpoint$outboundSchema: z.ZodMiniType<
     secret: z.optional(z.string()),
     slackWebhookUrl: z.optional(z.string()),
     supportEmail: z.optional(z.string()),
+    teamsWebhookUrl: z.optional(z.string()),
     url: z.optional(z.string()),
   }),
   z.transform((v) => {
@@ -163,6 +173,7 @@ export const ModelsCreateEndpoint$outboundSchema: z.ZodMiniType<
       rateLimitDuration: "rate_limit_duration",
       slackWebhookUrl: "slack_webhook_url",
       supportEmail: "support_email",
+      teamsWebhookUrl: "teams_webhook_url",
     });
   }),
 );
