@@ -156,6 +156,13 @@ export type ModelsProjectResponseConfig = {
   ratelimit?: ModelsProjectResponseRatelimit | null | undefined;
   replayAttacksPreventionEnabled?: boolean | undefined;
   requestIdHeader?: ConfigRequestIDHeaderProvider | undefined;
+  /**
+   * SearchPolicy is an optional Go duration (e.g. "24h") shown in project settings.
+   *
+   * @remarks
+   * When set, the dashboard explains that payload/JSON search is additionally clamped
+   * to this lookback intersected with the Events log date picker. Empty means opt-out.
+   */
   searchPolicy?: string | undefined;
   signature?: ModelsProjectResponseSignature | null | undefined;
   ssl?: ModelsProjectResponseSsl | null | undefined;

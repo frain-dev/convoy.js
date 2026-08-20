@@ -43,7 +43,9 @@ export function eventsGetEventsPaged(
     operations.GetEventsPagedResponse,
     | errors.GetEventsPagedBadRequestError
     | errors.GetEventsPagedUnauthorizedError
+    | errors.GetEventsPagedForbiddenError
     | errors.GetEventsPagedNotFoundError
+    | errors.GatewayTimeoutError
     | ConvoyError
     | ResponseValidationError
     | ConnectionError
@@ -71,7 +73,9 @@ async function $do(
       operations.GetEventsPagedResponse,
       | errors.GetEventsPagedBadRequestError
       | errors.GetEventsPagedUnauthorizedError
+      | errors.GetEventsPagedForbiddenError
       | errors.GetEventsPagedNotFoundError
+      | errors.GatewayTimeoutError
       | ConvoyError
       | ResponseValidationError
       | ConnectionError
@@ -104,6 +108,7 @@ async function $do(
   const path = pathToFunc("/v1/projects/{projectID}/events")(pathParams);
 
   const query = encodeFormQuery({
+    "body": payload.body,
     "direction": payload.direction,
     "endDate": payload.endDate,
     "endpointId": payload.endpointId,
@@ -176,7 +181,9 @@ async function $do(
     operations.GetEventsPagedResponse,
     | errors.GetEventsPagedBadRequestError
     | errors.GetEventsPagedUnauthorizedError
+    | errors.GetEventsPagedForbiddenError
     | errors.GetEventsPagedNotFoundError
+    | errors.GatewayTimeoutError
     | ConvoyError
     | ResponseValidationError
     | ConnectionError
@@ -189,7 +196,9 @@ async function $do(
     M.json(200, operations.GetEventsPagedResponse$inboundSchema),
     M.jsonErr(400, errors.GetEventsPagedBadRequestError$inboundSchema),
     M.jsonErr(401, errors.GetEventsPagedUnauthorizedError$inboundSchema),
+    M.jsonErr(403, errors.GetEventsPagedForbiddenError$inboundSchema),
     M.jsonErr(404, errors.GetEventsPagedNotFoundError$inboundSchema),
+    M.jsonErr(504, errors.GatewayTimeoutError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

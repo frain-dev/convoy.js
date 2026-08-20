@@ -25,6 +25,13 @@ export type GetEventsPagedRequest = {
    * Project ID
    */
   projectID: string;
+  /**
+   * URL-encoded JSON object matched against the event payload.
+   *
+   * @remarks
+   * Combined with query as AND when both are set.
+   */
+  body?: string | undefined;
   direction?: GetEventsPagedDirection | undefined;
   /**
    * The end date
@@ -51,7 +58,10 @@ export type GetEventsPagedRequest = {
    */
   prevPageCursor?: string | undefined;
   /**
-   * Any arbitrary value to filter the events payload
+   * Matches event id prefix, idempotency key, event type, and source name.
+   *
+   * @remarks
+   * A JSON object uses payload containment, same as body. Text plus JSON ANDs both.
    */
   query?: string | undefined;
   /**
@@ -99,6 +109,7 @@ export const GetEventsPagedDirection$outboundSchema: z.ZodMiniEnum<
 /** @internal */
 export type GetEventsPagedRequest$Outbound = {
   projectID: string;
+  body?: string | undefined;
   direction?: string | undefined;
   endDate?: string | undefined;
   endpointId?: Array<string> | undefined;
@@ -119,6 +130,7 @@ export const GetEventsPagedRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     projectID: z.string(),
+    body: z.optional(z.string()),
     direction: z.optional(GetEventsPagedDirection$outboundSchema),
     endDate: z.optional(z.string()),
     endpointId: z.optional(z.array(z.string())),
