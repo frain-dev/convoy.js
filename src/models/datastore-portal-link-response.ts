@@ -218,6 +218,7 @@ export type EndpointsMetadatum = {
   status?: DatastoreEndpointStatus | undefined;
   successCount?: number | null | undefined;
   supportEmail?: string | undefined;
+  teamsWebhookUrl?: string | undefined;
   uid?: string | undefined;
   updatedAt?: string | undefined;
   url?: string | undefined;
@@ -512,6 +513,7 @@ export const EndpointsMetadatum$inboundSchema: z.ZodMiniType<
     status: types.optional(DatastoreEndpointStatus$inboundSchema),
     success_count: z.optional(z.nullable(types.number())),
     support_email: types.optional(types.string()),
+    teams_webhook_url: types.optional(types.string()),
     uid: types.optional(types.string()),
     updated_at: types.optional(types.string()),
     url: types.optional(types.string()),
@@ -536,6 +538,7 @@ export const EndpointsMetadatum$inboundSchema: z.ZodMiniType<
       "slack_webhook_url": "slackWebhookUrl",
       "success_count": "successCount",
       "support_email": "supportEmail",
+      "teams_webhook_url": "teamsWebhookUrl",
       "updated_at": "updatedAt",
     });
   }),
