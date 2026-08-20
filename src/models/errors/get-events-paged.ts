@@ -10,7 +10,7 @@ import { ConvoyError } from "./convoy-error.js";
 /**
  * Gateway Timeout
  */
-export type GatewayTimeoutErrorData = {
+export type GetEventsPagedGatewayTimeoutErrorData = {
   message?: string | undefined;
   status?: boolean | undefined;
   data?: { [k: string]: any } | null | undefined;
@@ -19,15 +19,15 @@ export type GatewayTimeoutErrorData = {
 /**
  * Gateway Timeout
  */
-export class GatewayTimeoutError extends ConvoyError {
+export class GetEventsPagedGatewayTimeoutError extends ConvoyError {
   status?: boolean | undefined;
   data?: { [k: string]: any } | null | undefined;
 
   /** The original data that was passed to this error instance. */
-  data$: GatewayTimeoutErrorData;
+  data$: GetEventsPagedGatewayTimeoutErrorData;
 
   constructor(
-    err: GatewayTimeoutErrorData,
+    err: GetEventsPagedGatewayTimeoutErrorData,
     httpMeta: { response: Response; request: Request; body: string },
   ) {
     const message = err.message || `API error occurred: ${JSON.stringify(err)}`;
@@ -36,7 +36,7 @@ export class GatewayTimeoutError extends ConvoyError {
     if (err.status != null) this.status = err.status;
     if (err.data != null) this.data = err.data;
 
-    this.name = "GatewayTimeoutError";
+    this.name = "GetEventsPagedGatewayTimeoutError";
   }
 }
 
@@ -173,8 +173,8 @@ export class GetEventsPagedBadRequestError extends ConvoyError {
 }
 
 /** @internal */
-export const GatewayTimeoutError$inboundSchema: z.ZodMiniType<
-  GatewayTimeoutError,
+export const GetEventsPagedGatewayTimeoutError$inboundSchema: z.ZodMiniType<
+  GetEventsPagedGatewayTimeoutError,
   unknown
 > = z.pipe(
   z.object({
@@ -186,7 +186,7 @@ export const GatewayTimeoutError$inboundSchema: z.ZodMiniType<
     body$: z.string(),
   }),
   z.transform((v) => {
-    return new GatewayTimeoutError(v, {
+    return new GetEventsPagedGatewayTimeoutError(v, {
       request: v.request$,
       response: v.response$,
       body: v.body$,
