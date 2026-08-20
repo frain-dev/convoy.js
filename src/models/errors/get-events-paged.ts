@@ -8,6 +8,39 @@ import * as types from "../../types/primitives.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
+ * Gateway Timeout
+ */
+export type GatewayTimeoutErrorData = {
+  message?: string | undefined;
+  status?: boolean | undefined;
+  data?: { [k: string]: any } | null | undefined;
+};
+
+/**
+ * Gateway Timeout
+ */
+export class GatewayTimeoutError extends ConvoyError {
+  status?: boolean | undefined;
+  data?: { [k: string]: any } | null | undefined;
+
+  /** The original data that was passed to this error instance. */
+  data$: GatewayTimeoutErrorData;
+
+  constructor(
+    err: GatewayTimeoutErrorData,
+    httpMeta: { response: Response; request: Request; body: string },
+  ) {
+    const message = err.message || `API error occurred: ${JSON.stringify(err)}`;
+    super(message, httpMeta);
+    this.data$ = err;
+    if (err.status != null) this.status = err.status;
+    if (err.data != null) this.data = err.data;
+
+    this.name = "GatewayTimeoutError";
+  }
+}
+
+/**
  * Not Found
  */
 export type GetEventsPagedNotFoundErrorData = {
@@ -37,6 +70,39 @@ export class GetEventsPagedNotFoundError extends ConvoyError {
     if (err.data != null) this.data = err.data;
 
     this.name = "GetEventsPagedNotFoundError";
+  }
+}
+
+/**
+ * Forbidden
+ */
+export type GetEventsPagedForbiddenErrorData = {
+  message?: string | undefined;
+  status?: boolean | undefined;
+  data?: { [k: string]: any } | null | undefined;
+};
+
+/**
+ * Forbidden
+ */
+export class GetEventsPagedForbiddenError extends ConvoyError {
+  status?: boolean | undefined;
+  data?: { [k: string]: any } | null | undefined;
+
+  /** The original data that was passed to this error instance. */
+  data$: GetEventsPagedForbiddenErrorData;
+
+  constructor(
+    err: GetEventsPagedForbiddenErrorData,
+    httpMeta: { response: Response; request: Request; body: string },
+  ) {
+    const message = err.message || `API error occurred: ${JSON.stringify(err)}`;
+    super(message, httpMeta);
+    this.data$ = err;
+    if (err.status != null) this.status = err.status;
+    if (err.data != null) this.data = err.data;
+
+    this.name = "GetEventsPagedForbiddenError";
   }
 }
 
@@ -107,6 +173,28 @@ export class GetEventsPagedBadRequestError extends ConvoyError {
 }
 
 /** @internal */
+export const GatewayTimeoutError$inboundSchema: z.ZodMiniType<
+  GatewayTimeoutError,
+  unknown
+> = z.pipe(
+  z.object({
+    message: types.optional(types.string()),
+    status: types.optional(types.boolean()),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    request$: z.custom<Request>(x => x instanceof Request),
+    response$: z.custom<Response>(x => x instanceof Response),
+    body$: z.string(),
+  }),
+  z.transform((v) => {
+    return new GatewayTimeoutError(v, {
+      request: v.request$,
+      response: v.response$,
+      body: v.body$,
+    });
+  }),
+);
+
+/** @internal */
 export const GetEventsPagedNotFoundError$inboundSchema: z.ZodMiniType<
   GetEventsPagedNotFoundError,
   unknown
@@ -121,6 +209,28 @@ export const GetEventsPagedNotFoundError$inboundSchema: z.ZodMiniType<
   }),
   z.transform((v) => {
     return new GetEventsPagedNotFoundError(v, {
+      request: v.request$,
+      response: v.response$,
+      body: v.body$,
+    });
+  }),
+);
+
+/** @internal */
+export const GetEventsPagedForbiddenError$inboundSchema: z.ZodMiniType<
+  GetEventsPagedForbiddenError,
+  unknown
+> = z.pipe(
+  z.object({
+    message: types.optional(types.string()),
+    status: types.optional(types.boolean()),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    request$: z.custom<Request>(x => x instanceof Request),
+    response$: z.custom<Response>(x => x instanceof Response),
+    body$: z.string(),
+  }),
+  z.transform((v) => {
+    return new GetEventsPagedForbiddenError(v, {
       request: v.request$,
       response: v.response$,
       body: v.body$,
