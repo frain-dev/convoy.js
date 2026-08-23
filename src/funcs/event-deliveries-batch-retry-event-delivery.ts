@@ -116,6 +116,7 @@ async function $do(
     "next_page_cursor": payload.next_page_cursor,
     "perPage": payload.perPage,
     "prev_page_cursor": payload.prev_page_cursor,
+    "query": payload.query,
     "sort": payload.sort,
     "startDate": payload.startDate,
     "status": payload.status,
