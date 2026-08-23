@@ -8,6 +8,39 @@ import * as types from "../../types/primitives.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
+ * Gateway Timeout
+ */
+export type GetEventDeliveriesPagedGatewayTimeoutErrorData = {
+  message?: string | undefined;
+  status?: boolean | undefined;
+  data?: { [k: string]: any } | null | undefined;
+};
+
+/**
+ * Gateway Timeout
+ */
+export class GetEventDeliveriesPagedGatewayTimeoutError extends ConvoyError {
+  status?: boolean | undefined;
+  data?: { [k: string]: any } | null | undefined;
+
+  /** The original data that was passed to this error instance. */
+  data$: GetEventDeliveriesPagedGatewayTimeoutErrorData;
+
+  constructor(
+    err: GetEventDeliveriesPagedGatewayTimeoutErrorData,
+    httpMeta: { response: Response; request: Request; body: string },
+  ) {
+    const message = err.message || `API error occurred: ${JSON.stringify(err)}`;
+    super(message, httpMeta);
+    this.data$ = err;
+    if (err.status != null) this.status = err.status;
+    if (err.data != null) this.data = err.data;
+
+    this.name = "GetEventDeliveriesPagedGatewayTimeoutError";
+  }
+}
+
+/**
  * Not Found
  */
 export type GetEventDeliveriesPagedNotFoundErrorData = {
@@ -105,6 +138,26 @@ export class GetEventDeliveriesPagedBadRequestError extends ConvoyError {
     this.name = "GetEventDeliveriesPagedBadRequestError";
   }
 }
+
+/** @internal */
+export const GetEventDeliveriesPagedGatewayTimeoutError$inboundSchema:
+  z.ZodMiniType<GetEventDeliveriesPagedGatewayTimeoutError, unknown> = z.pipe(
+    z.object({
+      message: types.optional(types.string()),
+      status: types.optional(types.boolean()),
+      data: z.optional(z.nullable(z.record(z.string(), z.any()))),
+      request$: z.custom<Request>(x => x instanceof Request),
+      response$: z.custom<Response>(x => x instanceof Response),
+      body$: z.string(),
+    }),
+    z.transform((v) => {
+      return new GetEventDeliveriesPagedGatewayTimeoutError(v, {
+        request: v.request$,
+        response: v.response$,
+        body: v.body$,
+      });
+    }),
+  );
 
 /** @internal */
 export const GetEventDeliveriesPagedNotFoundError$inboundSchema: z.ZodMiniType<

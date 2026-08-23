@@ -97,14 +97,14 @@ run();
 
 ### Errors
 
-| Error Type                             | Status Code                            | Content Type                           |
-| -------------------------------------- | -------------------------------------- | -------------------------------------- |
-| errors.GetEventsPagedBadRequestError   | 400                                    | application/json                       |
-| errors.GetEventsPagedUnauthorizedError | 401                                    | application/json                       |
-| errors.GetEventsPagedForbiddenError    | 403                                    | application/json                       |
-| errors.GetEventsPagedNotFoundError     | 404                                    | application/json                       |
-| errors.GatewayTimeoutError             | 504                                    | application/json                       |
-| errors.ConvoyDefaultError              | 4XX, 5XX                               | \*/\*                                  |
+| Error Type                               | Status Code                              | Content Type                             |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| errors.GetEventsPagedBadRequestError     | 400                                      | application/json                         |
+| errors.GetEventsPagedUnauthorizedError   | 401                                      | application/json                         |
+| errors.GetEventsPagedForbiddenError      | 403                                      | application/json                         |
+| errors.GetEventsPagedNotFoundError       | 404                                      | application/json                         |
+| errors.GetEventsPagedGatewayTimeoutError | 504                                      | application/json                         |
+| errors.ConvoyDefaultError                | 4XX, 5XX                                 | \*/\*                                    |
 
 ## createEndpointEvent
 

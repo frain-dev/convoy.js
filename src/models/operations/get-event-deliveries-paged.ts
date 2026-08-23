@@ -59,6 +59,10 @@ export type GetEventDeliveriesPagedRequest = {
    */
   prevPageCursor?: string | undefined;
   /**
+   * Matches delivery id, event id, event type prefix, and endpoint name.
+   */
+  query?: string | undefined;
+  /**
    * Sort order, values are `ASC` or `DESC`, defaults to `DESC`
    */
   sort?: string | undefined;
@@ -116,6 +120,7 @@ export type GetEventDeliveriesPagedRequest$Outbound = {
   next_page_cursor?: string | undefined;
   perPage?: number | undefined;
   prev_page_cursor?: string | undefined;
+  query?: string | undefined;
   sort?: string | undefined;
   startDate?: string | undefined;
   status?: Array<string> | undefined;
@@ -138,6 +143,7 @@ export const GetEventDeliveriesPagedRequest$outboundSchema: z.ZodMiniType<
     nextPageCursor: z.optional(z.string()),
     perPage: z.optional(z.int()),
     prevPageCursor: z.optional(z.string()),
+    query: z.optional(z.string()),
     sort: z.optional(z.string()),
     startDate: z.optional(z.string()),
     status: z.optional(z.array(z.string())),
