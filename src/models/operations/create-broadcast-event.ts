@@ -27,7 +27,7 @@ export type CreateBroadcastEventRequest = {
 export type CreateBroadcastEventResponse = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: models.ModelsEventResponse | undefined;
+  data?: models.ModelsEventQueuedResponse | undefined;
 };
 
 /** @internal */
@@ -62,7 +62,7 @@ export const CreateBroadcastEventResponse$inboundSchema: z.ZodMiniType<
 > = z.object({
   message: types.optional(types.string()),
   status: types.optional(types.boolean()),
-  data: types.optional(models.ModelsEventResponse$inboundSchema),
+  data: types.optional(models.ModelsEventQueuedResponse$inboundSchema),
 });
 
 export function createBroadcastEventResponseFromJSON(

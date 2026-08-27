@@ -34,6 +34,7 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * This endpoint creates an endpoint event
+ * The 201 body includes uid (the event id). Use GET /events/{eventID} or GET /eventdeliveries?eventId= to follow the send.
  */
 export function eventsCreateEndpointEvent(
   client: ConvoyCore,

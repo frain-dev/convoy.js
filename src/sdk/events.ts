@@ -40,6 +40,7 @@ export class Events extends ClientSDK {
    *
    * @remarks
    * This endpoint creates an endpoint event
+   * The 201 body includes uid (the event id). Use GET /events/{eventID} or GET /eventdeliveries?eventId= to follow the send.
    */
   async createEndpointEvent(
     projectID: string,
@@ -76,6 +77,7 @@ export class Events extends ClientSDK {
    *
    * @remarks
    * This endpoint creates a event that is broadcast to every endpoint whose subscription matches the given event type.
+   * The 201 body includes uid (the event id). Use GET /events/{eventID} or GET /eventdeliveries?eventId= to follow the send.
    */
   async createBroadcastEvent(
     projectID: string,
@@ -111,7 +113,8 @@ export class Events extends ClientSDK {
    * Dynamic Events
    *
    * @remarks
-   * This endpoint does not require creating endpoint and subscriptions ahead of time. Instead, you supply the endpoint and the payload, and Convoy delivers the events
+   * This endpoint creates a dynamic event without creating the endpoint and subscription ahead of time.
+   * The 201 body includes uid (the event id). Use GET /events/{eventID} or GET /eventdeliveries?eventId= to follow the send.
    */
   async createDynamicEvent(
     projectID: string,
@@ -131,6 +134,7 @@ export class Events extends ClientSDK {
    *
    * @remarks
    * This endpoint uses the owner_id to fan out an event to multiple endpoints.
+   * The 201 body includes uid (the event id). Use GET /events/{eventID} or GET /eventdeliveries?eventId= to follow the send.
    */
   async createEndpointFanoutEvent(
     projectID: string,
