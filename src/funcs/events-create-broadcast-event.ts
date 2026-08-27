@@ -34,6 +34,7 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * This endpoint creates a event that is broadcast to every endpoint whose subscription matches the given event type.
+ * The 201 body includes uid (the event id). Use GET /events/{eventID} or GET /eventdeliveries?eventId= to follow the send.
  */
 export function eventsCreateBroadcastEvent(
   client: ConvoyCore,

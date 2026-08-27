@@ -12,8 +12,8 @@ let value: CreateEndpointFanoutEventResponse = {};
 
 ## Fields
 
-| Field                 | Type                  | Required              | Description           |
-| --------------------- | --------------------- | --------------------- | --------------------- |
-| `message`             | *string*              | :heavy_minus_sign:    | N/A                   |
-| `status`              | *boolean*             | :heavy_minus_sign:    | N/A                   |
-| `data`                | Record<string, *any*> | :heavy_minus_sign:    | N/A                   |
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `message`                                                                        | *string*                                                                         | :heavy_minus_sign:                                                               | N/A                                                                              |
+| `status`                                                                         | *boolean*                                                                        | :heavy_minus_sign:                                                               | N/A                                                                              |
+| `data`                                                                           | [models.ModelsEventQueuedResponse](../../models/models-event-queued-response.md) | :heavy_minus_sign:                                                               | N/A                                                                              |

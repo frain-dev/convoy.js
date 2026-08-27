@@ -61,6 +61,7 @@ export * from "./models-endpoint-authentication.js";
 export * from "./models-endpoint-period-failure-rate.js";
 export * from "./models-endpoint-response.js";
 export * from "./models-event-delivery-response.js";
+export * from "./models-event-queued-response.js";
 export * from "./models-event-response.js";
 export * from "./models-event-type-response.js";
 export * from "./models-expire-secret.js";
