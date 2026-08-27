@@ -27,7 +27,7 @@ export type CreateEndpointEventRequest = {
 export type CreateEndpointEventResponse = {
   message?: string | undefined;
   status?: boolean | undefined;
-  data?: { [k: string]: any } | null | undefined;
+  data?: models.ModelsEventQueuedResponse | undefined;
 };
 
 /** @internal */
@@ -60,7 +60,7 @@ export const CreateEndpointEventResponse$inboundSchema: z.ZodMiniType<
 > = z.object({
   message: types.optional(types.string()),
   status: types.optional(types.boolean()),
-  data: z.optional(z.nullable(z.record(z.string(), z.any()))),
+  data: types.optional(models.ModelsEventQueuedResponse$inboundSchema),
 });
 
 export function createEndpointEventResponseFromJSON(

@@ -33,7 +33,8 @@ import { Result } from "../types/fp.js";
  * Dynamic Events
  *
  * @remarks
- * This endpoint does not require creating endpoint and subscriptions ahead of time. Instead, you supply the endpoint and the payload, and Convoy delivers the events
+ * This endpoint creates a dynamic event without creating the endpoint and subscription ahead of time.
+ * The 201 body includes uid (the event id). Use GET /events/{eventID} or GET /eventdeliveries?eventId= to follow the send.
  */
 export function eventsCreateDynamicEvent(
   client: ConvoyCore,
