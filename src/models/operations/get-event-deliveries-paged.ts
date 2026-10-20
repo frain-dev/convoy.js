@@ -47,6 +47,20 @@ export type GetEventDeliveriesPagedRequest = {
    */
   idempotencyKey?: string | undefined;
   /**
+   * Raw value of a source's single idempotency key location, e.g. a provider delivery ID.
+   *
+   * @remarks
+   * Matches deliveries of events ingested with it. Not combinable with idempotencyKey.
+   */
+  idempotencyValue?: string | undefined;
+  /**
+   * Only return deliveries with at least this many attempts; 2 or more means retried.
+   *
+   * @remarks
+   * Requires idempotencyValue, eventId, or endpointId.
+   */
+  minTrials?: number | undefined;
+  /**
    * A pagination cursor to fetch the next page of a list
    */
   nextPageCursor?: string | undefined;
@@ -66,6 +80,10 @@ export type GetEventDeliveriesPagedRequest = {
    * Sort order, values are `ASC` or `DESC`, defaults to `DESC`
    */
   sort?: string | undefined;
+  /**
+   * Limits idempotencyValue matching to these source IDs.
+   */
+  sourceId?: Array<string> | undefined;
   /**
    * The start date
    */
@@ -115,13 +133,16 @@ export type GetEventDeliveriesPagedRequest$Outbound = {
   endDate?: string | undefined;
   endpointId?: Array<string> | undefined;
   eventId?: string | undefined;
-  event_type?: string | undefined;
+  eventType?: string | undefined;
   idempotencyKey?: string | undefined;
+  idempotencyValue?: string | undefined;
+  minTrials?: number | undefined;
   next_page_cursor?: string | undefined;
   perPage?: number | undefined;
   prev_page_cursor?: string | undefined;
   query?: string | undefined;
   sort?: string | undefined;
+  sourceId?: Array<string> | undefined;
   startDate?: string | undefined;
   status?: Array<string> | undefined;
   subscriptionId?: string | undefined;
@@ -140,18 +161,20 @@ export const GetEventDeliveriesPagedRequest$outboundSchema: z.ZodMiniType<
     eventId: z.optional(z.string()),
     eventType: z.optional(z.string()),
     idempotencyKey: z.optional(z.string()),
+    idempotencyValue: z.optional(z.string()),
+    minTrials: z.optional(z.int()),
     nextPageCursor: z.optional(z.string()),
     perPage: z.optional(z.int()),
     prevPageCursor: z.optional(z.string()),
     query: z.optional(z.string()),
     sort: z.optional(z.string()),
+    sourceId: z.optional(z.array(z.string())),
     startDate: z.optional(z.string()),
     status: z.optional(z.array(z.string())),
     subscriptionId: z.optional(z.string()),
   }),
   z.transform((v) => {
     return remap$(v, {
-      eventType: "event_type",
       nextPageCursor: "next_page_cursor",
       prevPageCursor: "prev_page_cursor",
     });
