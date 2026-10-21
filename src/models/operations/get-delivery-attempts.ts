@@ -19,6 +19,14 @@ export type GetDeliveryAttemptsRequest = {
    * event delivery id
    */
   eventDeliveryID: string;
+  /**
+   * Return a page of ten attempts and next_cursor
+   */
+  paginated?: boolean | undefined;
+  /**
+   * Exclusive attempt cursor from next_cursor; requires paginated=true
+   */
+  before?: string | undefined;
 };
 
 /**
@@ -34,6 +42,8 @@ export type GetDeliveryAttemptsResponse = {
 export type GetDeliveryAttemptsRequest$Outbound = {
   projectID: string;
   eventDeliveryID: string;
+  paginated?: boolean | undefined;
+  before?: string | undefined;
 };
 
 /** @internal */
@@ -43,6 +53,8 @@ export const GetDeliveryAttemptsRequest$outboundSchema: z.ZodMiniType<
 > = z.object({
   projectID: z.string(),
   eventDeliveryID: z.string(),
+  paginated: z.optional(z.boolean()),
+  before: z.optional(z.string()),
 });
 
 export function getDeliveryAttemptsRequestToJSON(
