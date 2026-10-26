@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { ConvoyCore } from "../core.js";
-import { encodeSimple } from "../lib/encodings.js";
+import { encodeFormQuery, encodeSimple } from "../lib/encodings.js";
 import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
@@ -33,11 +33,14 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * This endpoint fetches an app message's delivery attempts
+ * Default: latest ten attempts as an array. With paginated=true: content and next_cursor. Pass next_cursor as before for older history; empty means last page. Pages are oldest first.
  */
 export function deliveryAttemptsGetDeliveryAttempts(
   client: ConvoyCore,
   projectID: string,
   eventDeliveryID: string,
+  paginated?: boolean | undefined,
+  before?: string | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
@@ -59,6 +62,8 @@ export function deliveryAttemptsGetDeliveryAttempts(
     client,
     projectID,
     eventDeliveryID,
+    paginated,
+    before,
     options,
   ));
 }
@@ -67,6 +72,8 @@ async function $do(
   client: ConvoyCore,
   projectID: string,
   eventDeliveryID: string,
+  paginated?: boolean | undefined,
+  before?: string | undefined,
   options?: RequestOptions,
 ): Promise<
   [
@@ -90,6 +97,8 @@ async function $do(
   const input: operations.GetDeliveryAttemptsRequest = {
     projectID: projectID,
     eventDeliveryID: eventDeliveryID,
+    paginated: paginated,
+    before: before,
   };
 
   const parsed = safeParse(
@@ -117,6 +126,11 @@ async function $do(
   const path = pathToFunc(
     "/v1/projects/{projectID}/eventdeliveries/{eventDeliveryID}/deliveryattempts",
   )(pathParams);
+
+  const query = encodeFormQuery({
+    "before": payload.before,
+    "paginated": payload.paginated,
+  });
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
@@ -147,6 +161,7 @@ async function $do(
     baseURL: options?.serverURL,
     path: path,
     headers: headers,
+    query: query,
     body: body,
     userAgent: client._options.userAgent,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
