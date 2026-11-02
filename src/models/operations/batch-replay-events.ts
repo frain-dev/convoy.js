@@ -45,6 +45,13 @@ export type BatchReplayEventsRequest = {
    */
   idempotencyKey?: string | undefined;
   /**
+   * Raw value of a source's single idempotency key location, e.g. a provider delivery ID.
+   *
+   * @remarks
+   * List only; pass sourceId if several sources qualify. Not combinable with idempotencyKey.
+   */
+  idempotencyValue?: string | undefined;
+  /**
    * A pagination cursor to fetch the next page of a list
    */
   nextPageCursor?: string | undefined;
@@ -63,6 +70,10 @@ export type BatchReplayEventsRequest = {
    * A JSON object uses payload containment, same as body. Text plus JSON ANDs both.
    */
   query?: string | undefined;
+  /**
+   * Set to text to search metadata literally, without interpreting JSON in query.
+   */
+  queryMode?: string | undefined;
   /**
    * Sort order, values are `ASC` or `DESC`, defaults to `DESC`
    */
@@ -99,10 +110,12 @@ export type BatchReplayEventsRequest$Outbound = {
   endDate?: string | undefined;
   endpointId?: Array<string> | undefined;
   idempotencyKey?: string | undefined;
+  idempotencyValue?: string | undefined;
   next_page_cursor?: string | undefined;
   perPage?: number | undefined;
   prev_page_cursor?: string | undefined;
   query?: string | undefined;
+  queryMode?: string | undefined;
   sort?: string | undefined;
   sourceId?: Array<string> | undefined;
   startDate?: string | undefined;
@@ -120,10 +133,12 @@ export const BatchReplayEventsRequest$outboundSchema: z.ZodMiniType<
     endDate: z.optional(z.string()),
     endpointId: z.optional(z.array(z.string())),
     idempotencyKey: z.optional(z.string()),
+    idempotencyValue: z.optional(z.string()),
     nextPageCursor: z.optional(z.string()),
     perPage: z.optional(z.int()),
     prevPageCursor: z.optional(z.string()),
     query: z.optional(z.string()),
+    queryMode: z.optional(z.string()),
     sort: z.optional(z.string()),
     sourceId: z.optional(z.array(z.string())),
     startDate: z.optional(z.string()),

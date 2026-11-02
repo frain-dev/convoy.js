@@ -8,6 +8,39 @@ import * as types from "../../types/primitives.js";
 import { ConvoyError } from "./convoy-error.js";
 
 /**
+ * Conflict
+ */
+export type ConflictErrorData = {
+  message?: string | undefined;
+  status?: boolean | undefined;
+  data?: { [k: string]: any } | null | undefined;
+};
+
+/**
+ * Conflict
+ */
+export class ConflictError extends ConvoyError {
+  status?: boolean | undefined;
+  data?: { [k: string]: any } | null | undefined;
+
+  /** The original data that was passed to this error instance. */
+  data$: ConflictErrorData;
+
+  constructor(
+    err: ConflictErrorData,
+    httpMeta: { response: Response; request: Request; body: string },
+  ) {
+    const message = err.message || `API error occurred: ${JSON.stringify(err)}`;
+    super(message, httpMeta);
+    this.data$ = err;
+    if (err.status != null) this.status = err.status;
+    if (err.data != null) this.data = err.data;
+
+    this.name = "ConflictError";
+  }
+}
+
+/**
  * Not Found
  */
 export type BatchReplayEventsNotFoundErrorData = {
@@ -105,6 +138,28 @@ export class BatchReplayEventsBadRequestError extends ConvoyError {
     this.name = "BatchReplayEventsBadRequestError";
   }
 }
+
+/** @internal */
+export const ConflictError$inboundSchema: z.ZodMiniType<
+  ConflictError,
+  unknown
+> = z.pipe(
+  z.object({
+    message: types.optional(types.string()),
+    status: types.optional(types.boolean()),
+    data: z.optional(z.nullable(z.record(z.string(), z.any()))),
+    request$: z.custom<Request>(x => x instanceof Request),
+    response$: z.custom<Response>(x => x instanceof Response),
+    body$: z.string(),
+  }),
+  z.transform((v) => {
+    return new ConflictError(v, {
+      request: v.request$,
+      response: v.response$,
+      body: v.body$,
+    });
+  }),
+);
 
 /** @internal */
 export const BatchReplayEventsNotFoundError$inboundSchema: z.ZodMiniType<
