@@ -266,6 +266,7 @@ run();
 | errors.BatchReplayEventsBadRequestError   | 400                                       | application/json                          |
 | errors.BatchReplayEventsUnauthorizedError | 401                                       | application/json                          |
 | errors.BatchReplayEventsNotFoundError     | 404                                       | application/json                          |
+| errors.ConflictError                      | 409                                       | application/json                          |
 | errors.ConvoyDefaultError                 | 4XX, 5XX                                  | \*/\*                                     |
 
 ## createBroadcastEvent

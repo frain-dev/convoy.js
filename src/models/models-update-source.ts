@@ -6,6 +6,10 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import {
+  DatastoreSourceProvider,
+  DatastoreSourceProvider$outboundSchema,
+} from "./datastore-source-provider.js";
+import {
   DatastoreSourceType,
   DatastoreSourceType$outboundSchema,
 } from "./datastore-source-type.js";
@@ -74,6 +78,10 @@ export type ModelsUpdateSource = {
    */
   name?: string | undefined;
   /**
+   * Use this to specify one of our predefined source types.
+   */
+  provider?: DatastoreSourceProvider | undefined;
+  /**
    * PubSub are used to specify message broker sources for outgoing
    *
    * @remarks
@@ -104,6 +112,7 @@ export type ModelsUpdateSource$Outbound = {
   idempotency_keys?: Array<string> | undefined;
   is_disabled?: boolean | undefined;
   name?: string | undefined;
+  provider?: string | undefined;
   pub_sub?: ModelsPubSubConfig$Outbound | undefined;
   type?: string | undefined;
   verifier?: ModelsVerifierConfig$Outbound | undefined;
@@ -123,6 +132,7 @@ export const ModelsUpdateSource$outboundSchema: z.ZodMiniType<
     idempotencyKeys: z.optional(z.array(z.string())),
     isDisabled: z.optional(z.boolean()),
     name: z.optional(z.string()),
+    provider: z.optional(DatastoreSourceProvider$outboundSchema),
     pubSub: z.optional(ModelsPubSubConfig$outboundSchema),
     type: z.optional(DatastoreSourceType$outboundSchema),
     verifier: z.optional(ModelsVerifierConfig$outboundSchema),
