@@ -44,6 +44,7 @@ export function eventsBatchReplayEvents(
     | errors.BatchReplayEventsBadRequestError
     | errors.BatchReplayEventsUnauthorizedError
     | errors.BatchReplayEventsNotFoundError
+    | errors.ConflictError
     | ConvoyError
     | ResponseValidationError
     | ConnectionError
@@ -72,6 +73,7 @@ async function $do(
       | errors.BatchReplayEventsBadRequestError
       | errors.BatchReplayEventsUnauthorizedError
       | errors.BatchReplayEventsNotFoundError
+      | errors.ConflictError
       | ConvoyError
       | ResponseValidationError
       | ConnectionError
@@ -112,10 +114,12 @@ async function $do(
     "endDate": payload.endDate,
     "endpointId": payload.endpointId,
     "idempotencyKey": payload.idempotencyKey,
+    "idempotencyValue": payload.idempotencyValue,
     "next_page_cursor": payload.next_page_cursor,
     "perPage": payload.perPage,
     "prev_page_cursor": payload.prev_page_cursor,
     "query": payload.query,
+    "queryMode": payload.queryMode,
     "sort": payload.sort,
     "sourceId": payload.sourceId,
     "startDate": payload.startDate,
@@ -181,6 +185,7 @@ async function $do(
     | errors.BatchReplayEventsBadRequestError
     | errors.BatchReplayEventsUnauthorizedError
     | errors.BatchReplayEventsNotFoundError
+    | errors.ConflictError
     | ConvoyError
     | ResponseValidationError
     | ConnectionError
@@ -194,6 +199,7 @@ async function $do(
     M.jsonErr(400, errors.BatchReplayEventsBadRequestError$inboundSchema),
     M.jsonErr(401, errors.BatchReplayEventsUnauthorizedError$inboundSchema),
     M.jsonErr(404, errors.BatchReplayEventsNotFoundError$inboundSchema),
+    M.jsonErr(409, errors.ConflictError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
