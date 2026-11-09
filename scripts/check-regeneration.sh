@@ -16,6 +16,13 @@ else
   cp "$OPENAPI_SCHEMA" "$work/input.yaml"
 fi
 cd "$work"
+# Persistent edits require a repository even in a disposable verification tree.
+# The local-only baseline has no remote and cannot publish generated commits.
+git init -q
+git config user.name "SDK verification"
+git config user.email "sdk-verification@localhost"
+git add .
+git commit -qm "Regeneration verification baseline"
 protected=(src/sdk/delivery-attempts.ts src/funcs/delivery-attempts-get-delivery-attempts.ts src/models/operations/get-delivery-attempts.ts tests/delivery-attempts-compatibility.test.ts)
 sha256sum "${protected[@]}" > protected.sha256
 for pass in 1 2; do
