@@ -14,13 +14,15 @@ export class DeliveryAttempts extends ClientSDK {
    * List delivery attempts
    *
    * @remarks
+   * The third argument also accepts legacy RequestOptions. Pagination uses the
+   * boolean third argument, optional cursor fourth, and RequestOptions fifth.
    * This endpoint fetches an app message's delivery attempts
    * Default: latest ten attempts as an array. With paginated=true: content and next_cursor. Pass next_cursor as before for older history; empty means last page. Pages are oldest first.
    */
   async getDeliveryAttempts(
     projectID: string,
     eventDeliveryID: string,
-    paginated?: boolean | undefined,
+    paginated?: boolean | RequestOptions | undefined,
     before?: string | undefined,
     options?: RequestOptions,
   ): Promise<operations.GetDeliveryAttemptsResponse> {

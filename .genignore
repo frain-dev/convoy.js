@@ -15,3 +15,8 @@ LICENSE.md
 .prettierrc
 tslint.json
 MIGRATION.md
+
+# Public compatibility adapters. Update deliberately alongside generated models.
+src/sdk/delivery-attempts.ts
+src/funcs/delivery-attempts-get-delivery-attempts.ts
+tests/delivery-attempts-compatibility.test.ts

@@ -51,3 +51,25 @@ If the project maintainer has any additional requirements, you will find them li
 - **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](https://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
 
 **Happy coding**!
+## SDK compatibility checks
+
+Run `npm ci`, `npm test`, `npm run build`, and `npm run lint` before publishing.
+`npm run test:compatibility` type-checks and exercises both the class and standalone
+API, including the pre-pagination delivery-attempts options argument. CI treats
+missing scripts and failing tests as failures. Generated PRs must have a successful
+`SDK compatibility` check for their exact head before automated approval; a pending
+or absent check leaves the PR for human review.
+
+The delivery-attempts class/function adapters and compatibility test are protected
+by `.genignore`. Do not remove these exclusions during regeneration. Review these
+adapters manually when upstream models change. Test scripts are also configured
+in `.speakeasy/gen.yaml`, so regenerated package metadata retains the checks.
+After running the normal Speakeasy generation workflow, rerun all checks above.
+
+Known release blocker: upstream `GetDeliveryAttempts` documents an array response
+but returns `data: {content, next_cursor}` when `paginated=true`. The current
+compatibility tests verify pagination argument serialization, not that page-shaped
+responses are supported. Correct the upstream schema and add response-specific
+public typing and fixtures before advertising pagination support. Preserve the
+array response type for legacy callers rather than broadly replacing it with a
+union that would break existing consumers.

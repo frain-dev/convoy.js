@@ -28,7 +28,9 @@
     "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
     "build": "tshy",
     "prepublishOnly": "npm run build",
-    "test:verify": "jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'"
+    "test:verify": "jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'",
+    "test": "jest --config jestconfig.json --runInBand",
+    "test:compatibility": "jest --config jestconfig.json --runInBand --testPathPattern=delivery-attempts-compatibility"
   },
   "peerDependencies": {},
   "devDependencies": {

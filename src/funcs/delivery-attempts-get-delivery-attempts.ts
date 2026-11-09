@@ -39,7 +39,7 @@ export function deliveryAttemptsGetDeliveryAttempts(
   client: ConvoyCore,
   projectID: string,
   eventDeliveryID: string,
-  paginated?: boolean | undefined,
+  paginated?: boolean | RequestOptions | undefined,
   before?: string | undefined,
   options?: RequestOptions,
 ): APIPromise<
@@ -62,9 +62,9 @@ export function deliveryAttemptsGetDeliveryAttempts(
     client,
     projectID,
     eventDeliveryID,
-    paginated,
+    typeof paginated === "object" ? undefined : paginated,
     before,
-    options,
+    typeof paginated === "object" ? paginated : options,
   ));
 }
 
