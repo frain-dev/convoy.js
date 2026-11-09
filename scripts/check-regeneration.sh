@@ -33,8 +33,14 @@ for pass in 1 2; do
   # old lock's timestamp without changing its contents before freshness checks.
   touch -d @0 .speakeasy/gen.lock
   touch generation-start
-  "$SPEAKEASY_BIN" generate sdk --lang typescript --schema "$work/input.yaml" \
-    --out "$work" --repo https://github.com/frain-dev/convoy.js --auto-yes
+  if ! "$SPEAKEASY_BIN" generate sdk --lang typescript --schema "$work/input.yaml" \
+    --out "$work" --repo https://github.com/frain-dev/convoy.js --auto-yes; then
+    # Package metadata is public source, useful for diagnosing persistent edits.
+    if git diff --name-only --diff-filter=U | grep -Fxq package.json; then
+      cat package.json
+    fi
+    exit 1
+  fi
   # This pinned CLI can return zero after an authentication timeout. Require
   # a freshly written generation lock, not only a successful process exit.
   if [[ ! .speakeasy/gen.lock -nt generation-start ]]; then
