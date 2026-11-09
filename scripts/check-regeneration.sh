@@ -16,9 +16,11 @@ else
   cp "$OPENAPI_SCHEMA" "$work/input.yaml"
 fi
 cd "$work"
-# Persistent edits require a repository even in a disposable verification tree.
-# The local-only baseline has no remote and cannot publish generated commits.
+# Persistent edits require git plus read access to the previous generator
+# snapshot refs. Use the public repository for fetch and explicitly disable push.
 git init -q
+git remote add origin https://github.com/frain-dev/convoy.js.git
+git remote set-url --push origin no-push://disabled
 git config user.name "SDK verification"
 git config user.email "sdk-verification@localhost"
 git add .
