@@ -1,3 +1,4 @@
+import { unwrapAsync } from "../src/types/fp.js";
 import { DeliveryAttempts } from "../src/sdk/delivery-attempts.js";
 import { ConvoyCore } from "../src/core.js";
 import { HTTPClient } from "../src/lib/http.js";
@@ -10,11 +11,17 @@ describe.each(["class", "standalone"] as const)("%s delivery attempts compatibil
   let requests: Request[];
   let sdk: DeliveryAttempts;
   let core: ConvoyCore;
+  let responseData: unknown;
   beforeEach(() => {
     requests = [];
+    responseData = undefined;
     const httpClient = new HTTPClient({ fetcher: async (input) => {
       requests.push(input as Request);
-      return new Response(JSON.stringify({ status: true, data: [] }), {
+      const paginated = new URL((input as Request).url).searchParams.get("paginated") === "true";
+      const data = responseData ?? (paginated
+        ? { content: [{ uid: "attempt-1", http_status: "200" }], next_cursor: "older" }
+        : [{ uid: "attempt-1", http_status: "200" }]);
+      return new Response(JSON.stringify({ status: true, data }), {
         status: 200, headers: { "Content-Type": "application/json" },
       });
     } });
@@ -28,6 +35,57 @@ describe.each(["class", "standalone"] as const)("%s delivery attempts compatibil
     headers: { "X-Compatibility": "preserved" },
     timeoutMs: 5000,
   };
+
+  test("legacy calls keep the array response type", async () => {
+    const response = api === "class"
+      ? await sdk.getDeliveryAttempts("project", "delivery", options)
+      : await unwrapAsync(deliveryAttemptsGetDeliveryAttempts(core, "project", "delivery", options));
+    const ids: string[] | undefined = response.data?.map((attempt) => attempt.uid ?? "");
+    expect(ids).toEqual(["attempt-1"]);
+    expect(response.data?.[0]?.httpStatus).toBe("200");
+  });
+
+  test("literal true returns a typed cursor page", async () => {
+    const response = api === "class"
+      ? await sdk.getDeliveryAttempts("project", "delivery", true, undefined, options)
+      : await unwrapAsync(deliveryAttemptsGetDeliveryAttempts(core, "project", "delivery", true, undefined, options));
+    const next: string | undefined = response.data?.nextCursor;
+    expect(next).toBe("older");
+    expect(response.data?.content[0]?.httpStatus).toBe("200");
+  });
+
+  test("supports the last empty page", async () => {
+    responseData = { content: [], next_cursor: "" };
+    const response = api === "class"
+      ? await sdk.getDeliveryAttempts("project", "delivery", true, "older")
+      : await unwrapAsync(deliveryAttemptsGetDeliveryAttempts(core, "project", "delivery", true, "older"));
+    expect(response.data).toEqual({ content: [], nextCursor: "" });
+  });
+
+  test("literal false keeps the array response type", async () => {
+    const response = api === "class"
+      ? await sdk.getDeliveryAttempts("project", "delivery", false)
+      : await unwrapAsync(deliveryAttemptsGetDeliveryAttempts(core, "project", "delivery", false));
+    expect(response.data?.map((attempt) => attempt.uid)).toEqual(["attempt-1"]);
+  });
+
+  test("dynamic booleans return a safely narrowable union", async () => {
+    const enabled: boolean = JSON.parse("true");
+    const response = api === "class"
+      ? await sdk.getDeliveryAttempts("project", "delivery", enabled)
+      : await unwrapAsync(deliveryAttemptsGetDeliveryAttempts(core, "project", "delivery", enabled));
+    if (response.data && !Array.isArray(response.data)) {
+      expect(response.data.nextCursor).toBe("older");
+    } else throw new Error("Expected cursor page");
+  });
+
+  test.each([{ content: [] }, [], { content: [], next_cursor: 42 }])("rejects malformed page responses %#", async (badPage) => {
+    responseData = badPage;
+    const response = api === "class"
+      ? sdk.getDeliveryAttempts("project", "delivery", true)
+      : unwrapAsync(deliveryAttemptsGetDeliveryAttempts(core, "project", "delivery", true));
+    await expect(response).rejects.toThrow();
+  });
 
   test("accepts the original options argument and forwards it", async () => {
     if (api === "class") await sdk.getDeliveryAttempts("project", "delivery", options);

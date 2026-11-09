@@ -20,3 +20,5 @@ MIGRATION.md
 src/sdk/delivery-attempts.ts
 src/funcs/delivery-attempts-get-delivery-attempts.ts
 tests/delivery-attempts-compatibility.test.ts
+src/models/operations/get-delivery-attempts.ts
+scripts/check-regeneration.sh

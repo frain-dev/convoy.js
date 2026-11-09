@@ -57,19 +57,47 @@ Run `npm ci`, `npm test`, `npm run build`, and `npm run lint` before publishing.
 `npm run test:compatibility` type-checks and exercises both the class and standalone
 API, including the pre-pagination delivery-attempts options argument. CI treats
 missing scripts and failing tests as failures. Generated PRs must have a successful
-`SDK compatibility` check for their exact head before automated approval; a pending
+`SDK compatibility` and `SDK regeneration` check for their exact head before automated approval; a pending
 or absent check leaves the PR for human review.
 
-The delivery-attempts class/function adapters and compatibility test are protected
+The delivery-attempts class/function adapters, operation response model, and compatibility test are protected
 by `.genignore`. Do not remove these exclusions during regeneration. Review these
 adapters manually when upstream models change. Test scripts are also configured
 in `.speakeasy/gen.yaml`, so regenerated package metadata retains the checks.
 After running the normal Speakeasy generation workflow, rerun all checks above.
 
-Known release blocker: upstream `GetDeliveryAttempts` documents an array response
-but returns `data: {content, next_cursor}` when `paginated=true`. The current
-compatibility tests verify pagination argument serialization, not that page-shaped
-responses are supported. Correct the upstream schema and add response-specific
-public typing and fixtures before advertising pagination support. Preserve the
-array response type for legacy callers rather than broadly replacing it with a
-union that would break existing consumers.
+### Delivery-attempt response compatibility
+
+Legacy calls retain their array response type:
+
+```ts
+const response = await sdk.deliveryAttempts.getDeliveryAttempts(projectID, deliveryID, options);
+response.data?.map(attempt => attempt.uid);
+```
+
+Opt-in cursor pagination returns a separate page type:
+
+```ts
+const response = await sdk.deliveryAttempts.getDeliveryAttempts(projectID, deliveryID, true, before, options);
+response.data?.content.map(attempt => attempt.uid);
+const next = response.data?.nextCursor; // Empty string means the final page.
+```
+
+The standalone function has the same overloads (with `client` first). A dynamic
+boolean returns an array-or-page union; narrow with `Array.isArray(response.data)`.
+The wire key `next_cursor` is mapped to `nextCursor`, consistent with SDK naming.
+Malformed pages are rejected instead of silently dropping cursor data.
+
+The upstream OpenAPI response must describe both array and page shapes. The
+hand-maintained operation model keeps the legacy exported response type stable,
+so changing the upstream response to `oneOf` does not widen existing consumers.
+
+### Regeneration verification
+
+`SPEAKEASY_API_KEY=... OPENAPI_SCHEMA=/path/to/openapi3.yaml bash scripts/check-regeneration.sh`
+checks the committed HEAD in a disposable directory. It runs pinned SDK generation
+twice, verifies the compatibility files are unchanged, and runs tests, build and
+lint after each pass. The CI job uses a fixed upstream schema revision for
+reproducibility and has read-only repository permissions. It never pushes or
+publishes. Fork PRs do not receive the generator credential and therefore require
+maintainer verification before approval.
