@@ -41,6 +41,8 @@ typescript:
     peerDependencies: {}
   additionalPackageJSON: {}
   additionalScripts:
+    test: jest --config jestconfig.json --runInBand
+    test:compatibility: jest --config jestconfig.json --runInBand --testPathPattern=delivery-attempts-compatibility
     test:verify: jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'
   alwaysIncludeInboundAndOutbound: false
   apiPromiseHelpers: false

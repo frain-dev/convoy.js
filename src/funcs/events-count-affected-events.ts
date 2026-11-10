@@ -117,6 +117,7 @@ async function $do(
     "perPage": payload.perPage,
     "prev_page_cursor": payload.prev_page_cursor,
     "query": payload.query,
+    "queryMode": payload.queryMode,
     "sort": payload.sort,
     "sourceId": payload.sourceId,
     "startDate": payload.startDate,

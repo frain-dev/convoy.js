@@ -72,6 +72,10 @@ export type CountAffectedEventsRequest = {
    */
   query?: string | undefined;
   /**
+   * Set to text to search metadata literally, without interpreting JSON in query.
+   */
+  queryMode?: string | undefined;
+  /**
    * Sort order, values are `ASC` or `DESC`, defaults to `DESC`
    */
   sort?: string | undefined;
@@ -112,6 +116,7 @@ export type CountAffectedEventsRequest$Outbound = {
   perPage?: number | undefined;
   prev_page_cursor?: string | undefined;
   query?: string | undefined;
+  queryMode?: string | undefined;
   sort?: string | undefined;
   sourceId?: Array<string> | undefined;
   startDate?: string | undefined;
@@ -134,6 +139,7 @@ export const CountAffectedEventsRequest$outboundSchema: z.ZodMiniType<
     perPage: z.optional(z.int()),
     prevPageCursor: z.optional(z.string()),
     query: z.optional(z.string()),
+    queryMode: z.optional(z.string()),
     sort: z.optional(z.string()),
     sourceId: z.optional(z.array(z.string())),
     startDate: z.optional(z.string()),

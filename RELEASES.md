@@ -120,7 +120,7 @@ Based on:
 ### Generated
 - [typescript v2.1.10] .
 
-## 2026-10-19 12:39:06
+## 2026-11-09 15:43:07
 ### Changes
 Based on:
 - OpenAPI Doc  
