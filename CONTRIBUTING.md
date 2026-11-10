@@ -62,8 +62,8 @@ or absent check leaves the PR for human review.
 
 The delivery-attempts class/function adapters, operation response model, and compatibility test are protected
 by `.genignore`. Do not remove these exclusions during regeneration. Review these
-adapters manually when upstream models change. Test scripts are also configured
-in `.speakeasy/gen.yaml`, so regenerated package metadata retains the checks.
+adapters manually when upstream models change. The added test scripts are preserved as persistent edits to package.json;
+the regeneration gate asserts all three test script values survive each pass.
 After running the normal Speakeasy generation workflow, rerun all checks above.
 
 ### Delivery-attempt response compatibility
@@ -95,9 +95,19 @@ so changing the upstream response to `oneOf` does not widen existing consumers.
 ### Regeneration verification
 
 `SPEAKEASY_API_KEY=... OPENAPI_SCHEMA=/path/to/openapi3.yaml bash scripts/check-regeneration.sh`
-checks the committed HEAD in a disposable directory. It runs pinned SDK generation
-twice, verifies the compatibility files are unchanged, and runs tests, build and
+checks the committed HEAD in a disposable directory. It runs the pinned production `speakeasy run` workflow, including pristine
+compilation, twice, verifies the compatibility files are unchanged, and runs tests, build and
 lint after each pass. The CI job uses a fixed upstream schema revision for
 reproducibility and has read-only repository permissions. It never pushes or
 publishes. Fork PRs do not receive the generator credential and therefore require
 maintainer verification before approval.
+
+Keep `test` and `test:compatibility` as hand-maintained package.json scripts,
+not duplicate `additionalScripts` entries in gen.yaml. Speakeasy persists these
+edits against its pristine snapshot. Declaring the same additions on both sides
+of that merge creates ordering conflicts because generated scripts can be
+reordered during pristine compilation. Retain the original `test:verify`
+generator entry so the existing snapshot's baseline remains stable. The CI gate
+checks that the scripts survive two complete production workflow runs.
+The regression harness preserves workflow configuration and production metadata,
+overrides only the input schema, and disables registry uploads and git pushes.
