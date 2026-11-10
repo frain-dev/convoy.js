@@ -113,6 +113,7 @@ async function $do(
     "endDate": payload.endDate,
     "endpointId": payload.endpointId,
     "idempotencyKey": payload.idempotencyKey,
+    "idempotencyValue": payload.idempotencyValue,
     "next_page_cursor": payload.next_page_cursor,
     "perPage": payload.perPage,
     "prev_page_cursor": payload.prev_page_cursor,

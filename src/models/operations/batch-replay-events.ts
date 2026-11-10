@@ -45,6 +45,13 @@ export type BatchReplayEventsRequest = {
    */
   idempotencyKey?: string | undefined;
   /**
+   * Raw value of a source's single idempotency key location, e.g. a provider delivery ID.
+   *
+   * @remarks
+   * List only; pass sourceId if several sources qualify. Not combinable with idempotencyKey.
+   */
+  idempotencyValue?: string | undefined;
+  /**
    * A pagination cursor to fetch the next page of a list
    */
   nextPageCursor?: string | undefined;
@@ -99,6 +106,7 @@ export type BatchReplayEventsRequest$Outbound = {
   endDate?: string | undefined;
   endpointId?: Array<string> | undefined;
   idempotencyKey?: string | undefined;
+  idempotencyValue?: string | undefined;
   next_page_cursor?: string | undefined;
   perPage?: number | undefined;
   prev_page_cursor?: string | undefined;
@@ -120,6 +128,7 @@ export const BatchReplayEventsRequest$outboundSchema: z.ZodMiniType<
     endDate: z.optional(z.string()),
     endpointId: z.optional(z.array(z.string())),
     idempotencyKey: z.optional(z.string()),
+    idempotencyValue: z.optional(z.string()),
     nextPageCursor: z.optional(z.string()),
     perPage: z.optional(z.int()),
     prevPageCursor: z.optional(z.string()),
