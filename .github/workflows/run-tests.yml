@@ -20,7 +20,7 @@ jobs:
           cache: npm
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Verify hand-written modules are present
         run: |
@@ -31,6 +31,48 @@ jobs:
       - name: Execute verify + shared vector tests
         run: npx jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'
 
-      - name: Execute full test suite when present
+      - name: Execute full test suite
         run: npm test
-        continue-on-error: true
+
+  compatibility:
+    name: SDK compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Run the protected suite directly: generated package scripts cannot
+      # replace this release gate with a successful no-op.
+      - run: ./node_modules/.bin/jest --config jestconfig.json --runInBand --testPathPattern=delivery-attempts-compatibility
+
+  regeneration:
+    name: SDK regeneration
+    # Forks do not receive the API key. A skipped check cannot satisfy bot approval.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+      - name: Install pinned generator
+        run: |
+          curl --fail --location --retry 3 https://github.com/speakeasy-api/speakeasy/releases/download/v1.790.2/speakeasy_linux_amd64.zip -o "$RUNNER_TEMP/speakeasy.zip"
+          echo "445928c70d199def45ab5921df6785a55bd64d4894e6058bbb513e90342c423f  $RUNNER_TEMP/speakeasy.zip" | sha256sum --check
+          unzip "$RUNNER_TEMP/speakeasy.zip" -d "$RUNNER_TEMP/speakeasy"
+      - name: Verify two regenerations preserve compatibility
+        env:
+          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+          SPEAKEASY_BIN: ${{ runner.temp }}/speakeasy/speakeasy
+          OPENAPI_SCHEMA: https://raw.githubusercontent.com/frain-dev/convoy/088fe3ba5642aa40899374e091e83720349f3747/docs/v3/openapi3.yaml
+        run: bash scripts/check-regeneration.sh
