@@ -15,6 +15,19 @@ if [[ "$OPENAPI_SCHEMA" == https://* ]]; then
 else
   cp "$OPENAPI_SCHEMA" "$work/input.yaml"
 fi
+# Keep the checked-in workflow pipeline (including pristine compilation), but
+# make its source reproducible for this regression test. Do not upload to registry.
+python3 - "$work/.speakeasy/workflow.yaml" "$work/input.yaml" <<'PYWORKFLOW'
+import json
+import pathlib
+import re
+import sys
+path = pathlib.Path(sys.argv[1])
+text, count = re.subn(r"(?m)^(\s*- location:) .+$", lambda match: match[1] + " " + json.dumps(sys.argv[2]), path.read_text())
+if count != 1:
+    raise SystemExit("Expected one workflow source; update the regression harness for this workflow")
+path.write_text(text)
+PYWORKFLOW
 cd "$work"
 # Persistent edits require git plus read access to the previous generator
 # snapshot refs. Use the public repository for fetch and explicitly disable push.
@@ -33,8 +46,15 @@ for pass in 1 2; do
   # old lock's timestamp without changing its contents before freshness checks.
   touch -d @0 .speakeasy/gen.lock
   touch generation-start
-  if ! "$SPEAKEASY_BIN" generate sdk --lang typescript --schema "$work/input.yaml" \
-    --out "$work" --repo https://github.com/frain-dev/convoy.js --auto-yes; then
+  # Match sdk-generation-action's production command and metadata. In particular,
+  # `run` compiles the pristine SDK before merging edits; `generate sdk` does not.
+  # Compilation moves package.json's test script to the end of the scripts object.
+  # Force both passes so an unchanged input cannot turn pass two into a no-op.
+  if ! SPEAKEASY_FORCE_GENERATION=true "$SPEAKEASY_BIN" run -t all \
+    --installationURLs '{"typescript":"https://github.com/frain-dev/convoy.js"}' \
+    --repo-subdirs '{"typescript":""}' \
+    -r https://github.com/frain-dev/convoy.js.git --skip-testing \
+    --skip-upload-spec --output console --auto-yes; then
     # Package metadata is public source, useful for diagnosing persistent edits.
     if git diff --name-only --diff-filter=U | grep -Fxq package.json; then
       cat package.json

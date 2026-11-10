@@ -95,9 +95,16 @@ so changing the upstream response to `oneOf` does not widen existing consumers.
 ### Regeneration verification
 
 `SPEAKEASY_API_KEY=... OPENAPI_SCHEMA=/path/to/openapi3.yaml bash scripts/check-regeneration.sh`
-checks the committed HEAD in a disposable directory. It runs pinned SDK generation
-twice, verifies the compatibility files are unchanged, and runs tests, build and
+checks the committed HEAD in a disposable directory. It runs the pinned production `speakeasy run` workflow, including pristine
+compilation, twice, verifies the compatibility files are unchanged, and runs tests, build and
 lint after each pass. The CI job uses a fixed upstream schema revision for
 reproducibility and has read-only repository permissions. It never pushes or
 publishes. Fork PRs do not receive the generator credential and therefore require
 maintainer verification before approval.
+
+Keep the `test` entry last in package.json's scripts object, matching the
+production pristine-compilation step. The lower-level `generate sdk` command
+orders this entry differently and is not an equivalent regression check: that
+ordering difference can conflict with persistent edits even when values match.
+The regression harness preserves workflow configuration and production metadata,
+overrides only the input schema, and disables registry uploads and git pushes.
