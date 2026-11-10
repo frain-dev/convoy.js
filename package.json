@@ -1,6 +1,6 @@
 {
   "name": "convoy.js",
-  "version": "2.1.11",
+  "version": "2.2.0",
   "author": "Convoy",
   "type": "module",
   "tshy": {
@@ -28,7 +28,9 @@
     "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
     "build": "tshy",
     "prepublishOnly": "npm run build",
-    "test:verify": "jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'"
+    "test:compatibility": "jest --config jestconfig.json --runInBand --testPathPattern=delivery-attempts-compatibility",
+    "test:verify": "jest --config jestconfig.json --testPathPattern='(webhook|shared-vectors)'",
+    "test": "jest --config jestconfig.json --runInBand"
   },
   "peerDependencies": {},
   "devDependencies": {
