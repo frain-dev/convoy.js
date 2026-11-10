@@ -102,9 +102,12 @@ reproducibility and has read-only repository permissions. It never pushes or
 publishes. Fork PRs do not receive the generator credential and therefore require
 maintainer verification before approval.
 
-Keep the `test` entry last in package.json's scripts object, matching the
-production pristine-compilation step. The lower-level `generate sdk` command
-orders this entry differently and is not an equivalent regression check: that
-ordering difference can conflict with persistent edits even when values match.
+Keep `test` and `test:compatibility` as hand-maintained package.json scripts,
+not duplicate `additionalScripts` entries in gen.yaml. Speakeasy persists these
+edits against its pristine snapshot. Declaring the same additions on both sides
+of that merge creates ordering conflicts because generated scripts can be
+reordered during pristine compilation. Retain the original `test:verify`
+generator entry so the existing snapshot's baseline remains stable. The CI gate
+checks that the scripts survive two complete production workflow runs.
 The regression harness preserves workflow configuration and production metadata,
 overrides only the input schema, and disables registry uploads and git pushes.

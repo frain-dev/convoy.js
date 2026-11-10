@@ -48,7 +48,6 @@ for pass in 1 2; do
   touch generation-start
   # Match sdk-generation-action's production command and metadata. In particular,
   # `run` compiles the pristine SDK before merging edits; `generate sdk` does not.
-  # Compilation moves package.json's test script to the end of the scripts object.
   # Force both passes so an unchanged input cannot turn pass two into a no-op.
   if ! SPEAKEASY_FORCE_GENERATION=true "$SPEAKEASY_BIN" run -t all \
     --installationURLs '{"typescript":"https://github.com/frain-dev/convoy.js"}' \
