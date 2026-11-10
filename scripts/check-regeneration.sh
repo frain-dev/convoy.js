@@ -40,6 +40,7 @@ git add .
 git commit -qm "Regeneration verification baseline"
 protected=(src/sdk/delivery-attempts.ts src/funcs/delivery-attempts-get-delivery-attempts.ts src/models/operations/get-delivery-attempts.ts tests/delivery-attempts-compatibility.test.ts)
 sha256sum "${protected[@]}" > protected.sha256
+node -e 'const p = require("./package.json"); for (const k of ["test", "test:compatibility", "test:verify"]) { if (!p.scripts[k]) throw new Error(`Missing ${k}`); console.log(`${k}=${p.scripts[k]}`); }' > expected-test-scripts.txt
 for pass in 1 2; do
   echo "Regeneration verification pass $pass"
   # git archive preserves commit times, which can be in the future. Reset the
@@ -67,6 +68,8 @@ for pass in 1 2; do
     exit 1
   fi
   sha256sum --check protected.sha256
+  node -e 'const p = require("./package.json"); for (const k of ["test", "test:compatibility", "test:verify"]) console.log(`${k}=${p.scripts[k]}`);' > actual-test-scripts.txt
+  diff -u expected-test-scripts.txt actual-test-scripts.txt
   # Do not expose the generator credential to dependency scripts or test code.
   env -u SPEAKEASY_API_KEY npm ci
   env -u SPEAKEASY_API_KEY npm test

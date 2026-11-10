@@ -62,8 +62,8 @@ or absent check leaves the PR for human review.
 
 The delivery-attempts class/function adapters, operation response model, and compatibility test are protected
 by `.genignore`. Do not remove these exclusions during regeneration. Review these
-adapters manually when upstream models change. Test scripts are also configured
-in `.speakeasy/gen.yaml`, so regenerated package metadata retains the checks.
+adapters manually when upstream models change. The added test scripts are preserved as persistent edits to package.json;
+the regeneration gate asserts all three test script values survive each pass.
 After running the normal Speakeasy generation workflow, rerun all checks above.
 
 ### Delivery-attempt response compatibility
