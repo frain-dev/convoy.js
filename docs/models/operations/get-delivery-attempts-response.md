@@ -12,8 +12,8 @@ let value: GetDeliveryAttemptsResponse = {};
 
 ## Fields
 
-| Field                                                                           | Type                                                                            | Required                                                                        | Description                                                                     |
-| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `message`                                                                       | *string*                                                                        | :heavy_minus_sign:                                                              | N/A                                                                             |
-| `status`                                                                        | *boolean*                                                                       | :heavy_minus_sign:                                                              | N/A                                                                             |
-| `data`                                                                          | [models.DatastoreDeliveryAttempt](../../models/datastore-delivery-attempt.md)[] | :heavy_minus_sign:                                                              | N/A                                                                             |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `message`          | *string*           | :heavy_minus_sign: | N/A                |
+| `status`           | *boolean*          | :heavy_minus_sign: | N/A                |
+| `data`             | *operations.Data*  | :heavy_minus_sign: | N/A                |
